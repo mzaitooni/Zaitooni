@@ -242,14 +242,15 @@ body.tree-open>main.wrap{animation:none}
     <div class="tree-toolbar generation-controls" id="treeToolbar">
       <label for="treeGenerationCount">عرض</label>
       <select id="treeGenerationCount" aria-label="عرض الشجرة">
-        <option value="3">٣ أجيال</option>
+        <option value="3">٣ أجيال (افتراضي)</option>
         <option value="all">كامل الشجرة</option>
       </select>
       <output id="treeZoomValue" aria-label="نسبة الزوم">٧٤٪</output>
     </div>
   </div>
   <div class="tree-navigation" id="treeNavigation" hidden>
-    <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> <span id="treeBackLabel">العودة إلى الجيل السابق</span></button>
+    <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> العودة إلى الجيل السابق</button>
+    <button class="btn" type="button" id="helpBackToTree" hidden><span aria-hidden="true">→</span> العودة إلى الشجرة</button>
   </div>
   </div>
   <section class="panel active" id="treePanel">
@@ -489,7 +490,7 @@ function updateGenerationOptions(max) {
     maxGenerationCount = ceiling;
     const options = [];
     for (let n = DEFAULT_GENERATIONS; n <= ceiling; n++) {
-      const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا');
+      const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا') + (n === DEFAULT_GENERATIONS ? ' (افتراضي)' : '');
       options.push(new Option(label, String(n)));
     }
     options.push(new Option('كامل الشجرة', 'all'));
@@ -539,11 +540,25 @@ function generationView({ root, depthBelow }) {
   return { root: prefix[0], generations:true, lineage, openIds };
 }
 
+function matchNameChain(tokens) {
+  const exact = [];
+  const partial = [];
+  const last = tokens.length - 1;
+  for (const person of data.people) {
+    const names = normalizeSearch(fullName(person)).split(' ');
+    // Match from the person's own name outward, in lineage order.
+    if (names.length < tokens.length || !tokens.slice(0, last).every((word, index) => word === names[index])) continue;
+    if (names[last] === tokens[last]) exact.push(person);
+    else if (names[last].startsWith(tokens[last])) partial.push(person);
+  }
+  return exact.length ? exact : partial;
+}
+
 function treeSearchView(needle) {
   const tokens = needle.split(' ');
-  const matches = data.people.filter(person => tokens.length > 1
-    ? tokens.every(token => normalizeSearch(fullName(person)).includes(token))
-    : normalizeSearch(person.name).includes(needle));
+  const matches = tokens.length === 1
+    ? data.people.filter(person => normalizeSearch(person.name).includes(needle))
+    : matchNameChain(tokens);
   const matchIds = new Set(matches.map(person => person.id));
   const visibleIds = new Set();
   const nestedMatchIds = new Set();
@@ -558,6 +573,15 @@ function treeSearchView(needle) {
     }
   }
   return { openIds: expanded, visibleIds, matchIds, nestedMatchIds };
+}
+
+function updateTreeNavigation(searching = Boolean(normalizeSearch(document.getElementById('treeSearch').value))) {
+  const helpOpen = document.getElementById('aboutPanel').classList.contains('active');
+  const treeOpen = document.getElementById('treePanel').classList.contains('active');
+  const canGoBack = treeOpen && !searching && !fullTreeSelected && treeViewHistory.length > 0;
+  document.getElementById('treeBackBtn').hidden = !canGoBack;
+  document.getElementById('helpBackToTree').hidden = !helpOpen;
+  document.getElementById('treeNavigation').hidden = !helpOpen && !canGoBack;
 }
 
 function renderTree(query = '') {
@@ -575,8 +599,7 @@ function renderTree(query = '') {
     ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><ul>${html}</ul></div></div>`
     : `<div class="tree-empty">${needle ? 'ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.' : 'لا توجد أسماء بعد.'}</div>`;
 
-  const navigation = document.getElementById('treeNavigation');
-  navigation.hidden = Boolean(needle) || fullTreeSelected || treeViewHistory.length === 0;
+  updateTreeNavigation(Boolean(needle));
 
   observeTreeGeometry(viewport);
   viewport.querySelectorAll('[data-toggle]').forEach(button => {
@@ -823,7 +846,9 @@ document.getElementById('profileAddChild').onclick=()=>{const id=activeProfileId
 document.getElementById('settingsOpen').onclick=()=>document.getElementById('settingsBack').classList.add('open');
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{if(b.dataset.close==='profileBack')saveProfileBioNow();closeLayer(b.dataset.close)});document.querySelectorAll('.modal-back').forEach(back=>back.onclick=e=>{if(e.target===back){if(back.id==='profileBack')saveProfileBioNow();closeLayer(back.id)}});
 document.getElementById('personForm').onsubmit=e=>{e.preventDefault();const mode=document.getElementById('formMode').value,name=document.getElementById('personName').value.trim(),gender=document.querySelector('input[name="gender"]:checked')?.value,parentId=document.getElementById('parentIdField').value,source=document.getElementById('sourceField').value.trim(),bio=document.getElementById('bioField').value.trim(),parent=byId(parentId);if(!name||!gender||!parent||parent.gender!=='male')return;const rec={id:'x'+Date.now()+Math.random().toString(36).slice(2,6),name,gender,parentId,source,bio};if(mode==='suggest'){data.requests.unshift({...rec,status:'pending',contributor:document.getElementById('contributorName').value.trim(),submittedAt:new Date().toISOString()});toast('تم حفظ الاقتراح للمراجعة')}else{data.people.push(rec);expanded.add(parentId);toast('تمت الإضافة')}closeLayer('modalBack');save();if(mode!=='suggest')openProfile(parentId)};
-function activateMainPanel(panelId){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===panelId));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panelId));const helpLabel=document.getElementById('helpButtonLabel');if(helpLabel)helpLabel.textContent=panelId==='aboutPanel'?'الشجرة':'مساعدة'}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const current=document.getElementById(b.dataset.tab)?.classList.contains('active');activateMainPanel(current?'treePanel':b.dataset.tab)});let lastTreeSearchQuery=document.getElementById('treeSearch').value;document.getElementById('treeSearch').addEventListener('focus',()=>{if(!document.getElementById('treePanel').classList.contains('active'))activateMainPanel('treePanel')});const treeSearchInput=document.getElementById('treeSearch');const applyTreeSearch = () => {
+function activateMainPanel(panelId){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===panelId));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panelId));const helpLabel=document.getElementById('helpButtonLabel');if(helpLabel)helpLabel.textContent=panelId==='aboutPanel'?'الشجرة':'مساعدة';updateTreeNavigation()}
+document.getElementById('helpBackToTree').onclick=()=>activateMainPanel('treePanel');
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const current=document.getElementById(b.dataset.tab)?.classList.contains('active');activateMainPanel(current?'treePanel':b.dataset.tab)});let lastTreeSearchQuery=document.getElementById('treeSearch').value;document.getElementById('treeSearch').addEventListener('focus',()=>{if(!document.getElementById('treePanel').classList.contains('active'))activateMainPanel('treePanel')});const treeSearchInput=document.getElementById('treeSearch');const applyTreeSearch = () => {
   const q = String(treeSearchInput.value || '').trim();
   if (q === lastTreeSearchQuery) return;
   treePinchZoom = null;
