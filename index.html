@@ -511,9 +511,15 @@ function generationView({ root, depthBelow }) {
     current = byId(current.parentId);
   }
 
-  // Keep the selected person in the next-to-last column whenever it fits.
+  // Until a branch is selected, show every branch up to the chosen depth.
   const anchor = path.at(-1);
-  if (anchor && path.length >= generationCount - 1) {
+  if (!anchor) {
+    const openIds = focusedTreeView.openIds ?? new Set(data.people.map(person => person.id));
+    return { root, generations:true, openIds };
+  }
+
+  // Keep the selected person in the next-to-last column whenever it fits.
+  if (path.length >= generationCount - 1) {
     const visiblePath = path.slice(-(generationCount - 1));
     const line = visiblePath.slice(0, -2);
     const lineage = new Map(line.map((person, i) => [person.id, visiblePath[i + 1].id]));
@@ -523,8 +529,7 @@ function generationView({ root, depthBelow }) {
   }
 
   // When there are too few ancestors, continue through the active branch.
-  // At the top, prefer the first branch deep enough to fill the chosen columns.
-  const prefix = path.length ? path : root ? [root] : [];
+  const prefix = path.slice();
   while (prefix.length < generationCount - 2) {
     const tip = prefix.at(-1);
     if (!tip) break;
