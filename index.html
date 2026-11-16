@@ -249,7 +249,7 @@ const initial={version:3,people:[
 ],requests:[]};
 function normalize(d){const known={p1:'male',p2:'male',p3:'male',p4:'male',p5:'male',c1:'female',c2:'female',c3:'female',c4:'female',c5:'female',c6:'male',c7:'male',c8:'male',c9:'male',c10:'male'};d.people=d.people.map(p=>({...p,gender:p.gender||known[p.id]||'unknown'}));d.requests=d.requests.map(r=>({...r,gender:r.gender||'unknown'}));return d}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.people)&&Array.isArray(d.requests))return normalize(d)}catch{}return structuredClone(initial)}
-let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];let treeZoom=.5,treeNeedsInitialFit=true,treeCloudInitialized=false;let proposalMode=false,pendingProposalEditId=null,proposalDraft={parts:['','','',''],items:[]};
+let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];let treeZoom=1,treeNeedsInitialFit=true,treeCloudInitialized=false;let proposalMode=false,pendingProposalEditId=null,proposalDraft={parts:['','','',''],items:[]};
 const byId=id=>data.people.find(p=>p.id===id),children=id=>data.people.filter(p=>p.parentId===id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
