@@ -166,6 +166,15 @@ body.tree-open>main.wrap{animation:none}
 .sticky-tree-header .tree-toolbar{position:static;left:auto;bottom:auto;transform:none;z-index:auto;display:flex;flex:0 0 auto;flex-wrap:nowrap;gap:4px;width:auto;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .sticky-tree-header .tree-toolbar .btn{font-size:11px;padding:7px 8px;border-radius:10px}
 #fitTreeBtn{white-space:nowrap}
+.tree-navigation{margin-top:5px;padding-inline:5px}
+.tree-navigation .btn{font-size:12px;padding:5px 10px}
+.tree-root.tree-generations .person{width:116px;flex:0 0 auto;padding-left:12px}
+.tree-generations>ul>li>.person{width:205px}
+.tree-root.tree-generations .person-name{min-width:0}
+@media(max-width:620px){
+  .tree-root.tree-generations .person{width:96px;padding-left:12px}
+  .tree-generations>ul>li>.person{width:172px}
+}
 #treeZoomValue{color:var(--green);font-variant-numeric:tabular-nums}
 .sticky-tree-header .tree-toolbar .tree-zoom{width:30px;min-width:30px;height:30px;padding:0;font-size:18px}
 #tree{overflow:auto;max-height:none;min-height:0;height:auto;padding:10px 0 12px;scroll-behavior:auto;scroll-padding-bottom:12px;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y}
@@ -192,6 +201,8 @@ body.tree-open>main.wrap{animation:none}
 <style id="treeArrowAndSearchPolish">
 .tree-root .person{padding-left:35px;position:relative}
 .tree-root .kids-count{position:absolute;left:-13px;top:-11px;z-index:3;width:27px;height:27px;min-width:27px;border:1px solid #b8d0bc;background:#f4f8f3;color:var(--green);box-shadow:0 2px 7px #173d3520}
+.tree-root .kids-count svg{display:block;width:15px;height:15px;pointer-events:none}
+.tree-root .kids-count[aria-expanded="true"] svg{transform:rotate(-90deg)}
 .tree-root .person.root .kids-count{background:#e5f2e9;color:var(--green);border-color:#c7dccd}
 .eyebrow{transform:translateY(-5px)}
 .hero h1{font-size:clamp(28px,3.4vw,36px)!important;margin-top:0}
@@ -219,6 +230,9 @@ body.tree-open>main.wrap{animation:none}
   </header>
   <input id="importFile" type="file" accept="application/json,.json" class="hidden">
   <div class="tree-controls"><input class="search" id="treeSearch" placeholder="ابحث عن اسم…"><div class="tree-toolbar" id="treeToolbar"><button class="btn" id="fitTreeBtn" type="button">ملاءمة <span id="treeZoomValue">٧٤٪</span></button><button class="btn tree-zoom" id="treeZoomIn" type="button" aria-label="تكبير" title="تكبير">+</button><button class="btn tree-zoom" id="treeZoomOut" type="button" aria-label="تصغير" title="تصغير">−</button><button class="btn soft" id="expandAllBtn" type="button">عرض الكل</button><button class="btn" id="collapseAllBtn" type="button">إغلاق الكل</button></div></div>
+  <div class="tree-navigation" id="treeNavigation" hidden>
+    <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> <span id="treeBackLabel">العودة إلى الجيل السابق</span></button>
+  </div>
   </div>
   <section class="panel active" id="treePanel">
     <div class="card"><div class="tree" id="tree"></div></div>
@@ -227,7 +241,7 @@ body.tree-open>main.wrap{animation:none}
     <div class="card"><h2>طلبات الإضافة</h2><p class="sub">الاقتراحات التي يرسلها الزوار تظهر هنا للمشرف فقط، ولا تُضاف للشجرة حتى اعتمادها.</p><div class="list" id="requestsList"></div></div>
   </section>
   <section class="panel" id="aboutPanel">
-    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم بجانب الاسم لفتح أو إغلاق الفروع.</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
+    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم لفتح أبناء الشخص أو إخفائهم. عند فتح فرع من العمود الأيسر، يظهر والد الشخص في العمود الأيمن ويبدأ العرض من فرعه. للرجوع، اضغط «العودة إلى الجيل السابق».</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
   </section>
   <div class="footer">الشجرة تعرض النسخة المعتمدة المشتركة. الاقتراحات تنتظر مراجعة المشرف.</div>
 </main>
@@ -254,7 +268,10 @@ function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.is
 let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const DEFAULT_TREE_ZOOM = 0.74;
 const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
 let treeZoom = DEFAULT_TREE_ZOOM;
-let treeNeedsInitialBranches = true, treeCloudInitialized = false;
+let focusedTreeView = { rootId: null, openIds: null };
+const treeViewHistory = [];
+let overviewReturn = null;
+let zoomBeforeSearch = null;
 const treeGeometryObserver = new ResizeObserver(layoutTree);
 let proposalMode=false,pendingProposalEditId=null,proposalDraft={parts:['','','',''],items:[]};
 const byId=id=>data.people.find(p=>p.id===id),children=id=>data.people.filter(p=>p.parentId===id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -263,7 +280,39 @@ function toast(t){const el=document.getElementById('toast');el.textContent=t;el.
 function fullName(p){if(!p)return'';let result=p.name,cur=p;while(cur.parentId){const parent=byId(cur.parentId);if(!parent)break;result+=(cur.gender==='female'?' بنت ':' بن ')+parent.name;cur=parent}return result}
 function render(){const peopleCounter=document.getElementById('peopleCount');if(peopleCounter)peopleCounter.textContent=data.people.length;const pending=data.requests.filter(r=>r.status==='pending').length;document.getElementById('pendingCount').textContent=pending;document.getElementById('pendingBadge').textContent=pending?`(${pending})`:'';renderTree(document.getElementById('treeSearch').value);renderRequests()}
 function normalizeSearch(v){return String(v||'').toLowerCase().replace(/[ًٌٍَُِّْـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[،,]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(w=>w&&w!=='بن'&&w!=='ابن'&&w!=='بنت').join(' ')}
-function treeNode(p,q='',visibleIds=null,matchIds=null,nestedMatchIds=null){const kids=children(p.id),needle=normalizeSearch(q),searching=!!needle,matched=searching&&matchIds?.has(p.id),pathBranch=searching&&kids.some(k=>visibleIds?.has(k.id))&&(!matched||nestedMatchIds?.has(p.id));let childHtml='';if(searching){if(pathBranch){if(!searchCollapsedBranches.has(p.id)){if(expanded.has(p.id))childHtml=kids.map(k=>treeNode(k,'')).join('');else childHtml=kids.filter(k=>visibleIds?.has(k.id)).map(k=>treeNode(k,q,visibleIds,matchIds,nestedMatchIds)).join('')}}else if(matched&&expanded.has(p.id))childHtml=kids.map(k=>treeNode(k,'')).join('')}else if(expanded.has(p.id))childHtml=kids.map(k=>treeNode(k,'')).join('');const pathOpen=pathBranch&&!searchCollapsedBranches.has(p.id);const cls=!p.parentId?'person ancestor':'person';return `<li data-branch-id="${p.id}"><div class="${cls}${matched?' search-match':''}${pathBranch?' search-path':''}"${matched?' data-search-match="true"':''}><button class="person-name" data-profile="${p.id}">${esc(p.name)}</button>${kids.length?`<button class="kids-count" data-toggle="${p.id}" aria-label="إظهار أو إخفاء الأبناء">${expanded.has(p.id)||pathOpen?'▾':'▸'}</button>`:''}</div>${childHtml?`<ul>${childHtml}</ul>`:''}</li>`}
+function treeNode(person, view, depth = 0) {
+  const kids = children(person.id);
+  const matched = view.matchIds?.has(person.id);
+  const searchPath = view.visibleIds && kids.some(child => view.visibleIds.has(child.id)) &&
+    (!matched || view.nestedMatchIds.has(person.id));
+  const canDrill = view.generations && depth === 2;
+  let shownKids = [];
+  let childView = view;
+  if (!canDrill) {
+    if (searchPath && !searchCollapsedBranches.has(person.id)) {
+      if (view.openIds.has(person.id)) {
+        shownKids = kids;
+        childView = { openIds: view.openIds };
+      } else {
+        shownKids = kids.filter(child => view.visibleIds.has(child.id));
+      }
+    } else if ((!view.visibleIds || matched) && view.openIds.has(person.id)) {
+      shownKids = kids;
+      if (view.visibleIds) childView = { openIds: view.openIds };
+    }
+  }
+
+  const name = esc(person.name);
+  const id = esc(person.id);
+  const ancestor = view.generations ? depth === 0 : !person.parentId;
+  const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
+  const actionLabel = canDrill ? `عرض فرع ${name}` : childHtml ? 'إخفاء الأبناء' : 'إظهار الأبناء';
+  const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${Boolean(childHtml)}"`;
+  const toggle = kids.length
+    ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
+    : '';
+  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
+}
 function drawTreeBranches(){const root=document.querySelector('#tree .tree-root');if(!root)return;root.querySelectorAll('ul ul').forEach(ul=>{const rows=[...ul.children];if(!rows.length)return;const box=ul.getBoundingClientRect(),first=rows[0].getBoundingClientRect(),last=rows[rows.length-1].getBoundingClientRect();ul.style.setProperty('--branch-top',((first.top-box.top+first.height/2)/treeZoom)+'px');ul.style.setProperty('--branch-height',Math.max(0,(last.top+last.height/2-first.top-first.height/2)/treeZoom)+'px')})}
 function layoutTree() {
   const stage = document.querySelector('#tree .tree-stage');
@@ -288,8 +337,199 @@ function observeTreeGeometry(viewport) {
   layoutTree();
 }
 function fitTreeView(){const viewport=document.getElementById('tree'),root=viewport.querySelector('.tree-root');if(!root)return;const cards=[...root.querySelectorAll('.person')];let width=root.scrollWidth,height=root.scrollHeight;if(cards.length){const rects=cards.map(el=>el.getBoundingClientRect()),bounds=rects.reduce((b,r)=>({left:Math.min(b.left,r.left),right:Math.max(b.right,r.right),top:Math.min(b.top,r.top),bottom:Math.max(b.bottom,r.bottom)}),{left:Infinity,right:-Infinity,top:Infinity,bottom:-Infinity});width=Math.max(1,(bounds.right-bounds.left)/Math.max(.06,treeZoom)+52);height=Math.max(1,(bounds.bottom-bounds.top)/Math.max(.06,treeZoom)+36)}const header=document.querySelector('.sticky-tree-header'),headerBottom=header?header.getBoundingClientRect().bottom:0,availableWidth=Math.max(1,viewport.clientWidth-24),availableHeight=Math.max(220,window.innerHeight-Math.max(0,headerBottom)-72);treeZoom=Math.max(.06,Math.min(1.8,availableWidth/width,availableHeight/height));layoutTree();viewport.scrollTo({top:0,left:0,behavior:'instant'})}
-function renderTree(q=''){const typed=String(q||'').trim(),needle=normalizeSearch(typed),roots=data.people.filter(p=>!p.parentId);if(treeNeedsInitialBranches){const first=data.people.filter(p=>!p.parentId&&children(p.id).length);expanded=new Set(first.flatMap(p=>[p.id,...children(p.id).filter(c=>children(c.id).length).map(c=>c.id)]))}let matchIds=new Set(),visibleIds=new Set(),nestedMatchIds=new Set(),candidates=[];if(needle){candidates=data.people.filter(p=>{const key=normalizeSearch(fullName(p)),own=normalizeSearch(p.name);return needle.includes(' ')?needle.split(' ').every(token=>key.includes(token)):own.includes(needle)});matchIds=new Set(candidates.map(p=>p.id));for(const p of candidates){let cur=p,guard=0;while(cur&&guard++<100){visibleIds.add(cur.id);cur=cur.parentId?byId(cur.parentId):null}cur=p.parentId?byId(cur.parentId):null;guard=0;while(cur&&guard++<100){if(matchIds.has(cur.id))nestedMatchIds.add(cur.id);cur=cur.parentId?byId(cur.parentId):null}}}const html=roots.map(p=>treeNode(p,needle,visibleIds,matchIds,nestedMatchIds)).filter(Boolean).join(''),viewport=document.getElementById('tree');viewport.innerHTML=needle&&!candidates.length?'<div class="tree-empty">ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.</div>':html?`<div class="tree-stage"><div class="tree-root"><ul>${html}</ul></div></div>`:needle?'<div class="tree-empty">ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.</div>':roots.length?`<div class="tree-stage"><div class="tree-root"><ul>${roots.map(p=>treeNode(p,'')).join('')}</ul></div></div>`:'<div class="tree-empty">لا توجد أسماء بعد.</div>';treeNeedsInitialBranches=false;observeTreeGeometry(viewport);viewport.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>{const id=b.dataset.toggle,searchPath=b.parentElement.classList.contains('search-path'),oldRight=scrollRightOffset(viewport),oldTop=viewport.scrollTop,wasOpen=expanded.has(id)&&!(needle&&searchPath&&searchCollapsedBranches.has(id)),toggleNow=()=>{if(needle&&searchPath){if(searchCollapsedBranches.has(id)){searchCollapsedBranches.delete(id);expanded.add(id)}else{expanded.delete(id);searchCollapsedBranches.add(id)}}else{const opening=!expanded.has(id);opening?expanded.add(id):expanded.delete(id)}renderTree(document.getElementById('treeSearch').value);requestAnimationFrame(()=>{setScrollRightOffset(viewport,oldRight);viewport.scrollTop=oldTop;const node=viewport.querySelector(`[data-branch-id="${id}"]`),card=node?.querySelector(':scope > div.person'),ul=node?.querySelector(':scope > ul');if(card){const r=card.getBoundingClientRect(),v=viewport.getBoundingClientRect();setScrollRightOffset(viewport,oldRight+(r.left+r.width/2-(v.left+v.width/2)));viewport.scrollTop=Math.max(0,oldTop+r.top+r.height/2-(v.top+v.height/2))}if(ul&&!wasOpen)ul.animate([{opacity:0,transform:'translateX(8px)'},{opacity:1,transform:'translateX(0)'}],{duration:220,easing:'ease-out'})})};const branch=b.parentElement.parentElement.querySelector(':scope > ul');if(wasOpen&&branch&&branch.animate){branch.animate([{opacity:1,transform:'translateX(0)'},{opacity:0,transform:'translateX(-8px)'}],{duration:160,easing:'ease-in',fill:'forwards'}).finished.then(toggleNow)}else toggleNow()});viewport.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{profileHistory=[];openProfile(b.dataset.profile)});if(needle){const first=viewport.querySelector('[data-search-match="true"]');if(first)requestAnimationFrame(()=>first.scrollIntoView({behavior:'smooth',block:'center',inline:'center'}))}}
-document.getElementById('expandAllBtn').onclick=()=>{searchCollapsedBranches.clear();expanded=new Set(data.people.filter(p=>children(p.id).length).map(p=>p.id));renderTree(document.getElementById('treeSearch').value);requestAnimationFrame(fitTreeView);toast('تم عرض الشجرة كاملة')};document.getElementById('collapseAllBtn').onclick=()=>{expanded.clear();searchCollapsedBranches.clear();document.getElementById('treeSearch').value='';renderTree('');requestAnimationFrame(fitTreeView);toast('تم إغلاق جميع الفروع')};document.getElementById('fitTreeBtn').onclick=fitTreeView;function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
+function focusedTreeRoot() {
+  return byId(focusedTreeView.rootId) || data.people.find(person => !person.parentId);
+}
+
+function initialOpenIds(root) {
+  return new Set(root ? [root.id, ...children(root.id).map(child => child.id)] : []);
+}
+
+function treeSearchView(needle) {
+  const tokens = needle.split(' ');
+  const matches = data.people.filter(person => tokens.length > 1
+    ? tokens.every(token => normalizeSearch(fullName(person)).includes(token))
+    : normalizeSearch(person.name).includes(needle));
+  const matchIds = new Set(matches.map(person => person.id));
+  const visibleIds = new Set();
+  const nestedMatchIds = new Set();
+
+  for (const match of matches) {
+    visibleIds.add(match.id);
+    let parent = byId(match.parentId);
+    for (let depth = 0; parent && depth < 100; depth++) {
+      visibleIds.add(parent.id);
+      if (matchIds.has(parent.id)) nestedMatchIds.add(parent.id);
+      parent = byId(parent.parentId);
+    }
+  }
+  return { openIds: expanded, visibleIds, matchIds, nestedMatchIds };
+}
+
+function renderTree(query = '') {
+  const needle = normalizeSearch(query);
+  const viewport = document.getElementById('tree');
+  const generations = !needle && !overviewReturn;
+  const focusRoot = generations ? focusedTreeRoot() : null;
+  const roots = generations ? (focusRoot ? [focusRoot] : []) : data.people.filter(person => !person.parentId);
+  const view = needle ? treeSearchView(needle) : {
+    generations,
+    openIds: generations ? focusedTreeView.openIds ?? initialOpenIds(focusRoot) : expanded
+  };
+  const html = !needle || view.matchIds.size
+    ? roots.map(person => treeNode(person, view)).join('')
+    : '';
+  viewport.innerHTML = html
+    ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><ul>${html}</ul></div></div>`
+    : `<div class="tree-empty">${needle ? 'ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.' : 'لا توجد أسماء بعد.'}</div>`;
+
+  const navigation = document.getElementById('treeNavigation');
+  navigation.hidden = Boolean(needle) || (!overviewReturn && treeViewHistory.length === 0);
+  document.getElementById('treeBackLabel').textContent = overviewReturn
+    ? 'العودة إلى تصفح الأجيال'
+    : 'العودة إلى الجيل السابق';
+
+  observeTreeGeometry(viewport);
+  viewport.querySelectorAll('[data-toggle]').forEach(button => {
+    button.onclick = () => toggleTreeBranch(button, viewport, query, view);
+  });
+  viewport.querySelectorAll('[data-profile]').forEach(button => {
+    button.onclick = () => {
+      profileHistory = [];
+      openProfile(button.dataset.profile);
+    };
+  });
+  if (needle) {
+    const first = viewport.querySelector('[data-search-match="true"]');
+    if (first) requestAnimationFrame(() => first.scrollIntoView({behavior:'smooth', block:'center', inline:'center'}));
+  }
+}
+
+function toggleTreeBranch(button, viewport, query, view) {
+  const id = button.dataset.toggle;
+  if (button.hasAttribute('data-drill')) {
+    const selected = byId(id);
+    const parent = selected && byId(selected.parentId);
+    if (!parent) return;
+    treeViewHistory.push({ view: focusedTreeView, top: window.scrollY, right: scrollRightOffset(viewport) });
+    focusedTreeView = { rootId: parent.id, openIds: new Set([parent.id, id]) };
+    renderTree();
+    moveToTreeStart(viewport);
+    animateTreeShift(viewport, 1);
+    viewport.querySelector(`[data-branch-id="${CSS.escape(id)}"] > .person > .kids-count`)?.focus({preventScroll:true});
+    return;
+  }
+
+  const wasOpen = button.getAttribute('aria-expanded') === 'true';
+  const right = scrollRightOffset(viewport);
+  const cardTop = button.parentElement.getBoundingClientRect().top;
+  if (view.generations) {
+    const openIds = new Set(view.openIds);
+    if (wasOpen) openIds.delete(id);
+    else openIds.add(id);
+    focusedTreeView = { ...focusedTreeView, openIds };
+  } else if (button.parentElement.classList.contains('search-path')) {
+    if (wasOpen) {
+      expanded.delete(id);
+      searchCollapsedBranches.add(id);
+    } else {
+      searchCollapsedBranches.delete(id);
+      expanded.add(id);
+    }
+  } else if (wasOpen) {
+    expanded.delete(id);
+  } else {
+    expanded.add(id);
+  }
+
+  renderTree(query);
+  setScrollRightOffset(viewport, right);
+  const row = viewport.querySelector(`[data-branch-id="${CSS.escape(id)}"]`);
+  const card = row?.querySelector(':scope > .person');
+  if (!card) return;
+  card.querySelector('.kids-count')?.focus({preventScroll:true});
+  if (!normalizeSearch(query)) {
+    window.scrollBy({top: card.getBoundingClientRect().top - cardTop, behavior:'instant'});
+  }
+  if (!wasOpen && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    row.querySelector(':scope > ul')?.animate(
+      [{opacity:0, transform:'translateX(6px)'}, {opacity:1, transform:'translateX(0)'}],
+      {duration:180, easing:'ease-out'}
+    );
+  }
+}
+
+function moveToTreeStart(viewport) {
+  setScrollRightOffset(viewport, 0);
+  viewport.scrollTop = 0;
+  const headerBottom = document.querySelector('.sticky-tree-header').getBoundingClientRect().bottom;
+  const treeTop = viewport.getBoundingClientRect().top;
+  if (treeTop < headerBottom) {
+    window.scrollBy({top: treeTop - headerBottom - 6, behavior:'instant'});
+  }
+}
+
+function animateTreeShift(viewport, direction) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  viewport.querySelector('.tree-stage')?.animate(
+    [{opacity:0.35, transform:`translateX(${-direction * 16}px)`}, {opacity:1, transform:'translateX(0)'}],
+    {duration:220, easing:'ease-out'}
+  );
+}
+
+document.getElementById('treeBackBtn').onclick = () => {
+  const viewport = document.getElementById('tree');
+  const previous = overviewReturn || treeViewHistory.pop();
+  if (!previous) return;
+  if (overviewReturn) {
+    treeZoom = overviewReturn.zoom;
+    overviewReturn = null;
+  } else {
+    focusedTreeView = previous.view;
+  }
+  renderTree();
+  setScrollRightOffset(viewport, previous.right);
+  window.scrollTo({top: previous.top, behavior:'instant'});
+  animateTreeShift(viewport, -1);
+  if (document.getElementById('treeNavigation').hidden) {
+    viewport.querySelector('.person-name')?.focus({preventScroll:true});
+  }
+};
+
+document.getElementById('expandAllBtn').onclick = () => {
+  const viewport = document.getElementById('tree');
+  const search = document.getElementById('treeSearch');
+  if (!overviewReturn) {
+    overviewReturn = { zoom: zoomBeforeSearch ?? treeZoom, top: window.scrollY, right: scrollRightOffset(viewport) };
+  }
+  search.value = '';
+  zoomBeforeSearch = null;
+  lastTreeSearchQuery = '';
+  searchCollapsedBranches.clear();
+  expanded = new Set(data.people.filter(person => children(person.id).length).map(person => person.id));
+  activateMainPanel('treePanel');
+  renderTree();
+  fitTreeView();
+  moveToTreeStart(viewport);
+  toast('تم عرض الشجرة كاملة');
+};
+
+document.getElementById('collapseAllBtn').onclick = () => {
+  if (overviewReturn || zoomBeforeSearch !== null) treeZoom = overviewReturn?.zoom ?? zoomBeforeSearch;
+  overviewReturn = null;
+  zoomBeforeSearch = null;
+  expanded.clear();
+  searchCollapsedBranches.clear();
+  focusedTreeView = { ...focusedTreeView, openIds: new Set() };
+  document.getElementById('treeSearch').value = '';
+  lastTreeSearchQuery = '';
+  activateMainPanel('treePanel');
+  renderTree();
+  moveToTreeStart(document.getElementById('tree'));
+  toast('تم إغلاق جميع الفروع');
+};
+document.getElementById('fitTreeBtn').onclick = fitTreeView;
+function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
 const rtlScrollMode=detectRtlScrollMode();function scrollRightOffset(el){const max=Math.max(0,el.scrollWidth-el.clientWidth);return rtlScrollMode==='negative'?-el.scrollLeft:rtlScrollMode==='reverse'?el.scrollLeft:max-el.scrollLeft}function setScrollRightOffset(el,value){const max=Math.max(0,el.scrollWidth-el.clientWidth),v=Math.max(0,Math.min(max,value));el.scrollLeft=rtlScrollMode==='negative'?-v:rtlScrollMode==='reverse'?v:max-v}
 function zoomTreeAt(nextZoom,clientX,clientY,anchor=null){const view=document.getElementById('tree'),rect=view.getBoundingClientRect(),screenRight=rect.right-clientX,screenDown=clientY-rect.top,contentX=anchor?anchor.x:(scrollRightOffset(view)+screenRight)/treeZoom,contentY=anchor?anchor.y:(view.scrollTop+screenDown)/treeZoom;treeZoom=Math.max(.06,Math.min(1.8,nextZoom));const scale=treeZoom;layoutTree();requestAnimationFrame(()=>{setScrollRightOffset(view,contentX*scale-screenRight);view.scrollTop=Math.max(0,contentY*scale-screenDown)})}
 document.getElementById('treeZoomIn').onclick=()=>{const r=document.getElementById('tree').getBoundingClientRect();zoomTreeAt(treeZoom+.12,(r.left+r.right)/2,(r.top+r.bottom)/2)};document.getElementById('treeZoomOut').onclick=()=>{const r=document.getElementById('tree').getBoundingClientRect();zoomTreeAt(treeZoom-.12,(r.left+r.right)/2,(r.top+r.bottom)/2)};
@@ -346,7 +586,24 @@ document.getElementById('profileAddChild').onclick=()=>{const id=activeProfileId
 document.getElementById('settingsOpen').onclick=()=>document.getElementById('settingsBack').classList.add('open');
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{if(b.dataset.close==='profileBack')saveProfileBioNow();closeLayer(b.dataset.close)});document.querySelectorAll('.modal-back').forEach(back=>back.onclick=e=>{if(e.target===back){if(back.id==='profileBack')saveProfileBioNow();closeLayer(back.id)}});
 document.getElementById('personForm').onsubmit=e=>{e.preventDefault();const mode=document.getElementById('formMode').value,name=document.getElementById('personName').value.trim(),gender=document.querySelector('input[name="gender"]:checked')?.value,parentId=document.getElementById('parentIdField').value,source=document.getElementById('sourceField').value.trim(),bio=document.getElementById('bioField').value.trim(),parent=byId(parentId);if(!name||!gender||!parent||parent.gender!=='male')return;const rec={id:'x'+Date.now()+Math.random().toString(36).slice(2,6),name,gender,parentId,source,bio};if(mode==='suggest'){data.requests.unshift({...rec,status:'pending',contributor:document.getElementById('contributorName').value.trim(),submittedAt:new Date().toISOString()});toast('تم حفظ الاقتراح للمراجعة')}else{data.people.push(rec);expanded.add(parentId);toast('تمت الإضافة')}closeLayer('modalBack');save();if(mode!=='suggest')openProfile(parentId)};
-function activateMainPanel(panelId){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===panelId));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panelId));const helpLabel=document.getElementById('helpButtonLabel');if(helpLabel)helpLabel.textContent=panelId==='aboutPanel'?'الشجرة':'مساعدة'}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const current=document.getElementById(b.dataset.tab)?.classList.contains('active');activateMainPanel(current?'treePanel':b.dataset.tab)});let lastTreeSearchQuery=document.getElementById('treeSearch').value;document.getElementById('treeSearch').addEventListener('focus',()=>{if(!document.getElementById('treePanel').classList.contains('active'))activateMainPanel('treePanel')});const treeSearchInput=document.getElementById('treeSearch');const applyTreeSearch=()=>{const q=String(treeSearchInput.value||'').trim();if(q!==lastTreeSearchQuery){expanded.clear();searchCollapsedBranches.clear();lastTreeSearchQuery=q}activateMainPanel('treePanel');renderTree(q);requestAnimationFrame(()=>{if(q)fitTreeView()})};treeSearchInput.oninput=applyTreeSearch;treeSearchInput.onchange=applyTreeSearch;treeSearchInput.onsearch=applyTreeSearch;treeSearchInput.addEventListener('compositionend',applyTreeSearch);treeSearchInput.addEventListener('keyup',applyTreeSearch);
+function activateMainPanel(panelId){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===panelId));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panelId));const helpLabel=document.getElementById('helpButtonLabel');if(helpLabel)helpLabel.textContent=panelId==='aboutPanel'?'الشجرة':'مساعدة'}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const current=document.getElementById(b.dataset.tab)?.classList.contains('active');activateMainPanel(current?'treePanel':b.dataset.tab)});let lastTreeSearchQuery=document.getElementById('treeSearch').value;document.getElementById('treeSearch').addEventListener('focus',()=>{if(!document.getElementById('treePanel').classList.contains('active'))activateMainPanel('treePanel')});const treeSearchInput=document.getElementById('treeSearch');const applyTreeSearch = () => {
+  const q = String(treeSearchInput.value || '').trim();
+  if (q === lastTreeSearchQuery) return;
+  if (normalizeSearch(q) && zoomBeforeSearch === null) {
+    zoomBeforeSearch = overviewReturn?.zoom ?? treeZoom;
+  }
+  if (overviewReturn) overviewReturn = null;
+  expanded.clear();
+  searchCollapsedBranches.clear();
+  lastTreeSearchQuery = q;
+  activateMainPanel('treePanel');
+  if (!normalizeSearch(q) && zoomBeforeSearch !== null) {
+    treeZoom = zoomBeforeSearch;
+    zoomBeforeSearch = null;
+  }
+  renderTree(q);
+  if (normalizeSearch(q)) fitTreeView();
+};treeSearchInput.oninput=applyTreeSearch;treeSearchInput.onchange=applyTreeSearch;treeSearchInput.onsearch=applyTreeSearch;treeSearchInput.addEventListener('compositionend',applyTreeSearch);treeSearchInput.addEventListener('keyup',applyTreeSearch);
 document.getElementById('saveImageBtn').onclick=saveTreeImage;document.getElementById('savePdfBtn').onclick=saveTreePdf;document.getElementById('exportBtn').onclick=async()=>{const payload=JSON.stringify(data,null,2),filename='شجرة-آل-الزيتوني-نسخة-احتياطية.json',blob=new Blob([payload],{type:'application/json;charset=utf-8'});try{if(navigator.share&&navigator.canShare&&typeof File!=='undefined'){const file=new File([blob],filename,{type:'application/json'});if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'نسخة احتياطية لشجرة آل الزيتوني'});toast('تم فتح المشاركة للنسخة الاحتياطية');return}}}catch(err){if(err&&err.name==='AbortError')return}triggerDownload(blob,filename);toast('تم تجهيز ملف JSON؛ راجع التنزيلات أو احفظه إلى الملفات')};document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.people)||!Array.isArray(d.requests))throw Error();if(confirm('استعادة النسخة ستستبدل بيانات هذا الجهاز الحالية. تتابع؟')){data=normalize(d);expanded=new Set();save();toast('تمت استعادة النسخة')}}catch{alert('الملف غير صالح أو ليس نسخة من الأداة.')}e.target.value=''};
 // Shared tree with owner-chosen server-verified admin code
 const CLOUD_URL='https://hjjfbgdodbnctyhmerqy.supabase.co';
@@ -402,7 +659,7 @@ document.getElementById('profileDeletePerson').onclick=()=>cloudAdmin?deletePers
 document.getElementById('profileAddChild').onclick=()=>{const id=activeProfileId;if(!cloudAdmin&&!proposalMode)return;openAdd(cloudAdmin?'add':'batchAdd',id)};
 confirmDelete=async function(){if(!cloudAdmin)return;const id=pendingDeleteId;if(!id)return;try{await treeAdminCall('delete_person',{person_id:id});pendingDeleteId=null;activeProfileId=null;closeLayer('deleteConfirmBack');closeLayer('profileBack');await syncCloud();toast('تم حذف الاسم وفروعه')}catch(e){toast('تعذر الحذف: '+e.message)}};document.getElementById('confirmDeleteBtn').onclick=()=>confirmDelete();
 moveChild=async function(id,step){const person=byId(id);if(!person||!person.parentId)return;if(!cloudAdmin){if(proposalMode)queueProposedOrder(id,step);return}const sibs=children(person.parentId),i=sibs.findIndex(x=>x.id===id),j=i+step;if(j<0||j>=sibs.length)return;[sibs[i],sibs[j]]=[sibs[j],sibs[i]];try{await treeAdminCall('reorder',{items:sibs.map((p,n)=>({id:p.id,sort_order:n+1}))});sibs.forEach((p,n)=>p.sortOrder=n+1);data.people.sort((a,b)=>(a.sortOrder??0)-(b.sortOrder??0));save();openProfile(person.parentId);toast('تم تحديث ترتيب الأبناء')}catch(e){toast('تعذر حفظ الترتيب: '+e.message)}};
-async function syncCloud(){if(cloudSyncBusy){cloudSyncQueued=true;return cloudSyncPromise}cloudSyncBusy=true;cloudSyncPromise=(async()=>{do{cloudSyncQueued=false;try{const people=await cloudFetch('/rest/v1/family_tree_people?select=id,parent_id,name,gender,bio,source,photo_url,sort_order&order=sort_order.asc,created_at.asc');if(!Array.isArray(people))throw new Error('تعذر قراءة الشجرة');data.people=people.map(cloudPerson);if(!treeCloudInitialized){treeCloudInitialized=true;expanded=new Set(data.people.filter(p=>!p.parentId&&children(p.id).length).map(p=>p.id));treeNeedsInitialBranches=true}if(adminVerified){const r=await treeAdminCall('list_suggestions');data.requests=(r.rows||[]).map(cloudRequest)}else data.requests=[];cloudOnline=true;localStorage.setItem(KEY,JSON.stringify(data));render();const editing=!(document.getElementById('profileBioEditor')?.classList.contains('hidden'))||document.getElementById('modalBack')?.classList.contains('open')||document.getElementById('editNameBack')?.classList.contains('open')||document.getElementById('deleteConfirmBack')?.classList.contains('open');if(activeProfileId&&byId(activeProfileId)&&!editing)openProfile(activeProfileId)}catch(e){cloudOnline=false;console.error('Cloud sync failed',e);const f=document.querySelector('.footer');if(f)f.textContent='تعذر الاتصال بالشجرة المشتركة مؤقتًا؛ تظهر النسخة المحفوظة على هذا الجهاز.'}}while(cloudSyncQueued)})();try{await cloudSyncPromise}finally{cloudSyncBusy=false;cloudSyncPromise=null}}
+async function syncCloud(){if(cloudSyncBusy){cloudSyncQueued=true;return cloudSyncPromise}cloudSyncBusy=true;cloudSyncPromise=(async()=>{do{cloudSyncQueued=false;try{const people=await cloudFetch('/rest/v1/family_tree_people?select=id,parent_id,name,gender,bio,source,photo_url,sort_order&order=sort_order.asc,created_at.asc');if(!Array.isArray(people))throw new Error('تعذر قراءة الشجرة');data.people=people.map(cloudPerson);if(adminVerified){const r=await treeAdminCall('list_suggestions');data.requests=(r.rows||[]).map(cloudRequest)}else data.requests=[];cloudOnline=true;localStorage.setItem(KEY,JSON.stringify(data));render();const editing=!(document.getElementById('profileBioEditor')?.classList.contains('hidden'))||document.getElementById('modalBack')?.classList.contains('open')||document.getElementById('editNameBack')?.classList.contains('open')||document.getElementById('deleteConfirmBack')?.classList.contains('open');if(activeProfileId&&byId(activeProfileId)&&!editing)openProfile(activeProfileId)}catch(e){cloudOnline=false;console.error('Cloud sync failed',e);const f=document.querySelector('.footer');if(f)f.textContent='تعذر الاتصال بالشجرة المشتركة مؤقتًا؛ تظهر النسخة المحفوظة على هذا الجهاز.'}}while(cloudSyncQueued)})();try{await cloudSyncPromise}finally{cloudSyncBusy=false;cloudSyncPromise=null}}
 render=function(){localRender();cloudUpdateControls()};
 document.getElementById('importFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.people)||!Array.isArray(d.requests))throw new Error('ملف النسخة غير صالح');if(!adminVerified)throw new Error('فعّل وضع المشرف أولًا');const n=d.people.length;if(!confirm('سيتم استبدال الشجرة المشتركة بالكامل بالنسخة التي تحتوي على '+n+' اسمًا، وستظهر للجميع. ستُغلق الاقتراحات المعلقة. هل تتابع؟'))return;const result=await treeAdminCall('restore_tree',{people:d.people});await syncCloud();toast('تمت استعادة '+(result.count||n)+' اسمًا إلى الشجرة المشتركة')}catch(err){alert('تعذرت استعادة النسخة: '+(err.message||'تأكد من صحة الملف والروابط بين الأسماء.'))}finally{e.target.value=''}};
 function renderSuggestionDiff(r){const current=byId(r.personId);if(r.operation==='delete'){if(!current)return'<div class="request-diff"><div class="request-diff-empty">الشخص غير موجود حاليًا في الشجرة.</div></div>';const descendants=personDescendantCount(r.personId);return'<div class="request-diff"><div class="request-diff-title">اقتراح حذف '+esc(fullName(current)||current.name)+'</div><div class="request-diff-empty">'+(descendants?'سيحذف معه '+descendants+' اسمًا متفرعًا.':'سيُحذف هذا الاسم فقط.')+'</div></div>'}if(r.operation==='reorder'){const before=children(r.personId).map(x=>x.name).join(' · '),after=(r.proposedOrder||[]).map(id=>byId(id)?.name||'').filter(Boolean).join(' · ');return'<div class="request-diff"><div class="request-diff-title">ترتيب الأبناء المقترح</div><div class="request-diff-values"><div class="request-diff-before"><span class="diff-caption">قبل:</span> '+esc(before||'لا يوجد أبناء')+'</div><div class="request-diff-after"><span class="diff-caption">بعد:</span> '+esc(after||'لا يوجد أبناء')+'</div></div></div>'}if(r.operation==='add'){return'<div class="request-diff"><div class="request-diff-title">بيانات الابن المقترح</div><div class="request-diff-list"><div class="request-diff-item"><b>'+esc(r.gender==='female'?'الجنس: أنثى':'الجنس: ذكر')+'</b>'+(r.bio?'<div class="detail">النبذة: '+esc(r.bio)+'</div>':'')+(r.source?'<div class="detail">المصدر: '+esc(r.source)+'</div>':'')+'</div></div>'+photoCompare(r,null)+'</div>'}if(!current)return'<div class="request-diff"><div class="request-diff-title">تعذر العثور على بيانات الشخص الحالية</div></div>';const genderName=v=>v==='female'?'أنثى':v==='male'?'ذكر':v||'غير محدد';const vals={name:{label:'الاسم',old:current.name,next:r.name},gender:{label:'الجنس',old:genderName(current.gender),next:genderName(r.gender)},bio:{label:'النبذة',old:current.bio||'',next:r.bio||'',empty:'لا توجد نبذة'},source:{label:'المصدر أو الملاحظة',old:current.source||'',next:r.source||'',empty:'لا توجد ملاحظة'}};const fields=Object.entries(vals).filter(([key,f])=>r.proposedFields?Object.prototype.hasOwnProperty.call(r.proposedFields,key):String(f.old??'').trim()!==String(f.next??'').trim()).map(([,f])=>f);const photos=photoCompare(r,current);if(!fields.length&&!r.proposedPhotoUrl)return'<div class="request-diff"><div class="request-diff-title">التغييرات المقترحة</div><div class="request-diff-empty">لا توجد اختلافات فعلية بين البيانات الحالية والاقتراح.</div></div>';return'<div class="request-diff"><div class="request-diff-title">التغييرات المقترحة — القديم والجديد</div>'+(fields.length?'<div class="request-diff-list">'+fields.map(f=>'<div class="request-diff-item"><div class="request-diff-label">'+esc(f.label)+'</div><div class="request-diff-values"><div class="request-diff-before"><span class="diff-caption">قبل:</span> '+esc(String(f.old||f.empty||'غير محدد'))+'</div><div class="request-diff-after"><span class="diff-caption">بعد:</span> '+esc(String(f.next||f.empty||'غير محدد'))+'</div></div></div>').join('')+'</div>':'')+photos+'</div>'}function photoCompare(r,current){if(!r.proposedPhotoUrl)return'';return'<div class="request-photo-compare"><div class="request-photo-item"><b>الصورة الحالية</b>'+(current?.photo?'<img src="'+esc(current.photo)+'" alt="الصورة الحالية">':'<div class="request-photo-none">لا توجد صورة</div>')+'</div><div class="request-photo-item"><b>الصورة المقترحة</b><a href="'+esc(r.proposedPhotoUrl)+'" target="_blank" rel="noopener"><img src="'+esc(r.proposedPhotoUrl)+'" alt="الصورة المقترحة"></a></div></div>'}
