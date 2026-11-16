@@ -186,7 +186,7 @@ body.tree-open>main.wrap{animation:none}
 .sticky-tree-header .tree-toolbar .tree-zoom{width:30px;min-width:30px;height:30px;padding:0;font-size:18px}
 #tree{overflow:auto;max-height:none;min-height:0;height:auto;padding:10px 0 12px;scroll-behavior:auto;scroll-padding-bottom:12px;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y}
 #treePanel .card{padding:12px 14px;margin-bottom:12px}
-.tree-stage{overflow:clip;overflow-clip-margin:12px}
+.tree-stage{overflow:hidden}
 @media(max-width:620px){
  .sticky-tree-header{padding-top:3px;padding-bottom:6px}
  .sticky-tree-header .hero{padding-top:54px!important;padding-bottom:11px}
@@ -286,6 +286,7 @@ const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
 let treeZoom = DEFAULT_TREE_ZOOM;
 const DEFAULT_GENERATIONS = 3;
 const FOUR_GENERATION_ZOOM = 0.54;
+const TREE_STAGE_GUTTER = { left:22, right:4, top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
 const showAllGenerations = document.getElementById('treeShowAll');
@@ -389,7 +390,7 @@ function centerTreeLineage(root) {
 
 function automaticTreeZoom(viewport, root) {
   if (!root.classList.contains('tree-generations')) {
-    return Math.min(DEFAULT_TREE_ZOOM, (viewport.clientWidth - 12) / root.offsetWidth);
+    return Math.min(DEFAULT_TREE_ZOOM, viewport.clientWidth / (root.offsetWidth + TREE_STAGE_GUTTER.left + TREE_STAGE_GUTTER.right));
   }
   if (generationCount === DEFAULT_GENERATIONS) return DEFAULT_TREE_ZOOM;
   if (generationCount === 4) return FOUR_GENERATION_ZOOM;
@@ -398,8 +399,9 @@ function automaticTreeZoom(viewport, root) {
   const leading = parseFloat(styles.getPropertyValue('--root-card-width'));
   const step = parseFloat(styles.getPropertyValue('--generation-card-width')) +
     parseFloat(styles.getPropertyValue('--generation-gap'));
-  const width = leading + step * (generationCount - 1);
-  const targetWidth = Math.min(FOUR_GENERATION_ZOOM * (leading + step * 3), viewport.clientWidth - 12);
+  const sides = TREE_STAGE_GUTTER.left + TREE_STAGE_GUTTER.right;
+  const width = leading + step * (generationCount - 1) + sides;
+  const targetWidth = Math.min(FOUR_GENERATION_ZOOM * (leading + step * 3 + sides), viewport.clientWidth);
   return targetWidth / width;
 }
 
@@ -415,9 +417,12 @@ function layoutTree() {
   if (zoomLabel.textContent !== percent) zoomLabel.textContent = percent;
 
   root.style.transform = `scale(${treeZoom})`;
-  // Clip the unscaled layout box so it cannot create extra scrollable space.
-  stage.style.width = `${root.offsetWidth * treeZoom}px`;
-  const contentHeight = root.offsetHeight * treeZoom;
+  // Reserve room inside the stage for chevrons that overhang the top and left.
+  const { left, right, top, bottom } = TREE_STAGE_GUTTER;
+  root.style.top = `${top * treeZoom}px`;
+  root.style.right = `${right * treeZoom}px`;
+  stage.style.width = `${(root.offsetWidth + left + right) * treeZoom}px`;
+  const contentHeight = (root.offsetHeight + top + bottom) * treeZoom;
   const headerHeight = document.querySelector('.sticky-tree-header').offsetHeight;
   const minimumHeight = root.classList.contains('tree-generations') && generationCount > DEFAULT_GENERATIONS
     ? window.innerHeight - headerHeight - 35
