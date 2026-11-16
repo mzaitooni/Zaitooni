@@ -99,20 +99,18 @@ body.tree-open #introPage{display:none!important}
 .tree-root{position:absolute;top:0;right:0;width:max-content;transform-origin:top right}
 .tree-root ul{list-style:none;margin:0;padding:0;position:relative;width:max-content;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:stretch}
 .tree-root>ul{min-height:100%}
+.tree-root li>ul::before,.tree-root li>ul::after{content:none}
+.tree-connectors{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;fill:none;stroke:#b8cbbd;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 .tree-root li{position:relative;display:flex;align-items:center;width:auto;margin:0;padding:0}
 .tree-root li:before,.tree-root li:after{content:none!important;display:none!important}
 .tree-root li>ul{margin:0 34px 0 0;gap:13px}
-.tree-root li>ul:before{content:"";position:absolute;right:-15px;top:var(--branch-top,0);height:var(--branch-height,100%);border-right:1px solid #b8cbbd;display:block}
-.tree-root li>ul:after{content:"";position:absolute;right:-34px;top:50%;width:34px;border-top:1px solid #b8cbbd;display:block}
 .tree-root li>ul>li{padding-right:18px}
-.tree-root li>ul>li:before{content:""!important;display:block!important;position:absolute;right:-15px;top:50%;width:33px;border-top:1px solid #b8cbbd;height:0}
-.tree-root li>ul>li:after{content:none!important;display:none!important}
 .tree-root .person{position:relative;z-index:1;max-width:230px;min-width:110px;min-height:46px;border-radius:14px}
 .tree-root .person-name{white-space:normal;line-height:1.45;overflow-wrap:anywhere}
 .tree-root .kids-count{flex:0 0 28px;width:28px;height:28px;min-width:28px;border:1px solid #c9dbcf;border-radius:50%;background:#eef6ef;color:var(--green);display:inline-grid;place-items:center;font-size:17px;line-height:1;padding:0;cursor:pointer}
 .tree-root .person.root .kids-count{background:#ffffff24;border-color:#ffffff55;color:#fff}
 .tree-controls{flex-wrap:wrap}.tree-controls .tree-zoom{min-width:42px;padding-inline:10px}
-@media(max-width:620px){.tree{max-height:none;min-height:300px;padding:16px 12px}.tree-root li>ul{margin-right:24px;gap:10px}.tree-root li>ul:after{right:-24px;width:24px}.tree-root .person{max-width:185px;min-width:95px;padding:7px 8px}.tree-root .person-name{font-size:13px}.tree-root .kids-count{flex-basis:25px;width:25px;height:25px;min-width:25px}.tree-root li>ul>li:before{right:-12px;width:27px}}
+@media(max-width:620px){.tree{max-height:none;min-height:300px;padding:16px 12px}.tree-root li>ul{margin-right:24px;gap:10px}.tree-root .person{max-width:185px;min-width:95px;padding:7px 8px}.tree-root .person-name{font-size:13px}.tree-root .kids-count{flex-basis:25px;width:25px;height:25px;min-width:25px}}
 </style>
 <style id="stickyTreeHeaderAndMotion">
 .sticky-tree-header{position:sticky;top:calc(env(safe-area-inset-top) + 6px);z-index:19;background:var(--bg);padding-top:4px;margin-top:-4px}
@@ -171,8 +169,6 @@ body.tree-open>main.wrap{animation:none}
 .generation-controls #treeZoomValue{padding-inline:3px;font-size:11px}
 .tree-root.tree-generations{--root-card-width:205px;--generation-card-width:116px;--generation-gap:52px}
 .tree-root.tree-generations .person[data-lineage]{transform:translateY(var(--lineage-offset,0px))}
-.tree-root li>ul:after{top:var(--parent-line-top,50%)}
-.tree-root li>ul>li:before{top:var(--child-line-top,50%)}
 @media(max-width:620px){
   .tree-root.tree-generations{--root-card-width:172px;--generation-card-width:96px;--generation-gap:42px}
   .generation-controls{font-size:11px}
@@ -346,35 +342,41 @@ function treeNode(person, view, depth = 0) {
   return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
 }
 function drawTreeBranches(root) {
-  for (const group of root.querySelectorAll('ul ul')) {
-    const first = group.firstElementChild?.firstElementChild;
-    const last = group.lastElementChild?.firstElementChild;
-    const parent = group.previousElementSibling;
-    if (!first || !last || !parent) continue;
+  if (root.hasAttribute('data-shifting')) return;
+  const layer = root.querySelector('.tree-connectors path');
+  if (!layer) return;
 
-    const top = group.getBoundingClientRect().top;
-    const center = card => {
-      const box = card.getBoundingClientRect();
-      return (box.top + box.height / 2 - top) / treeZoom;
+  const origin = root.getBoundingClientRect();
+  const paths = [];
+  const round = value => Math.round(value * 100) / 100;
+  const cardPosition = card => {
+    const box = card.getBoundingClientRect();
+    return {
+      left:round((box.left - origin.left) / treeZoom),
+      right:round((box.right - origin.left) / treeZoom),
+      y:round((box.top + box.height / 2 - origin.top) / treeZoom)
     };
-    const parentY = center(parent);
-    const firstY = center(first);
-    const lastY = center(last);
-    const start = Math.min(parentY, firstY, lastY);
-    const end = Math.max(parentY, firstY, lastY);
-    for (const row of group.children) {
-      const child = row.firstElementChild;
-      if (!child?.hasAttribute('data-lineage')) continue;
-      const rowTop = (row.getBoundingClientRect().top - top) / treeZoom;
-      row.style.setProperty('--child-line-top', `${center(child) - rowTop}px`);
-    }
-    group.style.setProperty('--parent-line-top', `${parentY}px`);
-    group.style.setProperty('--branch-top', `${start}px`);
-    group.style.setProperty('--branch-height', `${end - start}px`);
+  };
+
+  for (const group of root.querySelectorAll('ul ul')) {
+    const parent = group.previousElementSibling;
+    const children = Array.from(group.children, row => row.firstElementChild).filter(Boolean);
+    if (!parent || !children.length) continue;
+    const from = cardPosition(parent);
+    const ends = children.map(cardPosition);
+    const trunk = round((from.left + Math.max(...ends.map(end => end.right))) / 2);
+    const ys = [from.y, ...ends.map(end => end.y)];
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    paths.push(`M${from.left} ${from.y}H${trunk}`);
+    if (top < bottom) paths.push(`M${trunk} ${top}V${bottom}`);
+    for (const end of ends) paths.push(`M${trunk} ${end.y}H${end.right}`);
   }
+  layer.setAttribute('d', paths.join(' '));
 }
 
 function centerTreeLineage(root) {
+  if (root.hasAttribute('data-shifting')) return;
   const cards = [...root.querySelectorAll('[data-lineage]')];
   if (!cards.length) return;
   const stageBox = root.parentElement.getBoundingClientRect();
@@ -602,7 +604,7 @@ function renderTree(query = '') {
     ? roots.map(person => treeNode(person, view)).join('')
     : '';
   viewport.innerHTML = html
-    ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><ul>${html}</ul></div></div>`
+    ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><svg class="tree-connectors" aria-hidden="true" focusable="false"><path/></svg><ul>${html}</ul></div></div>`
     : `<div class="tree-empty">${needle ? 'ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.' : 'لا توجد أسماء بعد.'}</div>`;
 
   updateTreeNavigation(Boolean(needle));
@@ -625,6 +627,7 @@ function renderTree(query = '') {
 
 function toggleTreeBranch(button, viewport, query, view) {
   const id = button.dataset.toggle;
+  const previousCards = view.generations ? snapshotTreeCards(viewport) : null;
   if (button.hasAttribute('data-drill')) {
     const selected = byId(id);
     const parent = selected && byId(selected.parentId);
@@ -633,7 +636,7 @@ function toggleTreeBranch(button, viewport, query, view) {
     focusedTreeView = { anchorId: id, openIds: null };
     renderTree();
     moveToTreeStart(viewport);
-    animateTreeShift(viewport, 1);
+    animateTreeShift(viewport, previousCards, 1);
     viewport.querySelector(`[data-branch-id="${CSS.escape(id)}"] > .person > .kids-count`)?.focus({preventScroll:true});
     return;
   }
@@ -669,7 +672,9 @@ function toggleTreeBranch(button, viewport, query, view) {
   if (!normalizeSearch(query)) {
     window.scrollBy({top: card.getBoundingClientRect().top - cardTop, behavior:'instant'});
   }
-  if (!wasOpen && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (previousCards) {
+    animateTreeShift(viewport, previousCards, wasOpen ? -1 : 1);
+  } else if (!wasOpen && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     row.querySelector(':scope > ul')?.animate(
       [{opacity:0, transform:'translateX(6px)'}, {opacity:1, transform:'translateX(0)'}],
       {duration:180, easing:'ease-out'}
@@ -687,25 +692,73 @@ function moveToTreeStart(viewport) {
   }
 }
 
-function animateTreeShift(viewport, direction) {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  viewport.querySelector('.tree-stage')?.animate(
-    [{opacity:0.35, transform:`translateX(${-direction * 16}px)`}, {opacity:1, transform:'translateX(0)'}],
-    {duration:220, easing:'ease-out'}
-  );
+function snapshotTreeCards(viewport) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+  const positions = new Map();
+  for (const name of viewport.querySelectorAll('[data-profile]')) {
+    positions.set(name.dataset.profile, name.parentElement.getBoundingClientRect());
+  }
+  return positions;
+}
+
+function animateTreeShift(viewport, previous, direction) {
+  if (!previous) return;
+  const root = viewport.querySelector('.tree-root');
+  if (!root?.animate) return;
+  centerTreeLineage(root);
+  drawTreeBranches(root);
+  const view = viewport.getBoundingClientRect();
+  const headerBottom = document.querySelector('.sticky-tree-header').getBoundingClientRect().bottom;
+  const onScreen = box => box && box.bottom > headerBottom && box.top < window.innerHeight &&
+    box.right > view.left && box.left < view.right;
+  const motion = { duration:330, easing:'cubic-bezier(.2,.75,.25,1)' };
+  const moves = [];
+
+  for (const name of root.querySelectorAll('[data-profile]')) {
+    const card = name.parentElement;
+    const before = previous.get(name.dataset.profile);
+    const after = card.getBoundingClientRect();
+    if (!onScreen(before) && !onScreen(after)) continue;
+    if (before) {
+      // Animate each retained card from its old screen position into its new column.
+      const x = (before.left - after.left) / treeZoom;
+      const y = (before.top - after.top) / treeZoom;
+      if (Math.abs(x) < 1 && Math.abs(y) < 1) continue;
+      moves.push(card.animate([{translate:`${x}px ${y}px`},{translate:'0px 0px'}], motion));
+    } else {
+      moves.push(card.animate(
+        [{opacity:0,translate:`${-direction * 15 / treeZoom}px 0px`},{opacity:1,translate:'0px 0px'}],
+        motion
+      ));
+    }
+  }
+  if (!moves.length) return;
+  root.setAttribute('data-shifting', '');
+  const lines = root.querySelector('.tree-connectors');
+  if (lines) moves.push(lines.animate(
+    [{opacity:0},{opacity:0.18,offset:.55},{opacity:1}],
+    motion
+  ));
+  Promise.allSettled(moves.map(move => move.finished)).then(() => {
+    if (!root.isConnected) return;
+    root.removeAttribute('data-shifting');
+    centerTreeLineage(root);
+    drawTreeBranches(root);
+  });
 }
 
 document.getElementById('treeBackBtn').onclick = () => {
   const viewport = document.getElementById('tree');
   const previous = treeViewHistory.pop();
   if (!previous) return;
+  const previousCards = snapshotTreeCards(viewport);
   focusedTreeView = previous.count === generationCount
     ? previous.view
     : { anchorId: previous.view.anchorId, openIds: null };
   renderTree();
   setScrollRightOffset(viewport, previous.right);
   window.scrollTo({top: previous.top, behavior:'instant'});
-  animateTreeShift(viewport, -1);
+  animateTreeShift(viewport, previousCards, -1);
   if (document.getElementById('treeNavigation').hidden) {
     viewport.querySelector('.person-name')?.focus({preventScroll:true});
   }
