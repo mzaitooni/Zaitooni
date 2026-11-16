@@ -165,20 +165,28 @@ body.tree-open>main.wrap{animation:none}
 .sticky-tree-header .tree-controls>.search{flex:1 1 120px;min-width:75px;width:auto;margin:0;padding:9px 11px}
 .sticky-tree-header .tree-toolbar{position:static;left:auto;bottom:auto;transform:none;z-index:auto;display:flex;flex:0 0 auto;flex-wrap:nowrap;gap:4px;width:auto;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .sticky-tree-header .tree-toolbar .btn{font-size:11px;padding:7px 8px;border-radius:10px}
-#fitTreeBtn{white-space:nowrap}
+.generation-controls{align-items:center;color:var(--ink);font-weight:700;font-size:12px;white-space:nowrap}
+.generation-controls select{font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px;min-height:29px}
+.generation-controls #treeZoomValue{padding-inline:3px;font-size:11px}
+.tree-root.tree-generations{--root-card-width:205px;--generation-card-width:116px;--generation-gap:52px}
+.tree-root.tree-generations .person[data-lineage]{transform:translateY(var(--lineage-offset,0px))}
+.tree-root li>ul:after{top:var(--parent-line-top,50%)}
+.tree-root li>ul>li:before{top:var(--child-line-top,50%)}
+@media(max-width:620px){
+  .tree-root.tree-generations{--root-card-width:172px;--generation-card-width:96px;--generation-gap:42px}
+  .generation-controls{font-size:11px}
+  .generation-controls #treeZoomValue{padding-inline:2px;font-size:10px}
+}
 .tree-navigation{margin-top:5px;padding-inline:5px}
 .tree-navigation .btn{font-size:12px;padding:5px 10px}
-.tree-root.tree-generations .person{width:116px;flex:0 0 auto;padding-left:12px}
-.tree-generations>ul>li>.person{width:205px}
+.tree-root.tree-generations .person{width:var(--generation-card-width);flex:0 0 auto;padding-left:12px}
+.tree-root.tree-generations>ul>li>.person{width:var(--root-card-width)}
 .tree-root.tree-generations .person-name{min-width:0}
-@media(max-width:620px){
-  .tree-root.tree-generations .person{width:96px;padding-left:12px}
-  .tree-generations>ul>li>.person{width:172px}
-}
 #treeZoomValue{color:var(--green);font-variant-numeric:tabular-nums}
 .sticky-tree-header .tree-toolbar .tree-zoom{width:30px;min-width:30px;height:30px;padding:0;font-size:18px}
 #tree{overflow:auto;max-height:none;min-height:0;height:auto;padding:10px 0 12px;scroll-behavior:auto;scroll-padding-bottom:12px;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y}
 #treePanel .card{padding:12px 14px;margin-bottom:12px}
+.tree-stage{overflow:clip;overflow-clip-margin:12px}
 @media(max-width:620px){
  .sticky-tree-header{padding-top:3px;padding-bottom:6px}
  .sticky-tree-header .hero{padding-top:54px!important;padding-bottom:11px}
@@ -229,7 +237,15 @@ body.tree-open>main.wrap{animation:none}
     <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div></div>
   </header>
   <input id="importFile" type="file" accept="application/json,.json" class="hidden">
-  <div class="tree-controls"><input class="search" id="treeSearch" placeholder="ابحث عن اسم…"><div class="tree-toolbar" id="treeToolbar"><button class="btn" id="fitTreeBtn" type="button">ملاءمة <span id="treeZoomValue">٧٤٪</span></button><button class="btn tree-zoom" id="treeZoomIn" type="button" aria-label="تكبير" title="تكبير">+</button><button class="btn tree-zoom" id="treeZoomOut" type="button" aria-label="تصغير" title="تصغير">−</button><button class="btn soft" id="expandAllBtn" type="button">عرض الكل</button><button class="btn" id="collapseAllBtn" type="button">إغلاق الكل</button></div></div>
+  <div class="tree-controls">
+    <input class="search" id="treeSearch" placeholder="ابحث عن اسم…">
+    <div class="tree-toolbar generation-controls" id="treeToolbar">
+      <label for="treeGenerationCount">عرض</label>
+      <select id="treeGenerationCount" aria-label="عدد الأجيال المعروضة"><option value="3">٣ أجيال</option></select>
+      <button class="btn soft" id="treeShowAll" type="button" aria-pressed="false">الكل</button>
+      <output id="treeZoomValue" aria-label="نسبة الزوم">٧٤٪</output>
+    </div>
+  </div>
   <div class="tree-navigation" id="treeNavigation" hidden>
     <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> <span id="treeBackLabel">العودة إلى الجيل السابق</span></button>
   </div>
@@ -241,7 +257,7 @@ body.tree-open>main.wrap{animation:none}
     <div class="card"><h2>طلبات الإضافة</h2><p class="sub">الاقتراحات التي يرسلها الزوار تظهر هنا للمشرف فقط، ولا تُضاف للشجرة حتى اعتمادها.</p><div class="list" id="requestsList"></div></div>
   </section>
   <section class="panel" id="aboutPanel">
-    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم لفتح أبناء الشخص أو إخفائهم. عند فتح فرع من العمود الأيسر، يظهر والد الشخص في العمود الأيمن ويبدأ العرض من فرعه. للرجوع، اضغط «العودة إلى الجيل السابق».</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
+    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم لفتح أبناء الشخص أو إخفائهم. اختر عدد الأجيال من «عرض»، أو اضغط «الكل» لاختيار أقصى عدد. عند فتح فرع من العمود الأيسر، يتحرّك العرض جيلًا معك. للرجوع، اضغط «العودة إلى الجيل السابق».</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
   </section>
   <div class="footer">الشجرة تعرض النسخة المعتمدة المشتركة. الاقتراحات تنتظر مراجعة المشرف.</div>
 </main>
@@ -268,10 +284,17 @@ function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.is
 let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const DEFAULT_TREE_ZOOM = 0.74;
 const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
 let treeZoom = DEFAULT_TREE_ZOOM;
-let focusedTreeView = { rootId: null, openIds: null };
+const DEFAULT_GENERATIONS = 3;
+const FOUR_GENERATION_ZOOM = 0.54;
+const generationNumber = new Intl.NumberFormat('ar-SA');
+const generationSelect = document.getElementById('treeGenerationCount');
+const showAllGenerations = document.getElementById('treeShowAll');
+let generationCount = DEFAULT_GENERATIONS;
+let maxGenerationCount = DEFAULT_GENERATIONS;
+let showAllSelected = false;
+let treePinchZoom = null;
+let focusedTreeView = { anchorId: null, openIds: null };
 const treeViewHistory = [];
-let overviewReturn = null;
-let zoomBeforeSearch = null;
 const treeGeometryObserver = new ResizeObserver(layoutTree);
 let proposalMode=false,pendingProposalEditId=null,proposalDraft={parts:['','','',''],items:[]};
 const byId=id=>data.people.find(p=>p.id===id),children=id=>data.people.filter(p=>p.parentId===id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -285,10 +308,13 @@ function treeNode(person, view, depth = 0) {
   const matched = view.matchIds?.has(person.id);
   const searchPath = view.visibleIds && kids.some(child => view.visibleIds.has(child.id)) &&
     (!matched || view.nestedMatchIds.has(person.id));
-  const canDrill = view.generations && depth === 2;
+  const ancestorOnly = view.lineage?.has(person.id);
+  const canDrill = view.generations && depth === generationCount - 1;
   let shownKids = [];
   let childView = view;
-  if (!canDrill) {
+  if (ancestorOnly) {
+    shownKids = kids.filter(child => child.id === view.lineage.get(person.id));
+  } else if (!canDrill) {
     if (searchPath && !searchCollapsedBranches.has(person.id)) {
       if (view.openIds.has(person.id)) {
         shownKids = kids;
@@ -308,41 +334,201 @@ function treeNode(person, view, depth = 0) {
   const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
   const actionLabel = canDrill ? `عرض فرع ${name}` : childHtml ? 'إخفاء الأبناء' : 'إظهار الأبناء';
   const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${Boolean(childHtml)}"`;
-  const toggle = kids.length
+  const toggle = kids.length && !ancestorOnly
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
-  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
+  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
 }
-function drawTreeBranches(){const root=document.querySelector('#tree .tree-root');if(!root)return;root.querySelectorAll('ul ul').forEach(ul=>{const rows=[...ul.children];if(!rows.length)return;const box=ul.getBoundingClientRect(),first=rows[0].getBoundingClientRect(),last=rows[rows.length-1].getBoundingClientRect();ul.style.setProperty('--branch-top',((first.top-box.top+first.height/2)/treeZoom)+'px');ul.style.setProperty('--branch-height',Math.max(0,(last.top+last.height/2-first.top-first.height/2)/treeZoom)+'px')})}
+function drawTreeBranches(root) {
+  for (const group of root.querySelectorAll('ul ul')) {
+    const first = group.firstElementChild?.firstElementChild;
+    const last = group.lastElementChild?.firstElementChild;
+    const parent = group.previousElementSibling;
+    if (!first || !last || !parent) continue;
+
+    const top = group.getBoundingClientRect().top;
+    const center = card => {
+      const box = card.getBoundingClientRect();
+      return (box.top + box.height / 2 - top) / treeZoom;
+    };
+    const parentY = center(parent);
+    const firstY = center(first);
+    const lastY = center(last);
+    const start = Math.min(parentY, firstY, lastY);
+    const end = Math.max(parentY, firstY, lastY);
+    for (const row of group.children) {
+      const child = row.firstElementChild;
+      if (!child?.hasAttribute('data-lineage')) continue;
+      const rowTop = (row.getBoundingClientRect().top - top) / treeZoom;
+      row.style.setProperty('--child-line-top', `${center(child) - rowTop}px`);
+    }
+    group.style.setProperty('--parent-line-top', `${parentY}px`);
+    group.style.setProperty('--branch-top', `${start}px`);
+    group.style.setProperty('--branch-height', `${end - start}px`);
+  }
+}
+
+function centerTreeLineage(root) {
+  const cards = [...root.querySelectorAll('[data-lineage]')];
+  if (!cards.length) return;
+  const stageBox = root.parentElement.getBoundingClientRect();
+  const headerBottom = document.querySelector('.sticky-tree-header').getBoundingClientRect().bottom;
+  const top = Math.max(0, headerBottom, stageBox.top);
+  const bottom = Math.min(window.innerHeight, stageBox.bottom);
+  if (bottom <= top) return;
+
+  for (const card of cards) {
+    const box = card.getBoundingClientRect();
+    const oldOffset = parseFloat(card.style.getPropertyValue('--lineage-offset')) || 0;
+    const target = Math.min(stageBox.bottom - box.height / 2,
+      Math.max(stageBox.top + box.height / 2, (top + bottom) / 2));
+    const offset = oldOffset + (target - box.top - box.height / 2) / treeZoom;
+    card.style.setProperty('--lineage-offset', `${offset}px`);
+  }
+}
+
+function automaticTreeZoom(viewport, root) {
+  if (!root.classList.contains('tree-generations')) {
+    return Math.min(DEFAULT_TREE_ZOOM, (viewport.clientWidth - 12) / root.offsetWidth);
+  }
+  if (generationCount === DEFAULT_GENERATIONS) return DEFAULT_TREE_ZOOM;
+  if (generationCount === 4) return FOUR_GENERATION_ZOOM;
+
+  const styles = getComputedStyle(root);
+  const leading = parseFloat(styles.getPropertyValue('--root-card-width'));
+  const step = parseFloat(styles.getPropertyValue('--generation-card-width')) +
+    parseFloat(styles.getPropertyValue('--generation-gap'));
+  const width = leading + step * (generationCount - 1);
+  const targetWidth = Math.min(FOUR_GENERATION_ZOOM * (leading + step * 3), viewport.clientWidth - 12);
+  return targetWidth / width;
+}
+
 function layoutTree() {
-  const stage = document.querySelector('#tree .tree-stage');
+  const viewport = document.getElementById('tree');
+  const stage = viewport.querySelector('.tree-stage');
   const root = stage?.querySelector('.tree-root');
+  if (!root?.offsetWidth || !root.offsetHeight) return;
+
+  treeZoom = treePinchZoom ?? automaticTreeZoom(viewport, root);
   const zoomLabel = document.getElementById('treeZoomValue');
   const percent = treeZoomFormat.format(treeZoom);
   if (zoomLabel.textContent !== percent) zoomLabel.textContent = percent;
-  if (!root) return;
 
   root.style.transform = `scale(${treeZoom})`;
-
-  // The intro and the help panel can hide the tree. Measure only once it has a layout box.
-  if (!root.offsetWidth || !root.offsetHeight) return;
-  stage.style.width = `${root.scrollWidth * treeZoom}px`;
-  stage.style.height = `${root.scrollHeight * treeZoom}px`;
-  drawTreeBranches();
+  // Clip the unscaled layout box so it cannot create extra scrollable space.
+  stage.style.width = `${root.offsetWidth * treeZoom}px`;
+  const contentHeight = root.offsetHeight * treeZoom;
+  const headerHeight = document.querySelector('.sticky-tree-header').offsetHeight;
+  const minimumHeight = root.classList.contains('tree-generations') && generationCount > DEFAULT_GENERATIONS
+    ? window.innerHeight - headerHeight - 35
+    : 0;
+  stage.style.height = `${Math.max(contentHeight, minimumHeight)}px`;
+  centerTreeLineage(root);
+  drawTreeBranches(root);
 }
+
 function observeTreeGeometry(viewport) {
   treeGeometryObserver.disconnect();
   const root = viewport.querySelector('.tree-root');
-  if (root) treeGeometryObserver.observe(root);
-  layoutTree();
-}
-function fitTreeView(){const viewport=document.getElementById('tree'),root=viewport.querySelector('.tree-root');if(!root)return;const cards=[...root.querySelectorAll('.person')];let width=root.scrollWidth,height=root.scrollHeight;if(cards.length){const rects=cards.map(el=>el.getBoundingClientRect()),bounds=rects.reduce((b,r)=>({left:Math.min(b.left,r.left),right:Math.max(b.right,r.right),top:Math.min(b.top,r.top),bottom:Math.max(b.bottom,r.bottom)}),{left:Infinity,right:-Infinity,top:Infinity,bottom:-Infinity});width=Math.max(1,(bounds.right-bounds.left)/Math.max(.06,treeZoom)+52);height=Math.max(1,(bounds.bottom-bounds.top)/Math.max(.06,treeZoom)+36)}const header=document.querySelector('.sticky-tree-header'),headerBottom=header?header.getBoundingClientRect().bottom:0,availableWidth=Math.max(1,viewport.clientWidth-24),availableHeight=Math.max(220,window.innerHeight-Math.max(0,headerBottom)-72);treeZoom=Math.max(.06,Math.min(1.8,availableWidth/width,availableHeight/height));layoutTree();viewport.scrollTo({top:0,left:0,behavior:'instant'})}
-function focusedTreeRoot() {
-  return byId(focusedTreeView.rootId) || data.people.find(person => !person.parentId);
+  if (root) {
+    treeGeometryObserver.observe(root);
+    layoutTree();
+  }
 }
 
-function initialOpenIds(root) {
-  return new Set(root ? [root.id, ...children(root.id).map(child => child.id)] : []);
+let lineageFrame = 0;
+window.addEventListener('resize', layoutTree);
+window.addEventListener('scroll', () => {
+  if (lineageFrame || generationCount <= DEFAULT_GENERATIONS) return;
+  lineageFrame = requestAnimationFrame(() => {
+    lineageFrame = 0;
+    const root = document.querySelector('#tree .tree-generations');
+    if (!root?.offsetWidth) return;
+    centerTreeLineage(root);
+    drawTreeBranches(root);
+  });
+}, {passive:true});
+
+function getTreeGenerations() {
+  const root = data.people.find(person => !person.parentId);
+  if (!root) return { root, depthBelow: new Map(), max: 0 };
+
+  const byParent = new Map();
+  for (const person of data.people) {
+    if (!byParent.has(person.parentId)) byParent.set(person.parentId, []);
+    byParent.get(person.parentId).push(person);
+  }
+  const depthBelow = new Map();
+  const visit = (person, active) => {
+    if (active.has(person.id)) return 0;
+    if (depthBelow.has(person.id)) return depthBelow.get(person.id);
+    active.add(person.id);
+    let depth = 1;
+    for (const child of byParent.get(person.id) || []) {
+      depth = Math.max(depth, 1 + visit(child, active));
+    }
+    active.delete(person.id);
+    depthBelow.set(person.id, depth);
+    return depth;
+  };
+  return { root, depthBelow, max: visit(root, new Set()) };
+}
+
+function updateGenerationOptions(max) {
+  const ceiling = Math.max(DEFAULT_GENERATIONS, max);
+  if (showAllSelected) generationCount = ceiling;
+  else generationCount = Math.min(generationCount, ceiling);
+  if (maxGenerationCount !== ceiling || generationSelect.options.length !== ceiling - DEFAULT_GENERATIONS + 1) {
+    maxGenerationCount = ceiling;
+    const options = [];
+    for (let n = DEFAULT_GENERATIONS; n <= ceiling; n++) {
+      const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا');
+      options.push(new Option(label, String(n)));
+    }
+    generationSelect.replaceChildren(...options);
+  }
+  generationSelect.value = String(generationCount);
+  showAllGenerations.setAttribute('aria-pressed', String(showAllSelected));
+}
+
+function generationView({ root, depthBelow }) {
+  const path = [];
+  let current = byId(focusedTreeView.anchorId);
+  const seen = new Set();
+  while (current && !seen.has(current.id)) {
+    path.unshift(current);
+    seen.add(current.id);
+    current = byId(current.parentId);
+  }
+
+  // Keep the selected person in the next-to-last column whenever it fits.
+  const anchor = path.at(-1);
+  if (anchor && path.length >= generationCount - 1) {
+    const visiblePath = path.slice(-(generationCount - 1));
+    const line = visiblePath.slice(0, -2);
+    const lineage = new Map(line.map((person, i) => [person.id, visiblePath[i + 1].id]));
+    const parent = visiblePath.at(-2);
+    const openIds = focusedTreeView.openIds ?? new Set([parent.id, anchor.id]);
+    return { root: visiblePath[0], generations:true, lineage, openIds };
+  }
+
+  // When there are too few ancestors, continue through the active branch.
+  // At the top, prefer the first branch deep enough to fill the chosen columns.
+  const prefix = path.length ? path : root ? [root] : [];
+  while (prefix.length < generationCount - 2) {
+    const tip = prefix.at(-1);
+    if (!tip) break;
+    const kids = children(tip.id).filter(child => !prefix.includes(child));
+    const needed = generationCount - prefix.length;
+    const next = kids.find(child => (depthBelow.get(child.id) || 0) >= needed)
+      || kids.reduce((best, child) => (depthBelow.get(child.id) || 0) > (depthBelow.get(best?.id) || 0) ? child : best, null);
+    if (!next) break;
+    prefix.push(next);
+  }
+  const lineage = new Map(prefix.slice(0, -1).map((person, i) => [person.id, prefix[i + 1].id]));
+  const pivot = prefix.at(-1);
+  const openIds = focusedTreeView.openIds ?? new Set(pivot ? [pivot.id, ...children(pivot.id).map(child => child.id)] : []);
+  return { root: prefix[0], generations:true, lineage, openIds };
 }
 
 function treeSearchView(needle) {
@@ -369,13 +555,11 @@ function treeSearchView(needle) {
 function renderTree(query = '') {
   const needle = normalizeSearch(query);
   const viewport = document.getElementById('tree');
-  const generations = !needle && !overviewReturn;
-  const focusRoot = generations ? focusedTreeRoot() : null;
-  const roots = generations ? (focusRoot ? [focusRoot] : []) : data.people.filter(person => !person.parentId);
-  const view = needle ? treeSearchView(needle) : {
-    generations,
-    openIds: generations ? focusedTreeView.openIds ?? initialOpenIds(focusRoot) : expanded
-  };
+  const generations = !needle;
+  const tree = getTreeGenerations();
+  updateGenerationOptions(tree.max);
+  const view = generations ? generationView(tree) : treeSearchView(needle);
+  const roots = generations ? (view.root ? [view.root] : []) : data.people.filter(person => !person.parentId);
   const html = !needle || view.matchIds.size
     ? roots.map(person => treeNode(person, view)).join('')
     : '';
@@ -384,10 +568,7 @@ function renderTree(query = '') {
     : `<div class="tree-empty">${needle ? 'ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.' : 'لا توجد أسماء بعد.'}</div>`;
 
   const navigation = document.getElementById('treeNavigation');
-  navigation.hidden = Boolean(needle) || (!overviewReturn && treeViewHistory.length === 0);
-  document.getElementById('treeBackLabel').textContent = overviewReturn
-    ? 'العودة إلى تصفح الأجيال'
-    : 'العودة إلى الجيل السابق';
+  navigation.hidden = Boolean(needle) || treeViewHistory.length === 0;
 
   observeTreeGeometry(viewport);
   viewport.querySelectorAll('[data-toggle]').forEach(button => {
@@ -411,8 +592,8 @@ function toggleTreeBranch(button, viewport, query, view) {
     const selected = byId(id);
     const parent = selected && byId(selected.parentId);
     if (!parent) return;
-    treeViewHistory.push({ view: focusedTreeView, top: window.scrollY, right: scrollRightOffset(viewport) });
-    focusedTreeView = { rootId: parent.id, openIds: new Set([parent.id, id]) };
+    treeViewHistory.push({ view: focusedTreeView, count: generationCount, top: window.scrollY, right: scrollRightOffset(viewport) });
+    focusedTreeView = { anchorId: id, openIds: null };
     renderTree();
     moveToTreeStart(viewport);
     animateTreeShift(viewport, 1);
@@ -479,14 +660,11 @@ function animateTreeShift(viewport, direction) {
 
 document.getElementById('treeBackBtn').onclick = () => {
   const viewport = document.getElementById('tree');
-  const previous = overviewReturn || treeViewHistory.pop();
+  const previous = treeViewHistory.pop();
   if (!previous) return;
-  if (overviewReturn) {
-    treeZoom = overviewReturn.zoom;
-    overviewReturn = null;
-  } else {
-    focusedTreeView = previous.view;
-  }
+  focusedTreeView = previous.count === generationCount
+    ? previous.view
+    : { anchorId: previous.view.anchorId, openIds: null };
   renderTree();
   setScrollRightOffset(viewport, previous.right);
   window.scrollTo({top: previous.top, behavior:'instant'});
@@ -496,43 +674,25 @@ document.getElementById('treeBackBtn').onclick = () => {
   }
 };
 
-document.getElementById('expandAllBtn').onclick = () => {
-  const viewport = document.getElementById('tree');
-  const search = document.getElementById('treeSearch');
-  if (!overviewReturn) {
-    overviewReturn = { zoom: zoomBeforeSearch ?? treeZoom, top: window.scrollY, right: scrollRightOffset(viewport) };
+function changeGenerationCount(count, all = false) {
+  generationCount = count;
+  showAllSelected = all;
+  treePinchZoom = null;
+  focusedTreeView = { ...focusedTreeView, openIds: null };
+  if (lastTreeSearchQuery) {
+    document.getElementById('treeSearch').value = '';
+    lastTreeSearchQuery = '';
   }
-  search.value = '';
-  zoomBeforeSearch = null;
-  lastTreeSearchQuery = '';
-  searchCollapsedBranches.clear();
-  expanded = new Set(data.people.filter(person => children(person.id).length).map(person => person.id));
-  activateMainPanel('treePanel');
-  renderTree();
-  fitTreeView();
-  moveToTreeStart(viewport);
-  toast('تم عرض الشجرة كاملة');
-};
-
-document.getElementById('collapseAllBtn').onclick = () => {
-  if (overviewReturn || zoomBeforeSearch !== null) treeZoom = overviewReturn?.zoom ?? zoomBeforeSearch;
-  overviewReturn = null;
-  zoomBeforeSearch = null;
-  expanded.clear();
-  searchCollapsedBranches.clear();
-  focusedTreeView = { ...focusedTreeView, openIds: new Set() };
-  document.getElementById('treeSearch').value = '';
-  lastTreeSearchQuery = '';
   activateMainPanel('treePanel');
   renderTree();
   moveToTreeStart(document.getElementById('tree'));
-  toast('تم إغلاق جميع الفروع');
-};
-document.getElementById('fitTreeBtn').onclick = fitTreeView;
+}
+
+generationSelect.onchange = () => changeGenerationCount(Number(generationSelect.value));
+showAllGenerations.onclick = () => changeGenerationCount(maxGenerationCount, true);
 function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
 const rtlScrollMode=detectRtlScrollMode();function scrollRightOffset(el){const max=Math.max(0,el.scrollWidth-el.clientWidth);return rtlScrollMode==='negative'?-el.scrollLeft:rtlScrollMode==='reverse'?el.scrollLeft:max-el.scrollLeft}function setScrollRightOffset(el,value){const max=Math.max(0,el.scrollWidth-el.clientWidth),v=Math.max(0,Math.min(max,value));el.scrollLeft=rtlScrollMode==='negative'?-v:rtlScrollMode==='reverse'?v:max-v}
-function zoomTreeAt(nextZoom,clientX,clientY,anchor=null){const view=document.getElementById('tree'),rect=view.getBoundingClientRect(),screenRight=rect.right-clientX,screenDown=clientY-rect.top,contentX=anchor?anchor.x:(scrollRightOffset(view)+screenRight)/treeZoom,contentY=anchor?anchor.y:(view.scrollTop+screenDown)/treeZoom;treeZoom=Math.max(.06,Math.min(1.8,nextZoom));const scale=treeZoom;layoutTree();requestAnimationFrame(()=>{setScrollRightOffset(view,contentX*scale-screenRight);view.scrollTop=Math.max(0,contentY*scale-screenDown)})}
-document.getElementById('treeZoomIn').onclick=()=>{const r=document.getElementById('tree').getBoundingClientRect();zoomTreeAt(treeZoom+.12,(r.left+r.right)/2,(r.top+r.bottom)/2)};document.getElementById('treeZoomOut').onclick=()=>{const r=document.getElementById('tree').getBoundingClientRect();zoomTreeAt(treeZoom-.12,(r.left+r.right)/2,(r.top+r.bottom)/2)};
+function zoomTreeAt(nextZoom,clientX,clientY,anchor=null){const view=document.getElementById('tree'),rect=view.getBoundingClientRect(),screenRight=rect.right-clientX,screenDown=clientY-rect.top,contentX=anchor?anchor.x:(scrollRightOffset(view)+screenRight)/treeZoom,contentY=anchor?anchor.y:(view.scrollTop+screenDown)/treeZoom;treePinchZoom=Math.max(.01,Math.min(1.8,nextZoom));layoutTree();const scale=treeZoom;requestAnimationFrame(()=>{setScrollRightOffset(view,contentX*scale-screenRight);view.scrollTop=Math.max(0,contentY*scale-screenDown)})}
 (()=>{const view=document.getElementById('tree');let startDistance=0,startZoom=1,anchor={x:0,y:0};const distance=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY),midpoint=t=>({x:(t[0].clientX+t[1].clientX)/2,y:(t[0].clientY+t[1].clientY)/2});view.addEventListener('touchstart',e=>{if(e.touches.length===2){e.preventDefault();const mid=midpoint(e.touches),rect=view.getBoundingClientRect();startDistance=distance(e.touches);startZoom=treeZoom;anchor={x:(scrollRightOffset(view)+rect.right-mid.x)/treeZoom,y:(view.scrollTop+mid.y-rect.top)/treeZoom} }},{passive:false});view.addEventListener('touchmove',e=>{if(e.touches.length===2&&startDistance){e.preventDefault();const mid=midpoint(e.touches);zoomTreeAt(startZoom*distance(e.touches)/startDistance,mid.x,mid.y,anchor)}},{passive:false});const reset=()=>{startDistance=0};view.addEventListener('touchend',e=>{if(e.touches.length<2)reset()},{passive:true});view.addEventListener('touchcancel',reset,{passive:true});['gesturestart','gesturechange','gestureend'].forEach(type=>view.addEventListener(type,e=>e.preventDefault(),{passive:false}))})();
 function updateBioCounter(fieldId,countId){const field=document.getElementById(fieldId),counter=document.getElementById(countId);if(field&&counter)counter.textContent=field.value.length}
 function profileChildList(id){const ordered=proposalDraft.items.find(x=>x.operation==='reorder'&&x.person_id===id)?.proposed_order;if(!proposalMode||!ordered)return children(id);const rank=new Map(ordered.map((childId,i)=>[childId,i]));return children(id).slice().sort((a,b)=>(rank.get(a.id)??999999)-(rank.get(b.id)??999999))}
@@ -589,20 +749,12 @@ document.getElementById('personForm').onsubmit=e=>{e.preventDefault();const mode
 function activateMainPanel(panelId){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===panelId));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panelId));const helpLabel=document.getElementById('helpButtonLabel');if(helpLabel)helpLabel.textContent=panelId==='aboutPanel'?'الشجرة':'مساعدة'}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{const current=document.getElementById(b.dataset.tab)?.classList.contains('active');activateMainPanel(current?'treePanel':b.dataset.tab)});let lastTreeSearchQuery=document.getElementById('treeSearch').value;document.getElementById('treeSearch').addEventListener('focus',()=>{if(!document.getElementById('treePanel').classList.contains('active'))activateMainPanel('treePanel')});const treeSearchInput=document.getElementById('treeSearch');const applyTreeSearch = () => {
   const q = String(treeSearchInput.value || '').trim();
   if (q === lastTreeSearchQuery) return;
-  if (normalizeSearch(q) && zoomBeforeSearch === null) {
-    zoomBeforeSearch = overviewReturn?.zoom ?? treeZoom;
-  }
-  if (overviewReturn) overviewReturn = null;
+  treePinchZoom = null;
   expanded.clear();
   searchCollapsedBranches.clear();
   lastTreeSearchQuery = q;
   activateMainPanel('treePanel');
-  if (!normalizeSearch(q) && zoomBeforeSearch !== null) {
-    treeZoom = zoomBeforeSearch;
-    zoomBeforeSearch = null;
-  }
   renderTree(q);
-  if (normalizeSearch(q)) fitTreeView();
 };treeSearchInput.oninput=applyTreeSearch;treeSearchInput.onchange=applyTreeSearch;treeSearchInput.onsearch=applyTreeSearch;treeSearchInput.addEventListener('compositionend',applyTreeSearch);treeSearchInput.addEventListener('keyup',applyTreeSearch);
 document.getElementById('saveImageBtn').onclick=saveTreeImage;document.getElementById('savePdfBtn').onclick=saveTreePdf;document.getElementById('exportBtn').onclick=async()=>{const payload=JSON.stringify(data,null,2),filename='شجرة-آل-الزيتوني-نسخة-احتياطية.json',blob=new Blob([payload],{type:'application/json;charset=utf-8'});try{if(navigator.share&&navigator.canShare&&typeof File!=='undefined'){const file=new File([blob],filename,{type:'application/json'});if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'نسخة احتياطية لشجرة آل الزيتوني'});toast('تم فتح المشاركة للنسخة الاحتياطية');return}}}catch(err){if(err&&err.name==='AbortError')return}triggerDownload(blob,filename);toast('تم تجهيز ملف JSON؛ راجع التنزيلات أو احفظه إلى الملفات')};document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.people)||!Array.isArray(d.requests))throw Error();if(confirm('استعادة النسخة ستستبدل بيانات هذا الجهاز الحالية. تتابع؟')){data=normalize(d);expanded=new Set();save();toast('تمت استعادة النسخة')}}catch{alert('الملف غير صالح أو ليس نسخة من الأداة.')}e.target.value=''};
 // Shared tree with owner-chosen server-verified admin code
