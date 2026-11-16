@@ -218,7 +218,7 @@ body.tree-open>main.wrap{animation:none}
     <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div></div>
   </header>
   <input id="importFile" type="file" accept="application/json,.json" class="hidden">
-  <div class="tree-controls"><input class="search" id="treeSearch" placeholder="ابحث عن اسم…"><div class="tree-toolbar" id="treeToolbar"><button class="btn" id="fitTreeBtn" type="button">ملاءمة <span id="treeZoomValue">٦٠٪</span></button><button class="btn tree-zoom" id="treeZoomIn" type="button" aria-label="تكبير" title="تكبير">+</button><button class="btn tree-zoom" id="treeZoomOut" type="button" aria-label="تصغير" title="تصغير">−</button><button class="btn soft" id="expandAllBtn" type="button">عرض الكل</button><button class="btn" id="collapseAllBtn" type="button">إغلاق الكل</button></div></div>
+  <div class="tree-controls"><input class="search" id="treeSearch" placeholder="ابحث عن اسم…"><div class="tree-toolbar" id="treeToolbar"><button class="btn" id="fitTreeBtn" type="button">ملاءمة <span id="treeZoomValue">٧٤٪</span></button><button class="btn tree-zoom" id="treeZoomIn" type="button" aria-label="تكبير" title="تكبير">+</button><button class="btn tree-zoom" id="treeZoomOut" type="button" aria-label="تصغير" title="تصغير">−</button><button class="btn soft" id="expandAllBtn" type="button">عرض الكل</button><button class="btn" id="collapseAllBtn" type="button">إغلاق الكل</button></div></div>
   </div>
   <section class="panel active" id="treePanel">
     <div class="card"><div class="tree" id="tree"></div></div>
@@ -251,7 +251,7 @@ const initial={version:3,people:[
 ],requests:[]};
 function normalize(d){const known={p1:'male',p2:'male',p3:'male',p4:'male',p5:'male',c1:'female',c2:'female',c3:'female',c4:'female',c5:'female',c6:'male',c7:'male',c8:'male',c9:'male',c10:'male'};d.people=d.people.map(p=>({...p,gender:p.gender||known[p.id]||'unknown'}));d.requests=d.requests.map(r=>({...r,gender:r.gender||'unknown'}));return d}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.people)&&Array.isArray(d.requests))return normalize(d)}catch{}return structuredClone(initial)}
-let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const DEFAULT_TREE_ZOOM = 0.6;
+let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const DEFAULT_TREE_ZOOM = 0.74;
 const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
 let treeZoom = DEFAULT_TREE_ZOOM;
 let treeNeedsInitialBranches = true, treeCloudInitialized = false;
