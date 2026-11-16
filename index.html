@@ -241,8 +241,10 @@ body.tree-open>main.wrap{animation:none}
     <input class="search" id="treeSearch" placeholder="ابحث عن اسم…">
     <div class="tree-toolbar generation-controls" id="treeToolbar">
       <label for="treeGenerationCount">عرض</label>
-      <select id="treeGenerationCount" aria-label="عدد الأجيال المعروضة"><option value="3">٣ أجيال</option></select>
-      <button class="btn soft" id="treeShowAll" type="button" aria-pressed="false">الكل</button>
+      <select id="treeGenerationCount" aria-label="عرض الشجرة">
+        <option value="3">٣ أجيال</option>
+        <option value="all">كامل الشجرة</option>
+      </select>
       <output id="treeZoomValue" aria-label="نسبة الزوم">٧٤٪</output>
     </div>
   </div>
@@ -257,7 +259,7 @@ body.tree-open>main.wrap{animation:none}
     <div class="card"><h2>طلبات الإضافة</h2><p class="sub">الاقتراحات التي يرسلها الزوار تظهر هنا للمشرف فقط، ولا تُضاف للشجرة حتى اعتمادها.</p><div class="list" id="requestsList"></div></div>
   </section>
   <section class="panel" id="aboutPanel">
-    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم لفتح أبناء الشخص أو إخفائهم. اختر عدد الأجيال من «عرض»، أو اضغط «الكل» لاختيار أقصى عدد. عند فتح فرع من العمود الأيسر، يتحرّك العرض جيلًا معك. للرجوع، اضغط «العودة إلى الجيل السابق».</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
+    <div class="card"><h2>طريقة الاستخدام للزائر</h2><ul class="sub"><li>اضغط على اسم الشخص لفتح بطاقته ومعرفة اسمه الكامل وأسرته وأولاده.</li><li>اضغط على السهم لفتح أبناء الشخص أو إخفائهم. من قائمة «عرض»، اختر عدد الأجيال لتصفّح الفرع الحالي، أو اختر «كامل الشجرة» لعرض كل الأسماء والفروع. عند فتح فرع من العمود الأيسر، يتحرّك العرض جيلًا معك. للرجوع، اضغط «العودة إلى الجيل السابق».</li><li>ابحث بالاسم أو بسلسلة النسب. إذا تكرر الاسم، ستظهر جميع النتائج المطابقة.</li><li>لإرسال تحديث، افتح بطاقة الشخص واضغط «اقتراح تعديل». يمكنك اقتراح تعديل الاسم الأول أو الجنس أو الصورة أو النبذة، كما يمكن اقتراح إضافة/حذف الأولاد أو تغيير ترتيبهم.</li><li>لا يمكن التعديل على الطلب بعد الإرسال.</li><li>طلبك لا يغيّر الشجرة مباشرة؛ يراجعه المشرف أولًا، ولا يظهر التغيير إلا بعد اعتماده.</li></ul></div>
   </section>
   <div class="footer">الشجرة تعرض النسخة المعتمدة المشتركة. الاقتراحات تنتظر مراجعة المشرف.</div>
 </main>
@@ -289,10 +291,9 @@ const FOUR_GENERATION_ZOOM = 0.54;
 const TREE_STAGE_GUTTER = { left:22, right:4, top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
-const showAllGenerations = document.getElementById('treeShowAll');
 let generationCount = DEFAULT_GENERATIONS;
 let maxGenerationCount = DEFAULT_GENERATIONS;
-let showAllSelected = false;
+let fullTreeSelected = false;
 let treePinchZoom = null;
 let focusedTreeView = { anchorId: null, openIds: null };
 const treeViewHistory = [];
@@ -313,7 +314,9 @@ function treeNode(person, view, depth = 0) {
   const canDrill = view.generations && depth === generationCount - 1;
   let shownKids = [];
   let childView = view;
-  if (ancestorOnly) {
+  if (view.fullTree) {
+    shownKids = kids;
+  } else if (ancestorOnly) {
     shownKids = kids.filter(child => child.id === view.lineage.get(person.id));
   } else if (!canDrill) {
     if (searchPath && !searchCollapsedBranches.has(person.id)) {
@@ -335,7 +338,7 @@ function treeNode(person, view, depth = 0) {
   const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
   const actionLabel = canDrill ? `عرض فرع ${name}` : childHtml ? 'إخفاء الأبناء' : 'إظهار الأبناء';
   const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${Boolean(childHtml)}"`;
-  const toggle = kids.length && !ancestorOnly
+  const toggle = kids.length && !ancestorOnly && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
   return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
@@ -481,19 +484,19 @@ function getTreeGenerations() {
 
 function updateGenerationOptions(max) {
   const ceiling = Math.max(DEFAULT_GENERATIONS, max);
-  if (showAllSelected) generationCount = ceiling;
-  else generationCount = Math.min(generationCount, ceiling);
-  if (maxGenerationCount !== ceiling || generationSelect.options.length !== ceiling - DEFAULT_GENERATIONS + 1) {
+  generationCount = Math.min(generationCount, ceiling);
+  if (maxGenerationCount !== ceiling) {
     maxGenerationCount = ceiling;
     const options = [];
     for (let n = DEFAULT_GENERATIONS; n <= ceiling; n++) {
       const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا');
       options.push(new Option(label, String(n)));
     }
+    options.push(new Option('كامل الشجرة', 'all'));
     generationSelect.replaceChildren(...options);
   }
-  generationSelect.value = String(generationCount);
-  showAllGenerations.setAttribute('aria-pressed', String(showAllSelected));
+  const selection = fullTreeSelected ? 'all' : String(generationCount);
+  if (generationSelect.value !== selection) generationSelect.value = selection;
 }
 
 function generationView({ root, depthBelow }) {
@@ -560,10 +563,10 @@ function treeSearchView(needle) {
 function renderTree(query = '') {
   const needle = normalizeSearch(query);
   const viewport = document.getElementById('tree');
-  const generations = !needle;
+  const generations = !needle && !fullTreeSelected;
   const tree = getTreeGenerations();
   updateGenerationOptions(tree.max);
-  const view = generations ? generationView(tree) : treeSearchView(needle);
+  const view = needle ? treeSearchView(needle) : fullTreeSelected ? { fullTree:true } : generationView(tree);
   const roots = generations ? (view.root ? [view.root] : []) : data.people.filter(person => !person.parentId);
   const html = !needle || view.matchIds.size
     ? roots.map(person => treeNode(person, view)).join('')
@@ -573,7 +576,7 @@ function renderTree(query = '') {
     : `<div class="tree-empty">${needle ? 'ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.' : 'لا توجد أسماء بعد.'}</div>`;
 
   const navigation = document.getElementById('treeNavigation');
-  navigation.hidden = Boolean(needle) || treeViewHistory.length === 0;
+  navigation.hidden = Boolean(needle) || fullTreeSelected || treeViewHistory.length === 0;
 
   observeTreeGeometry(viewport);
   viewport.querySelectorAll('[data-toggle]').forEach(button => {
@@ -679,11 +682,13 @@ document.getElementById('treeBackBtn').onclick = () => {
   }
 };
 
-function changeGenerationCount(count, all = false) {
-  generationCount = count;
-  showAllSelected = all;
+function changeTreeDisplay(selection) {
+  fullTreeSelected = selection === 'all';
+  if (!fullTreeSelected && generationCount !== Number(selection)) {
+    generationCount = Number(selection);
+    focusedTreeView = { ...focusedTreeView, openIds: null };
+  }
   treePinchZoom = null;
-  focusedTreeView = { ...focusedTreeView, openIds: null };
   if (lastTreeSearchQuery) {
     document.getElementById('treeSearch').value = '';
     lastTreeSearchQuery = '';
@@ -693,8 +698,7 @@ function changeGenerationCount(count, all = false) {
   moveToTreeStart(document.getElementById('tree'));
 }
 
-generationSelect.onchange = () => changeGenerationCount(Number(generationSelect.value));
-showAllGenerations.onclick = () => changeGenerationCount(maxGenerationCount, true);
+generationSelect.onchange = () => changeTreeDisplay(generationSelect.value);
 function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
 const rtlScrollMode=detectRtlScrollMode();function scrollRightOffset(el){const max=Math.max(0,el.scrollWidth-el.clientWidth);return rtlScrollMode==='negative'?-el.scrollLeft:rtlScrollMode==='reverse'?el.scrollLeft:max-el.scrollLeft}function setScrollRightOffset(el,value){const max=Math.max(0,el.scrollWidth-el.clientWidth),v=Math.max(0,Math.min(max,value));el.scrollLeft=rtlScrollMode==='negative'?-v:rtlScrollMode==='reverse'?v:max-v}
 function zoomTreeAt(nextZoom,clientX,clientY,anchor=null){const view=document.getElementById('tree'),rect=view.getBoundingClientRect(),screenRight=rect.right-clientX,screenDown=clientY-rect.top,contentX=anchor?anchor.x:(scrollRightOffset(view)+screenRight)/treeZoom,contentY=anchor?anchor.y:(view.scrollTop+screenDown)/treeZoom;treePinchZoom=Math.max(.01,Math.min(1.8,nextZoom));layoutTree();const scale=treeZoom;requestAnimationFrame(()=>{setScrollRightOffset(view,contentX*scale-screenRight);view.scrollTop=Math.max(0,contentY*scale-screenDown)})}
