@@ -139,6 +139,13 @@ body.tree-open>main.wrap{animation:treeEnter .52s cubic-bezier(.2,.75,.25,1) bot
 #treePanel .card{padding-bottom:24px}
 @media(max-width:620px){.hero{padding:12px 16px 11px}.hero h1{font-size:29px;margin-top:2px}.hero p{font-size:13px;line-height:1.55}.hero .stats{margin-top:7px}.tree-toolbar{gap:3px;padding:5px;border-radius:13px;bottom:calc(env(safe-area-inset-bottom) + 8px)}.tree-toolbar .btn{font-size:10px;padding:6px 5px}.tree-toolbar .tree-zoom{width:28px;min-width:28px;height:28px;font-size:17px}#tree{padding-bottom:105px}}
 </style>
+<style id="fullTreeAndSearchHistoryUI20261117">
+.tree-navigation{display:flex;align-items:center;gap:8px;justify-content:space-between;min-height:33px}
+.tree-navigation[hidden],.tree-navigation .btn[hidden]{display:none!important}
+.tree-navigation .tree-full-btn{margin-inline-start:auto;border-color:#c9dcd0;background:#f5faf6;color:var(--green);font-weight:700}
+.tree-navigation .tree-full-btn.is-active{background:var(--green);color:white;border-color:var(--green)}
+@media(max-width:620px){.tree-navigation .btn{font-size:11px;padding:6px 8px}}
+</style>
 <style id="finalIntroMotionAndTransition">
 .intro-title{animation:introShimmer 13.16s linear infinite;line-height:1.55;padding-bottom:.14em}
 @keyframes introShimmer{0%,1%{background-position:100% 50%}99%,100%{background-position:0% 50%}}
@@ -386,7 +393,6 @@ body.family-help-visible .tree-instruction-line{display:none}
       <label for="treeGenerationCount">عرض</label>
       <select id="treeGenerationCount" aria-label="عرض الشجرة">
         <option value="3">٣ أجيال (افتراضي)</option>
-        <option value="all">كامل الشجرة</option>
       </select>
       <output id="treeZoomValue" aria-label="نسبة الزوم">٧٤٪</output>
     </div>
@@ -394,6 +400,7 @@ body.family-help-visible .tree-instruction-line{display:none}
   <div class="tree-navigation" id="treeNavigation" hidden>
     <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> العودة إلى الجيل السابق</button>
     <button class="btn" type="button" id="helpBackToTree" hidden><span aria-hidden="true">→</span> العودة إلى الشجرة</button>
+    <button class="btn tree-full-btn" type="button" id="treeFullBtn" aria-pressed="false">كامل الشجرة</button>
   </div>
   </div>
   <section class="panel active" id="treePanel">
@@ -460,7 +467,6 @@ let focusedTreeView = { anchorId: null, openIds: null };
 const treeViewHistory = [];
 // A search does not change the tree until the visitor chooses one exact person.
 let selectedTreeSearchId = null;
-let treeSearchDrillId = null;
 let treeSearchSession = null;
 let treeSearchActiveOption = -1;
 const treeGeometryObserver = new ResizeObserver(layoutTree);
@@ -665,10 +671,10 @@ function updateGenerationOptions(max) {
       const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا') + (n === DEFAULT_GENERATIONS ? ' (افتراضي)' : '');
       options.push(new Option(label, String(n)));
     }
-    options.push(new Option('كامل الشجرة', 'all'));
     generationSelect.replaceChildren(...options);
   }
-  const selection = fullTreeSelected ? 'all' : String(generationCount);
+  // The independent full-tree button keeps the last selected generation count.
+  const selection = String(generationCount);
   if (generationSelect.value !== selection) generationSelect.value = selection;
 }
 
@@ -788,6 +794,46 @@ function restoreTreeScroll(state) {
   requestAnimationFrame(apply);
 }
 
+// A search is a shortcut to the same trail the visitor would follow manually.
+// Populate the ordinary back stack with the intervening generation windows.
+// The selected view ends with the person; the first back ends with their parent.
+function prepareSearchNavigation(person) {
+  const path=[];
+  let current=person;
+  const seen=new Set();
+  while (current && !seen.has(current.id)) {
+    path.unshift(current);
+    seen.add(current.id);
+    current=byId(current.parentId);
+  }
+  const top=treeSearchSession?.top ?? window.scrollY;
+  treeViewHistory.length=0;
+  if (path.length>1 && !fullTreeSelected) {
+    treeViewHistory.push({view:{anchorId:null,openIds:null},count:generationCount,top,right:0});
+    for (let i=generationCount-1; i<=path.length-3; i++) {
+      treeViewHistory.push({
+        view:{anchorId:path[i].id,openIds:null},
+        count:generationCount,top,right:0
+      });
+    }
+  }
+  // Equivalent to arriving at this window through the regular drill controls.
+  focusedTreeView={anchorId:path.length>1 ? path[path.length-2].id : null,openIds:null};
+}
+
+// Clearing navigation-driven search is different from ×, which restores the old view.
+function dismissSearchWithoutRestoring() {
+  if (!treeSearchSession && !selectedTreeSearchId && !document.getElementById('treeSearch').value) return;
+  const input=document.getElementById('treeSearch');
+  input.value='';
+  lastTreeSearchQuery='';
+  selectedTreeSearchId=null;
+  treeSearchSession=null;
+  currentTreeSearchMatches=[];
+  closeTreeSearchResults();
+  updateTreeSearchClear();
+}
+
 // Show exactly N generations ending at the selected person (e.g. grandfather → father → person).
 function selectedPersonGenerationView(person) {
   const path = [];
@@ -825,13 +871,17 @@ function focusChosenPerson(viewport, id) {
   }));
 }
 
-function updateTreeNavigation(searching = Boolean(normalizeSearch(document.getElementById('treeSearch').value))) {
+function updateTreeNavigation() {
   const helpOpen = document.getElementById('aboutPanel').classList.contains('active');
   const treeOpen = document.getElementById('treePanel').classList.contains('active');
-  const canGoBack = treeOpen && !searching && !fullTreeSelected && treeViewHistory.length > 0;
+  const canGoBack = treeOpen && !fullTreeSelected && treeViewHistory.length > 0;
   document.getElementById('treeBackBtn').hidden = !canGoBack;
   document.getElementById('helpBackToTree').hidden = !helpOpen;
-  document.getElementById('treeNavigation').hidden = !helpOpen && !canGoBack;
+  const fullButton=document.getElementById('treeFullBtn');
+  fullButton.hidden=!treeOpen;
+  fullButton.classList.toggle('is-active',fullTreeSelected);
+  fullButton.setAttribute('aria-pressed',String(fullTreeSelected));
+  document.getElementById('treeNavigation').hidden = !helpOpen && !treeOpen;
 }
 
 function renderTree(query = '') {
@@ -844,8 +894,6 @@ function renderTree(query = '') {
   let view;
   if (hasSelection && fullTreeSelected) {
     view = {fullTree:true,matchIds:new Set([person.id]),selectedId:person.id};
-  } else if (hasSelection && treeSearchDrillId) {
-    view = {...generationView(tree),matchIds:new Set([person.id]),selectedId:person.id};
   } else if (hasSelection) {
     view = selectedPersonGenerationView(person);
   } else {
@@ -857,7 +905,7 @@ function renderTree(query = '') {
     ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><svg class="tree-connectors" aria-hidden="true" focusable="false"><path/></svg><ul>${html}</ul></div></div>`
     : `<div class="tree-empty">لا توجد أسماء بعد.</div>`;
 
-  updateTreeNavigation(Boolean(document.getElementById('treeSearch').value.trim()));
+  updateTreeNavigation();
   observeTreeGeometry(viewport);
   viewport.querySelectorAll('[data-toggle]').forEach(button => {
     button.onclick = () => toggleTreeBranch(button,viewport,query,view);
@@ -873,15 +921,8 @@ function toggleTreeBranch(button, viewport, query, view) {
   const id = button.dataset.toggle;
   const previousCards = view.generations ? snapshotTreeCards(viewport) : null;
   if (button.hasAttribute('data-drill')) {
-    if (selectedTreeSearchId) {
-      // Follow the selected descendant's branch without dropping the active search.
-      treeSearchDrillId = id;
-      focusedTreeView = { anchorId:id, openIds:null };
-      renderTree();
-      moveToTreeStart(viewport);
-      animateTreeShift(viewport,previousCards,1);
-      return;
-    }
+    // Search is only a shortcut: drilling from the result switches to normal navigation.
+    if (treeSearchSession) dismissSearchWithoutRestoring();
     const selected = byId(id);
     const parent = selected && byId(selected.parentId);
     if (!parent) return;
@@ -1026,6 +1067,8 @@ document.getElementById('treeBackBtn').onclick = () => {
   const previous = treeViewHistory.pop();
   if (!previous) return;
   const previousCards = snapshotTreeCards(viewport);
+  // After back, the name and highlight disappear, but we return ONE step only.
+  dismissSearchWithoutRestoring();
   focusedTreeView = previous.count === generationCount
     ? previous.view
     : { anchorId: previous.view.anchorId, openIds: null };
@@ -1045,9 +1088,9 @@ function changeTreeDisplay(selection) {
     focusedTreeView = { ...focusedTreeView, openIds:null };
   }
   treePinchZoom = null;
-  // Keep a chosen result while changing the number of generations.
-  // Clearing × still returns to the complete pre-search tree state.
-  if (selectedTreeSearchId) treeSearchDrillId = null;
+  // Recalculate the manual back trail for the new number of generations.
+  // Clearing × still restores the state captured before searching.
+  if (selectedTreeSearchId) prepareSearchNavigation(byId(selectedTreeSearchId));
   activateMainPanel('treePanel');
   renderTree();
   const viewport = document.getElementById('tree');
@@ -1063,6 +1106,8 @@ function changeTreeDisplay(selection) {
   }
 }
 generationSelect.onchange = () => changeTreeDisplay(generationSelect.value);
+document.getElementById('treeFullBtn').onclick = () =>
+  changeTreeDisplay(fullTreeSelected ? String(generationCount) : 'all');
 function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
 const rtlScrollMode=detectRtlScrollMode();function scrollRightOffset(el){const max=Math.max(0,el.scrollWidth-el.clientWidth);return rtlScrollMode==='negative'?-el.scrollLeft:rtlScrollMode==='reverse'?el.scrollLeft:max-el.scrollLeft}function setScrollRightOffset(el,value){const max=Math.max(0,el.scrollWidth-el.clientWidth),v=Math.max(0,Math.min(max,value));el.scrollLeft=rtlScrollMode==='negative'?-v:rtlScrollMode==='reverse'?v:max-v}
 // Anchor the pinch to the midpoint in the tree's own coordinates.
@@ -1375,7 +1420,7 @@ function selectTreeSearchResult(id) {
   if (!byId(id)) return;
   if (!treeSearchSession) treeSearchSession=captureTreeState();
   selectedTreeSearchId=id;
-  treeSearchDrillId=null;
+  prepareSearchNavigation(byId(id));
   treePinchZoom=null;
   closeTreeSearchResults();
   const viewport=document.getElementById('tree');
@@ -1389,7 +1434,6 @@ function clearTreeSearch() {
   treeSearchInput.value='';
   lastTreeSearchQuery='';
   selectedTreeSearchId=null;
-  treeSearchDrillId=null;
   treeSearchSession=null;
   currentTreeSearchMatches=[];
   closeTreeSearchResults();
@@ -1406,7 +1450,6 @@ function applyTreeSearch() {
   if (!treeSearchSession) treeSearchSession=captureTreeState();
   if (selectedTreeSearchId) {
     selectedTreeSearchId=null;
-    treeSearchDrillId=null;
     restoreTreeState(treeSearchSession);
     renderTree();
     restoreTreeScroll(treeSearchSession);
