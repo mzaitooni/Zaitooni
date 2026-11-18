@@ -1,0 +1,33 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/keep-alive.yml'
+
+permissions: {}
+
+concurrency:
+  group: supabase-keep-alive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      SUPABASE_URL: https://hjjfbgdodbnctyhmerqy.supabase.co
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqamZiZ2RvZGJuY3R5aG1lcnF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4NzQ1MjMsImV4cCI6MjEwOTQ1MDUyM30.UtG0KRsA6iVtKx8opB8-lQRaUEJARvCur4HRO1k0BNs
+    steps:
+      - name: Check database connectivity
+        run: |
+          curl --fail --silent --show-error --head --output /dev/null \
+            --connect-timeout 10 --max-time 30 --retry 1 \
+            --header "apikey: $SUPABASE_ANON_KEY" \
+            --header "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            "$SUPABASE_URL/rest/v1/family_tree_people?select=id&limit=1"
+          echo "Supabase database ping succeeded."
