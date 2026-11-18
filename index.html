@@ -440,7 +440,7 @@ body.family-help-visible .tree-instruction-line{display:none}
   <div class="sticky-tree-header">
   <header class="hero">
     <div class="hero-actions"><button class="settings-btn" id="settingsOpen" aria-label="الإعدادات" title="الإعدادات">⚙</button><button class="hero-action tab" data-tab="aboutPanel" type="button"><span id="helpButtonLabel">مساعدة</span></button><button class="hero-action tab" data-tab="requestsPanel" type="button">الطلبات <span id="pendingBadge"></span></button></div><div class="eyebrow">مشروع عائلي قابل للتحديث</div><h1>شجرة آل الزيتوني</h1>
-    <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div></div>
+    <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div><button type="button" class="stat uncertainty-stat hidden" id="uncertaintyCounter" aria-label="عرض حالات عدم التأكد"><b id="uncertaintyCount">0</b><span>⚠ حالات عدم التأكد</span></button></div>
   </header>
   <p class="tree-instruction-line">اضغط على الاسم لعرض بطاقته، وعلى السهم لعرض فروعه أو إخفائها.</p>
   <input id="importFile" type="file" accept="application/json,.json" class="hidden">
@@ -468,7 +468,7 @@ body.family-help-visible .tree-instruction-line{display:none}
     <div class="card"><div class="tree" id="tree"></div></div>
   </section>
   <section class="panel" id="requestsPanel">
-    <div class="card"><h2>الطلبات والرسائل</h2><div class="launch-tabs" id="adminInboxTabs"><button class="btn active" type="button" id="adminRequestsTab">طلبات الشجرة</button><button class="btn" type="button" id="adminMessagesTab">الرسائل <span id="adminUnreadCount"></span></button></div><div id="adminTreeRequests"><p class="sub">الاقتراحات التي يرسلها الزوار تظهر هنا للمشرف فقط، ولا تُضاف للشجرة حتى اعتمادها.</p><div class="list" id="requestsList"></div></div><section id="adminMessagesArea" hidden><div class="launch-tabs small-tabs"><button type="button" class="btn active" id="messageInboxBtn">الواردة</button><button type="button" class="btn" id="messageArchiveBtn">الأرشيف</button><button type="button" class="btn" id="messageRefreshBtn">تحديث</button></div><div id="privateMessagesList" class="launch-list"></div></section></div>
+    <div class="card"><h2>الطلبات والرسائل</h2><div class="launch-tabs" id="adminInboxTabs"><button class="btn active" type="button" id="adminRequestsTab">طلبات الشجرة</button><button class="btn" type="button" id="adminMessagesTab">الرسائل <span id="adminUnreadCount"></span></button></div><div id="adminTreeRequests"><p class="sub">الاقتراحات التي يرسلها الزوار تظهر هنا للمشرف فقط، ولا تُضاف للشجرة حتى اعتمادها.</p><div class="launch-tabs small-tabs request-history-tabs"><button class="btn active" id="pendingTreeRequestsBtn" type="button">الطلبات المعلقة</button><button class="btn" id="archiveTreeRequestsBtn" type="button">أرشيف الطلبات</button><button class="btn" id="parentMoveHistoryBtn" type="button">سجل تصحيح الأب</button></div><div class="list" id="requestsList"></div><div id="parentMovesList" class="launch-list" hidden></div></div><section id="adminMessagesArea" hidden><div class="launch-tabs small-tabs"><button type="button" class="btn active" id="messageInboxBtn">الواردة</button><button type="button" class="btn" id="messageArchiveBtn">الأرشيف</button><button type="button" class="btn" id="messageRefreshBtn">تحديث</button></div><div id="privateMessagesList" class="launch-list"></div></section></div>
   </section>
   <section class="panel" id="aboutPanel">
  <div id="helpHome">
@@ -508,7 +508,7 @@ body.family-help-visible .tree-instruction-line{display:none}
   </section>
   <div class="footer">الشجرة تعرض النسخة المعتمدة المشتركة. الاقتراحات تنتظر مراجعة المشرف.</div>
 </main>
-<div class="modal-back" id="requestReceiptBack"><div class="modal proposal-exit-modal"><h2>تم إرسال طلبك بنجاح ✓</h2><p class="sub">احتفظ برقم الطلب لمتابعة حالته. تُراجع التغييرات كلٌّ على حدة.</p><div class="launch-reference receipt-reference" id="receiptReference" dir="ltr"></div><div class="proposal-exit-actions"><button type="button" class="btn primary" id="receiptTrack">متابعة حالة الطلب</button><button type="button" class="btn" id="receiptCopy">نسخ رقم الطلب</button><button type="button" class="btn" id="receiptClose">إغلاق</button></div></div></div><div class="modal-back" id="profileBack"><div class="modal profile-modal"><button class="close-x" id="profileBackButton" type="button" aria-label="عودة" title="عودة"><svg class="back-arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 7-7m-7 7 7 7"/></svg></button><button class="btn profile-return-tree" id="profileReturnTree" type="button" aria-label="إغلاق" title="إغلاق"><span aria-hidden="true">×</span></button><div class="profile-card-toolbar"><h2 id="profileName" class="visually-hidden">بطاقة الشخص</h2><div class="profile-record-actions"><button class="btn soft" id="profileEditName" aria-label="تعديل الاسم">تعديل الاسم</button><button class="btn danger" id="profileDeletePerson" aria-label="حذف الاسم">حذف الاسم</button></div></div><section id="proposalBatchPanel" class="proposal-batch hidden"><div class="proposal-batch-head"><b>طلب التعديلات</b><span id="proposalBatchCount" class="pill">0 تغييرات</span></div><div class="proposal-name-grid"><div class="field"><label for="proposalName0">الاسم الأول</label><input id="proposalName0" autocomplete="given-name" maxlength="50" required></div><div class="field"><label for="proposalName1">اسم الأب</label><input id="proposalName1" maxlength="50" required></div><div class="field"><label for="proposalName2">اسم الجد</label><input id="proposalName2" maxlength="50" required></div><div class="field"><label for="proposalName3">اسم العائلة</label><input id="proposalName3" autocomplete="family-name" maxlength="50" required></div></div><div class="proposal-contact-fields" id="proposalContactFields" aria-label="رقم التواصل لمقدم طلب التعديل"><div class="field proposal-phone-field"><label for="proposalPhone">رقم التواصل مع مفتاح الدولة <span class="proposal-required-star" aria-hidden="true">*</span></label><input id="proposalPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" maxlength="35" required placeholder="+963 9XXXXXXXX" aria-describedby="proposalPhoneHint"></div></div><div class="small proposal-phone-hint" id="proposalPhoneHint">الرقم إلزامي، ويجب أن يبدأ بعلامة + ومفتاح الدولة، مثل +963 9XXXXXXXX أو +966 5XXXXXXXX. لن يظهر الرقم لزوار الشجرة.</div><h3 class="proposal-summary-title" id="proposalSummaryTitle">مختصر طلب/طلبات التعديل</h3><div id="proposalBatchItems" class="proposal-batch-items" aria-live="polite"></div><div class="proposal-batch-actions"><button id="sendProposalBatch" class="btn primary" type="button">إرسال الطلب للمراجعة</button><button id="clearProposalBatch" class="btn danger" type="button">مسح الطلب</button></div></section><div class="profile-identity-row"><div class="full-name" id="profileFullName"></div><div class="profile-photo"><div class="photo-preview" id="profilePhotoPreview" aria-label="معاينة صورة الشخص">لا توجد صورة</div><div class="photo-controls"><button class="btn soft" id="chooseProfilePhoto" type="button">إضافة صورة</button><button class="btn danger hidden" id="removeProfilePhoto" type="button">حذف الصورة</button></div><input id="profilePhotoInput" class="hidden" type="file" accept="image/*"></div></div><div class="field bio-field profile-bio-section"><div class="profile-bio-card" id="profileBioCard" aria-label="نبذة الشخص"><div class="profile-bio-title"><b>نبذة عنه</b></div><div class="profile-bio-text" id="profileBioDisplay">لا توجد نبذة بعد.</div><div class="profile-bio-updated hidden" id="profileBioUpdated" aria-label="تاريخ آخر تحديث معتمد للنبذة"></div><div class="profile-bio-hint">تُعدّل من خيار «اقتراح تعديل»</div></div><div class="profile-bio-editor hidden" id="profileBioEditor"><label for="profileBio">تعديل النبذة</label><textarea id="profileBio" maxlength="300" placeholder="اكتب نبذة قصيرة عنه"></textarea><div class="small bio-counter"><span id="profileBioCount">0</span> / 300 حرف <span class="autosave-hint">· تُحفظ تلقائيًا</span></div></div></div><div id="profileCountries" class="profile-country-fields hidden" aria-label="الجنسية وبلد الإقامة"></div><fieldset class="gender-field profile-gender"><legend>الجنس</legend><label class="radio-choice"><input type="radio" name="profileGender" value="male"><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="profileGender" value="female"><span>أنثى</span></label></fieldset><div class="profile-stats" id="profileStats"></div><section class="children-section" id="profileChildrenSection"><div class="children-heading"><h3>الأبناء</h3><div class="profile-actions"><button class="btn primary" id="profileAddChild">＋ إضافة ابن/ابنة</button></div></div><div class="small order-hint">استخدم السهمين لترتيب الأسماء كما تريد.</div><div id="profileChildren" class="list"></div></section></div></div>
+<div class="modal-back" id="requestReceiptBack"><div class="modal proposal-exit-modal"><h2>تم إرسال طلبك بنجاح ✓</h2><p class="sub">احتفظ برقم الطلب لمتابعة حالته. تُراجع التغييرات كلٌّ على حدة.</p><div class="launch-reference receipt-reference" id="receiptReference" dir="ltr"></div><div class="proposal-exit-actions"><button type="button" class="btn primary" id="receiptTrack">متابعة حالة الطلب</button><button type="button" class="btn" id="receiptCopy">نسخ رقم الطلب</button><button type="button" class="btn" id="receiptClose">إغلاق</button></div></div></div><div class="modal-back" id="profileBack"><div class="modal profile-modal"><button class="close-x" id="profileBackButton" type="button" aria-label="عودة" title="عودة"><svg class="back-arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 7-7m-7 7 7 7"/></svg></button><button class="btn profile-return-tree" id="profileReturnTree" type="button" aria-label="إغلاق" title="إغلاق"><span aria-hidden="true">×</span></button><div id="uncertaintyProfileBanner" class="uncertainty-profile-banner" hidden></div><div class="profile-card-toolbar"><h2 id="profileName" class="visually-hidden">بطاقة الشخص</h2><div class="profile-record-actions"><button class="btn soft" id="profileEditName" aria-label="تعديل الاسم">تعديل الاسم</button><button class="btn danger" id="profileDeletePerson" aria-label="حذف الاسم">حذف الاسم</button></div></div><section id="proposalBatchPanel" class="proposal-batch hidden"><div class="proposal-batch-head"><b>طلب التعديلات</b><span id="proposalBatchCount" class="pill">0 تغييرات</span></div><div class="proposal-name-grid"><div class="field"><label for="proposalName0">الاسم الأول</label><input id="proposalName0" autocomplete="given-name" maxlength="50" required></div><div class="field"><label for="proposalName1">اسم الأب</label><input id="proposalName1" maxlength="50" required></div><div class="field"><label for="proposalName2">اسم الجد</label><input id="proposalName2" maxlength="50" required></div><div class="field"><label for="proposalName3">اسم العائلة</label><input id="proposalName3" autocomplete="family-name" maxlength="50" required></div></div><div class="proposal-contact-fields" id="proposalContactFields" aria-label="رقم التواصل لمقدم طلب التعديل"><div class="field proposal-phone-field"><label for="proposalPhone">رقم التواصل مع مفتاح الدولة <span class="proposal-required-star" aria-hidden="true">*</span></label><input id="proposalPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" maxlength="35" required placeholder="+963 9XXXXXXXX" aria-describedby="proposalPhoneHint"></div></div><div class="small proposal-phone-hint" id="proposalPhoneHint">الرقم إلزامي، ويجب أن يبدأ بعلامة + ومفتاح الدولة، مثل +963 9XXXXXXXX أو +966 5XXXXXXXX. لن يظهر الرقم لزوار الشجرة.</div><div class="visitor-father-correction"><button type="button" class="btn soft" id="visitorChooseFather">تصحيح الأب من الشجرة</button><div class="small" id="visitorFatherSelection"></div></div><h3 class="proposal-summary-title" id="proposalSummaryTitle">مختصر طلب/طلبات التعديل</h3><div id="proposalBatchItems" class="proposal-batch-items" aria-live="polite"></div><div class="proposal-batch-actions"><button id="sendProposalBatch" class="btn primary" type="button">إرسال الطلب للمراجعة</button><button id="clearProposalBatch" class="btn danger" type="button">مسح الطلب</button></div></section><div class="profile-identity-row"><div class="full-name" id="profileFullName"></div><div class="profile-photo"><div class="photo-preview" id="profilePhotoPreview" aria-label="معاينة صورة الشخص">لا توجد صورة</div><div class="photo-controls"><button class="btn soft" id="chooseProfilePhoto" type="button">إضافة صورة</button><button class="btn danger hidden" id="removeProfilePhoto" type="button">حذف الصورة</button></div><input id="profilePhotoInput" class="hidden" type="file" accept="image/*"></div></div><div class="field bio-field profile-bio-section"><div class="profile-bio-card" id="profileBioCard" aria-label="نبذة الشخص"><div class="profile-bio-title"><b>نبذة عنه</b></div><div class="profile-bio-text" id="profileBioDisplay">لا توجد نبذة بعد.</div><div class="profile-bio-updated hidden" id="profileBioUpdated" aria-label="تاريخ آخر تحديث معتمد للنبذة"></div><div class="profile-bio-hint">تُعدّل من خيار «اقتراح تعديل»</div></div><div class="profile-bio-editor hidden" id="profileBioEditor"><label for="profileBio">تعديل النبذة</label><textarea id="profileBio" maxlength="300" placeholder="اكتب نبذة قصيرة عنه"></textarea><div class="small bio-counter"><span id="profileBioCount">0</span> / 300 حرف <span class="autosave-hint">· تُحفظ تلقائيًا</span></div></div></div><div id="profileCountries" class="profile-country-fields hidden" aria-label="الجنسية وبلد الإقامة"></div><fieldset class="gender-field profile-gender"><legend>الجنس</legend><label class="radio-choice"><input type="radio" name="profileGender" value="male"><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="profileGender" value="female"><span>أنثى</span></label></fieldset><div class="profile-stats" id="profileStats"></div><section class="children-section" id="profileChildrenSection"><div class="children-heading"><h3>الأبناء</h3><div class="profile-actions"><button class="btn primary" id="profileAddChild">＋ إضافة ابن/ابنة</button></div></div><div class="small order-hint">استخدم السهمين لترتيب الأسماء كما تريد.</div><div id="profileChildren" class="list"></div></section></div></div>
 <div class="modal-back" id="deleteConfirmBack"><div class="modal"><h2>تأكيد الحذف</h2><p id="deleteConfirmMessage" class="sub"></p><div class="right"><button class="btn danger" id="confirmDeleteBtn" type="button">تأكيد الحذف</button><button class="btn" type="button" data-close="deleteConfirmBack">إلغاء</button></div></div></div>
 <div class="modal-back" id="editNameBack"><div class="modal"><button class="close-x" data-close="editNameBack" aria-label="إغلاق">×</button><h2>تعديل بطاقة الشخص</h2><form id="editNameForm"><div class="field"><label for="editPersonName">الاسم الأول</label><input id="editPersonName" required maxlength="100" placeholder="مثال: عبدالله"></div><fieldset class="gender-field"><legend>الجنس</legend><label class="radio-choice"><input type="radio" name="adminEditGender" value="male" required><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="adminEditGender" value="female"><span>أنثى</span></label></fieldset><div class="person-country-fields">
   <div class="country-picker" data-country-field="adminResidenceCountry">
@@ -519,7 +519,7 @@ body.family-help-visible .tree-instruction-line{display:none}
     <label for="adminNationality">الجنسية (اختياري)</label>
     <div class="country-input-wrap"><input id="adminNationality" type="text" autocomplete="off" placeholder="اختر الجنسية أو ابحث…" aria-autocomplete="list" aria-expanded="false" maxlength="100"><button class="country-picker-toggle" type="button" aria-label="عرض الدول">⌄</button></div><div class="country-options" role="listbox" hidden></div>
   </div>
-</div><div class="field"><label for="adminEditBio">النبذة (اختياري)</label><textarea id="adminEditBio" maxlength="300"></textarea><div class="small bio-counter"><span id="adminEditBioCount">0</span> / 300 حرف</div></div><div class="field"><label for="adminEditSource">المصدر أو الملاحظة (اختياري)</label><textarea id="adminEditSource" maxlength="1000"></textarea></div><div class="right"><button class="btn primary" type="submit">حفظ التعديلات</button><button class="btn" type="button" data-close="editNameBack">إلغاء</button></div></form></div></div>
+</div><div class="field"><label for="adminEditBio">النبذة (اختياري)</label><textarea id="adminEditBio" maxlength="300"></textarea><div class="small bio-counter"><span id="adminEditBioCount">0</span> / 300 حرف</div></div><div class="field"><label for="adminEditSource">المصدر أو الملاحظة (اختياري)</label><textarea id="adminEditSource" maxlength="1000"></textarea></div><section class="admin-uncertainty-editor" id="adminUncertaintySection"><label class="uncertainty-check"><input type="checkbox" id="editUncertaintyEnabled"> حالة عدم تأكد</label><div id="editUncertaintyDetails" hidden><div class="field"><label for="editUncertaintyPreset">الملاحظة <span class="child-required-star">*</span></label><select id="editUncertaintyPreset"><option value="">اختر ملاحظة جاهزة…</option><option value="parent">صلة النسب بحاجة إلى توثيق</option><option value="name">الاسم بحاجة إلى تأكيد</option><option value="gender">الجنس بحاجة إلى تأكيد</option><option value="custom">كتابة ملاحظة مخصصة</option></select></div><div class="field" id="editUncertaintyFreeRow" hidden><label for="editUncertaintyFree">نص الملاحظة <span class="child-required-star">*</span></label><textarea id="editUncertaintyFree" maxlength="1200" rows="3" placeholder="اكتب الملاحظة التي ستظهر في بطاقة الشخص"></textarea></div><fieldset class="uncertainty-visibility"><legend>إظهار الملاحظة</legend><label><input type="radio" name="uncertaintyVisibility" value="admin" checked> للمشرف فقط</label><label><input type="radio" name="uncertaintyVisibility" value="public"> للمشرف والزوار</label></fieldset></div></section><div class="admin-father-edit"><h3>تصحيح الأب</h3><p class="small">ينتقل الشخص وجميع ذريته إلى الأب المختار دون حذف أي بيانات.</p><button type="button" class="btn soft" id="adminChooseFather">اختيار الأب الصحيح من الشجرة</button><div class="small" id="adminFatherSelection"></div></div><div class="right"><button class="btn primary" id="saveEditName" type="submit">حفظ التعديلات</button><button class="btn" type="button" data-close="editNameBack">إلغاء</button></div></form></div></div>
 <div class="modal-back" id="settingsBack"><div class="modal"><button class="close-x" data-close="settingsBack" aria-label="إغلاق">×</button><h2>الإعدادات</h2><p class="sub">إدارة ملف الشجرة ونسخها.</p><div class="settings-actions"><button class="btn primary" id="saveImageBtn" hidden type="button">حفظ الشجرة كصورة PNG</button><button class="btn primary" id="savePdfBtn" hidden type="button">حفظ الشجرة PDF</button><button class="btn" id="exportBtn" type="button">حفظ نسخة احتياطية (JSON)</button><button class="btn" id="importBtn" type="button">استعادة نسخة</button></div><p class="small export-note">تصدير جميع الأسماء والفروع في شجرة دائرية واحدة بخطوط منحنية وأسماء مائلة حسب الحاجة. PDF يُعرض أولًا في معاينة يمكنك إغلاقها بعلامة ×؛ اضغط «حفظ PDF / طباعة» ثم احفظه كملف PDF من نافذة الطباعة. لحفظ JSON على الآيفون اختر «حفظ إلى الملفات» من المشاركة.</p><button class="btn" data-close="settingsBack">إغلاق</button></div></div>
 <div class="modal-back" id="proposalNameBack"><div class="modal"><button class="close-x" id="cancelProposalName" type="button" aria-label="إلغاء">×</button><h2>اسم مقدم الاقتراح</h2><p class="sub">اكتب اسمك الرباعي مرة واحدة؛ سيُرفق بكل التغييرات التي تجمعها في هذا الطلب.</p><form id="proposalNameForm"><div class="proposal-name-grid name-dialog-grid"><div class="field"><label for="proposalNameDialog0">الاسم الأول</label><input id="proposalNameDialog0" maxlength="50" required></div><div class="field"><label for="proposalNameDialog1">اسم الأب</label><input id="proposalNameDialog1" maxlength="50" required></div><div class="field"><label for="proposalNameDialog2">اسم الجد</label><input id="proposalNameDialog2" maxlength="50" required></div><div class="field"><label for="proposalNameDialog3">اسم العائلة</label><input id="proposalNameDialog3" maxlength="50" required></div></div><div class="right"><button class="btn primary" type="submit">متابعة الاقتراح</button></div></form></div></div>
 <div class="modal-back" id="modalBack"><div class="modal"><button class="close-x" data-close="modalBack" aria-label="إغلاق">×</button><h2 id="modalTitle">إضافة شخص</h2><div class="fixed-parent"><span>الأب:</span><b id="fixedParentName"></b></div><form id="personForm"><input type="hidden" id="formMode"><input type="hidden" id="parentIdField"><div class="field"><label for="personName">الاسم الأول <span class="child-required-star" aria-hidden="true">*</span></label><input id="personName" required maxlength="100" placeholder="مثال: عبدالله"></div><fieldset class="gender-field" id="childGenderField"><legend>الجنس <span class="child-required-star" aria-hidden="true">*</span></legend><label class="radio-choice"><input type="radio" name="gender" value="male" required><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="gender" value="female"><span>أنثى</span></label></fieldset><div class="person-country-fields">
@@ -549,7 +549,18 @@ body.family-help-visible .tree-instruction-line{display:none}
     <div class="photo-crop-actions"><button class="btn primary" type="button" id="photoCropApply">اعتماد القص</button><button class="btn" type="button" id="photoCropCancel">إلغاء</button></div>
   </div>
 </div>
+<div class="modal-back" id="uncertaintyListBack" role="dialog" aria-modal="true" aria-label="حالات عدم التأكد"><div class="modal"><button class="close-x" type="button" data-close="uncertaintyListBack" aria-label="إغلاق">×</button><h2>حالات عدم التأكد</h2><p class="sub">جميع الحالات النشطة، بما فيها الحالات الخاصة بالمشرف.</p><div id="uncertaintyCasesList" class="uncertainty-case-list"></div></div></div>
+<div class="modal-back" id="fatherPickerBack" role="dialog" aria-modal="true" aria-label="تصحيح الأب"><div class="modal father-picker-modal"><button class="close-x" type="button" data-close="fatherPickerBack" aria-label="إغلاق">×</button><h2>تصحيح الأب</h2><div class="small" id="fatherPickerSubject"></div><label for="fatherSearchInput">ابحث عن الأب الصحيح في الشجرة</label><input id="fatherSearchInput" type="search" autocomplete="off" placeholder="اكتب اسم الأب…" style="width:100%;font-size:16px;margin:9px 0"><div id="fatherPickerMatches" class="father-matches"></div><div id="fatherPickerSelection" class="father-selection" hidden></div><div class="right"><button class="btn primary" type="button" id="confirmFatherChoice" disabled>اختيار الأب</button></div><p class="small">إذا لم يكن الأب موجودًا، قدّم طلب إضافته أولًا، وبعد اعتماده اطلب تصحيح الأب.</p></div></div>
+<div class="modal-back" id="uncertaintyReviewBack" role="dialog" aria-modal="true" aria-label="مراجعة طلب متعلق بحالة عدم تأكد"><div class="modal"><h2>مراجعة حالة عدم التأكد</h2><div id="uncertaintyReviewSubject" class="small"></div><div class="uncertainty-review-note"><b>⚠ حالة عدم التأكد الحالية</b><p id="uncertaintyReviewText"></p><div class="small" id="uncertaintyReviewVisibility"></div></div><fieldset><legend>ماذا تريد أن تفعل بحالة عدم التأكد؟ <span class="child-required-star">*</span></legend><label class="uncertainty-radio"><input type="radio" name="requestUncertaintyDecision" value="keep"> الإبقاء عليها كما هي</label><label class="uncertainty-radio"><input type="radio" name="requestUncertaintyDecision" value="remove"> إزالة حالة عدم التأكد</label></fieldset><p id="uncertaintyReviewNote" class="small">لا يوجد اختيار افتراضي. عند رفض الطلب تبقى الحالة دون تغيير.</p><div class="right"><button class="btn primary" type="button" id="uncertaintyReviewConfirm" disabled>اعتماد الطلب</button><button class="btn" type="button" id="uncertaintyReviewCancel">إلغاء</button></div></div></div>
 <div class="toast" id="toast"></div>
+<style id="familyTreeFeatures178">
+.uncertainty-stat{font:inherit;color:inherit;cursor:pointer;border:1px solid #ffffff5c;background:#ffffff1c;border-radius:13px;padding:7px 14px;align-items:center;min-width:110px}.uncertainty-stat b{font-size:22px}.uncertainty-stat span{font-size:11px}.uncertainty-stat:hover{background:#ffffff2e}
+.tree-uncertainty-mark{display:inline-block;margin-inline-start:5px;font-size:14px;line-height:1;color:#ad2e36;vertical-align:middle}.tree-uncertainty-mark.private{color:#b16a23}
+.uncertainty-profile-banner{background:#fff1f0;border:1px solid #d96b6b;color:#7b1d24;border-radius:13px;padding:13px 14px;margin:4px 0 15px;line-height:1.8}.uncertainty-profile-banner[hidden]{display:none!important}.uncertainty-profile-banner .uncertainty-banner-head{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:800}.uncertainty-profile-banner .uncertainty-banner-head .mark{font-size:24px}.uncertainty-profile-banner p{margin:4px 0 5px;font-size:13px;white-space:pre-wrap}.uncertainty-profile-banner button{font:inherit;font-size:12px;color:#8f2229;cursor:pointer;background:none;padding:0;border:0;text-decoration:underline;font-weight:700}
+.admin-uncertainty-editor,.admin-father-edit{background:#f7faf7;padding:13px;border:1px solid #d5e1d5;border-radius:13px;margin:15px 0}.admin-uncertainty-editor .uncertainty-check{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800}.admin-uncertainty-editor #editUncertaintyDetails{margin-top:12px}.admin-uncertainty-editor select,.admin-uncertainty-editor textarea{width:100%;max-width:100%;box-sizing:border-box;font:inherit;font-size:16px;min-height:43px;border:1px solid #b9cbbd;border-radius:10px;padding:9px}.uncertainty-visibility{display:flex;flex-wrap:wrap;gap:12px;border:0;padding:8px 0}.uncertainty-visibility legend{font-size:13px;font-weight:700;margin-bottom:5px}.uncertainty-visibility label{font-size:13px}.admin-father-edit h3{margin:0 0 6px;font-size:15px}.admin-father-edit p{margin:0 0 10px}.visitor-father-correction{margin:9px 0 14px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.father-picker-modal{max-height:85dvh;overflow-y:auto}.father-matches{display:flex;flex-direction:column;gap:6px;max-height:235px;overflow-y:auto}.father-matches button{font:inherit;text-align:right;background:#f5f9f5;color:#244736;border:1px solid #d8e5da;padding:10px;border-radius:9px;cursor:pointer}.father-matches button.selected{background:#deefe4;border-color:#3e8063}.father-selection{padding:11px;margin:12px 0;background:#edf7ef;border:1px solid #a8c5b0;border-radius:10px;font-size:13px;line-height:1.8}.uncertainty-case-list{display:flex;flex-direction:column;gap:7px;max-height:65dvh;overflow:auto}.uncertainty-case-list button{font:inherit;cursor:pointer;text-align:right;padding:12px;border:1px solid #dce2d8;border-radius:10px;background:#f8faf7;line-height:1.6}.uncertainty-case-list .small{display:block;color:#66756b}
+.request-history-tabs{flex-wrap:wrap;gap:7px;margin:10px 0 16px}.request-history-tabs .btn{font-size:12px}.family-request-card{border:1px solid #d8e2d9;border-radius:12px;padding:12px;margin:8px 0;background:#fff}.family-request-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.family-request-header .small{font-size:11px;color:#6b786e}.family-request-fields{line-height:1.75;margin:8px 0;font-size:12px;color:#4b594e}.family-request-fields strong{color:#1a4d35}.family-request-status{font-size:11px;font-weight:700;border-radius:8px;padding:3px 7px;background:#f7f2e3;color:#906718;white-space:nowrap}.family-request-status.approved{background:#eaf6ee;color:#276f3b}.family-request-status.rejected{background:#fff0ee;color:#a83538}.family-request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.family-request-details{margin-top:8px}.family-request-details summary{cursor:pointer;font-size:12px;color:#336249}.family-request-details .detail{white-space:pre-wrap}.family-request-batch{margin:14px 0 20px;padding:9px 12px;background:#f8faf8;border:1px solid #e1e9e1;border-radius:14px}.family-request-batch>header{font-weight:750;font-size:13px;margin:4px 0}.uncertainty-review-note{border:1px solid #d67d7d;border-radius:12px;background:#fff1f1;padding:12px;margin:12px 0;color:#7f262b}.uncertainty-review-note p{font-size:13px;white-space:pre-wrap;line-height:1.75}.uncertainty-radio{display:block;font-size:13px;margin:10px 0}
+</style>
 <script>
 (()=>{
 const KEY='alzaitooni-family-tree-v1';
@@ -584,7 +595,7 @@ let treeSearchActiveOption = -1;
 const treeGeometryObserver = new ResizeObserver(layoutTree);
 let proposalMode=false,pendingProposalEditId=null,proposalDraft={parts:['','','',''],items:[]};
 const byId=id=>data.people.find(p=>p.id===id),children=id=>data.people.filter(p=>p.parentId===id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function save(){localStorage.setItem(KEY,JSON.stringify({...data,people:data.people.map(({uncertainty,...person})=>person),requests:[]}));render()}
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
 function fullName(p){if(!p)return'';let result=p.name,cur=p;while(cur.parentId){const parent=byId(cur.parentId);if(!parent)break;result+=(cur.gender==='female'?' بنت ':' بن ')+parent.name;cur=parent}return result}
 function render(){const peopleCounter=document.getElementById('peopleCount');if(peopleCounter)peopleCounter.textContent=data.people.length;const pending=data.requests.filter(r=>r.status==='pending').length;document.getElementById('pendingCount').textContent=pending;document.getElementById('pendingBadge').textContent=pending?`(${pending})`:'';renderTree();refreshTreeSearchResults();renderRequests()}
@@ -626,7 +637,7 @@ function treeNode(person, view, depth = 0) {
   const toggle = kids.length && !ancestorOnly && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
-  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
+  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
 }
 function drawTreeBranches(root) {
   if (root.hasAttribute('data-shifting')) return;
@@ -1715,8 +1726,8 @@ let cloudAdmin=false,cloudOnline=false,cloudSyncBusy=false,cloudSyncQueued=false
 function cloudHeaders(extra={}){return{apikey:CLOUD_KEY,Authorization:'Bearer '+CLOUD_KEY,...extra}}
 async function cloudFetch(path,{method='GET',body,headers={}}={}){const h=cloudHeaders(headers);if(body!==undefined)h['Content-Type']='application/json';const response=await fetch(CLOUD_URL+path,{method,headers:h,body:body===undefined?undefined:JSON.stringify(body),cache:"no-store"});const raw=await response.text();let result=null;try{result=raw?JSON.parse(raw):null}catch{result=raw}if(!response.ok)throw new Error(result?.message||result?.msg||result?.error_description||result?.error||'HTTP '+response.status);return result}
 async function treeAdminCall(action,payload={},key=localStorage.getItem(TREE_ADMIN_STORE)||''){const response=await fetch(CLOUD_URL+'/functions/v1/family-tree-admin',{method:'POST',headers:{...cloudHeaders({'Content-Type':'application/json'}),'x-admin-key':key},body:JSON.stringify({action,...payload})});const raw=await response.text();let result=null;try{result=raw?JSON.parse(raw):null}catch{result=raw}if(!response.ok)throw new Error(result?.error||result?.message||'تعذر تنفيذ العملية ('+response.status+')');return result}
-function cloudPerson(row){return{id:row.id,name:row.name,gender:row.gender,parentId:row.parent_id,source:row.source||'',bio:row.bio||'',bioUpdatedAt:row.bio_updated_at||null,residence_country:row.residence_country||'',nationality:row.nationality||'',photo:row.photo_url||'',sortOrder:row.sort_order}}
-function cloudRequest(row){return{id:row.id,operation:row.operation,personId:row.person_id,parentId:row.parent_id,name:row.name,gender:row.gender,source:row.source||'',bio:row.bio||'',residence_country:row.residence_country||'',nationality:row.nationality||'',contributor:row.proposer_name||'',contributorPhone:row.proposer_phone||'',status:row.status,submittedAt:row.created_at,proposedPhotoUrl:row.proposed_photo_url||'',batchId:row.batch_id||row.id,proposedFields:row.proposed_fields||null,proposedOrder:row.proposed_order||null}}
+function cloudPerson(row){return{id:row.id,name:row.name,gender:row.gender,parentId:row.parent_id,source:row.source||'',bio:row.bio||'',bioUpdatedAt:row.bio_updated_at||null,residence_country:row.residence_country||'',nationality:row.nationality||'',photo:row.photo_url||'',sortOrder:row.sort_order,uncertaintyPublicNote:row.uncertainty_public_note||'',uncertaintyPublicKind:row.uncertainty_public_kind||''}}
+function cloudRequest(row){return{id:row.id,operation:row.operation,personId:row.person_id,parentId:row.parent_id,name:row.name,gender:row.gender,source:row.source||'',bio:row.bio||'',residence_country:row.residence_country||'',nationality:row.nationality||'',contributor:row.proposer_name||'',contributorPhone:row.proposer_phone||'',status:row.status,submittedAt:row.created_at,proposedPhotoUrl:row.proposed_photo_url||'',batchId:row.batch_id||row.id,proposedFields:row.proposed_fields||null,proposedOrder:row.proposed_order||null,decidedAt:row.decided_at||null,adminNote:row.admin_note||'',uncertaintyDecision:row.uncertainty_decision||null}}
 const settingsModal=document.querySelector('#settingsBack .modal'),settingsActions=document.querySelector('#settingsBack .settings-actions'),adminBox=document.createElement('div');
 adminBox.className='card';adminBox.id='cloudAdminBox';
 adminBox.innerHTML='<h3 style="margin:0 0 8px">دخول المشرف</h3><p class="sub">اختر كودًا خاصًا بك. التحقق يتم على الخادم، وما يظهر الكود في ملف الموقع.</p><div id="treeCodeSetup" class="hidden"><div class="field"><label for="newTreeAdminCode">كود المشرف الذي تختاره (٨ أحرف على الأقل)</label><input id="newTreeAdminCode" type="password" autocomplete="new-password"></div><div class="field"><label for="confirmTreeAdminCode">تأكيد الكود</label><input id="confirmTreeAdminCode" type="password" autocomplete="new-password"></div><div class="field hidden" id="legacyKeyField"><label for="legacyTreeAdminKey">كود المدير الحالي في الإنترلاكن</label><input id="legacyTreeAdminKey" type="password" autocomplete="current-password"></div><button class="btn primary" id="saveTreeAdminCode" type="button">حفظ كود الشجرة</button></div><div id="treeCodeLogin" class="hidden"><div class="field"><label for="treeAdminCode">كود المشرف</label><input id="treeAdminCode" type="password" autocomplete="current-password"></div><button class="btn soft" id="activateTreeAdmin" type="button">تفعيل وضع المدير</button><button class="btn hidden" id="lockTreeAdmin" type="button" style="margin-inline-start:6px">قفل وضع المدير</button><div id="changeTreeCode" class="hidden" style="margin-top:14px"><div class="field"><label for="replacementTreeCode">كود جديد (٨ أحرف على الأقل)</label><input id="replacementTreeCode" type="password" autocomplete="new-password"></div><div class="field"><label for="confirmReplacementTreeCode">تأكيد الكود الجديد</label><input id="confirmReplacementTreeCode" type="password" autocomplete="new-password"></div><button class="btn" id="changeTreeAdminCode" type="button">تغيير الكود</button></div></div><div class="small" id="cloudAdminStatus" style="margin-top:9px">الدخول للمشرف فقط؛ اقتراحات الزوار لا تغيّر الشجرة مباشرة.</div>';
@@ -1764,7 +1775,7 @@ moveChild=async function(id,step){const person=byId(id);if(!person||!person.pare
 async function fetchAllTreePeople(){
   const pageSize=500;
   const all=[];
-  const base='/rest/v1/family_tree_people?select=id,parent_id,name,gender,bio,bio_updated_at,source,residence_country,nationality,photo_url,sort_order&order=sort_order.asc,created_at.asc,id.asc';
+  const base='/rest/v1/family_tree_people?select=id,parent_id,name,gender,bio,bio_updated_at,source,residence_country,nationality,photo_url,sort_order,uncertainty_public_note,uncertainty_public_kind&order=sort_order.asc,created_at.asc,id.asc';
   for(let offset=0;offset<50000;offset+=pageSize){
     const page=await cloudFetch(base+'&limit='+pageSize+'&offset='+offset);
     if(!Array.isArray(page))throw new Error('تعذر قراءة قائمة أفراد الشجرة');
@@ -1776,7 +1787,7 @@ async function fetchAllTreePeople(){
   }
   throw new Error('عدد أفراد الشجرة تجاوز حد التحميل المتوقع');
 }
-async function syncCloud(){if(cloudSyncBusy){cloudSyncQueued=true;return cloudSyncPromise}cloudSyncBusy=true;cloudSyncPromise=(async()=>{do{cloudSyncQueued=false;try{const people=await fetchAllTreePeople();data.people=people.map(cloudPerson);if(adminVerified){const r=await treeAdminCall('list_suggestions');data.requests=(r.rows||[]).map(cloudRequest)}else data.requests=[];cloudOnline=true;localStorage.setItem(KEY,JSON.stringify(data));render();const editing=!(document.getElementById('profileBioEditor')?.classList.contains('hidden'))||document.getElementById('modalBack')?.classList.contains('open')||document.getElementById('editNameBack')?.classList.contains('open')||document.getElementById('deleteConfirmBack')?.classList.contains('open');if(activeProfileId&&byId(activeProfileId)&&!editing)openProfile(activeProfileId)}catch(e){cloudOnline=false;console.error('Cloud sync failed',e);const f=document.querySelector('.footer');if(f)f.textContent='تعذر الاتصال بالشجرة المشتركة مؤقتًا؛ تظهر النسخة المحفوظة على هذا الجهاز.'}}while(cloudSyncQueued)})();try{await cloudSyncPromise}finally{cloudSyncBusy=false;cloudSyncPromise=null}}
+async function syncCloud(){if(cloudSyncBusy){cloudSyncQueued=true;return cloudSyncPromise}cloudSyncBusy=true;cloudSyncPromise=(async()=>{do{cloudSyncQueued=false;try{const people=await fetchAllTreePeople();data.people=people.map(cloudPerson);if(adminVerified){const r=await treeAdminCall('list_suggestions');data.requests=(r.rows||[]).map(cloudRequest);const u=await treeAdminCall('list_uncertainties');const uncertaintyMap=new Map((u.rows||[]).map(row=>[row.person_id,row]));data.people.forEach(person=>{person.uncertainty=uncertaintyMap.get(person.id)||null})}else data.requests=[];cloudOnline=true;localStorage.setItem(KEY,JSON.stringify({...data,people:data.people.map(({uncertainty,...person})=>person),requests:[]}));render();const editing=!(document.getElementById('profileBioEditor')?.classList.contains('hidden'))||document.getElementById('modalBack')?.classList.contains('open')||document.getElementById('editNameBack')?.classList.contains('open')||document.getElementById('deleteConfirmBack')?.classList.contains('open');if(activeProfileId&&byId(activeProfileId)&&!editing)openProfile(activeProfileId)}catch(e){cloudOnline=false;console.error('Cloud sync failed',e);const f=document.querySelector('.footer');if(f)f.textContent='تعذر الاتصال بالشجرة المشتركة مؤقتًا؛ تظهر النسخة المحفوظة على هذا الجهاز.'}}while(cloudSyncQueued)})();try{await cloudSyncPromise}finally{cloudSyncBusy=false;cloudSyncPromise=null}}
 render=function(){localRender();cloudUpdateControls()};
 document.getElementById('importFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.people)||!Array.isArray(d.requests))throw new Error('ملف النسخة غير صالح');if(!adminVerified)throw new Error('فعّل وضع المشرف أولًا');const n=d.people.length;if(!confirm('سيتم استبدال الشجرة المشتركة بالكامل بالنسخة التي تحتوي على '+n+' اسمًا، وستظهر للجميع. ستُغلق الاقتراحات المعلقة. هل تتابع؟'))return;const result=await treeAdminCall('restore_tree',{people:d.people});await syncCloud();toast('تمت استعادة '+(result.count||n)+' اسمًا إلى الشجرة المشتركة')}catch(err){alert('تعذرت استعادة النسخة: '+(err.message||'تأكد من صحة الملف والروابط بين الأسماء.'))}finally{e.target.value=''}};
 function renderSuggestionDiff(r){const current=byId(r.personId);if(r.operation==='delete'){if(!current)return'<div class="request-diff"><div class="request-diff-empty">الشخص غير موجود حاليًا في الشجرة.</div></div>';const descendants=personDescendantCount(r.personId);return'<div class="request-diff"><div class="request-diff-title">اقتراح حذف '+esc(fullName(current)||current.name)+'</div><div class="request-diff-empty">'+(descendants?'سيحذف معه '+descendants+' اسمًا متفرعًا.':'سيُحذف هذا الاسم فقط.')+'</div></div>'}if(r.operation==='reorder'){const before=children(r.personId).map(x=>x.name).join(' · '),after=(r.proposedOrder||[]).map(id=>byId(id)?.name||'').filter(Boolean).join(' · ');return'<div class="request-diff"><div class="request-diff-title">ترتيب الأبناء المقترح</div><div class="request-diff-values"><div class="request-diff-before"><span class="diff-caption">قبل:</span> '+esc(before||'لا يوجد أبناء')+'</div><div class="request-diff-after"><span class="diff-caption">بعد:</span> '+esc(after||'لا يوجد أبناء')+'</div></div></div>'}if(r.operation==='add'){return'<div class="request-diff"><div class="request-diff-title">بيانات الابن المقترح</div><div class="request-diff-list"><div class="request-diff-item"><b>'+esc(r.gender==='female'?'الجنس: أنثى':'الجنس: ذكر')+'</b>'+(r.bio?'<div class="detail">النبذة: '+esc(r.bio)+'</div>':'')+(r.source?'<div class="detail">المصدر: '+esc(r.source)+'</div>':'')+(r.residence_country?'<div class="detail">بلد الإقامة: '+esc(r.residence_country)+'</div>':'')+(r.nationality?'<div class="detail">الجنسية: '+esc(r.nationality)+'</div>':'')+'</div></div>'+photoCompare(r,null)+'</div>'}if(!current)return'<div class="request-diff"><div class="request-diff-title">تعذر العثور على بيانات الشخص الحالية</div></div>';const genderName=v=>v==='female'?'أنثى':v==='male'?'ذكر':v||'غير محدد';const vals={name:{label:'الاسم',old:current.name,next:r.name},gender:{label:'الجنس',old:genderName(current.gender),next:genderName(r.gender)},bio:{label:'النبذة',old:current.bio||'',next:r.bio||'',empty:'لا توجد نبذة'},source:{label:'المصدر أو الملاحظة',old:current.source||'',next:r.source||'',empty:'لا توجد ملاحظة'},residence_country:{label:'بلد الإقامة',old:current.residence_country||'',next:r.proposedFields?.residence_country??current.residence_country??'',empty:'غير محدد'},nationality:{label:'الجنسية',old:current.nationality||'',next:r.proposedFields?.nationality??current.nationality??'',empty:'غير محدد'}};const fields=Object.entries(vals).filter(([key,f])=>r.proposedFields?Object.prototype.hasOwnProperty.call(r.proposedFields,key):String(f.old??'').trim()!==String(f.next??'').trim()).map(([,f])=>f);const photos=photoCompare(r,current);if(!fields.length&&!r.proposedPhotoUrl)return'<div class="request-diff"><div class="request-diff-title">التغييرات المقترحة</div><div class="request-diff-empty">لا توجد اختلافات فعلية بين البيانات الحالية والاقتراح.</div></div>';return'<div class="request-diff"><div class="request-diff-title">التغييرات المقترحة — القديم والجديد</div>'+(fields.length?'<div class="request-diff-list">'+fields.map(f=>'<div class="request-diff-item"><div class="request-diff-label">'+esc(f.label)+'</div><div class="request-diff-values"><div class="request-diff-before"><span class="diff-caption">قبل:</span> '+esc(String(f.old||f.empty||'غير محدد'))+'</div><div class="request-diff-after"><span class="diff-caption">بعد:</span> '+esc(String(f.next||f.empty||'غير محدد'))+'</div></div></div>').join('')+'</div>':'')+photos+'</div>'}function photoCompare(r,current){if(!r.proposedPhotoUrl)return'';return'<div class="request-photo-compare"><div class="request-photo-item"><b>الصورة الحالية</b>'+(current?.photo?'<img src="'+esc(current.photo)+'" alt="الصورة الحالية">':'<div class="request-photo-none">لا توجد صورة</div>')+'</div><div class="request-photo-item"><b>الصورة المقترحة</b><a href="'+esc(r.proposedPhotoUrl)+'" target="_blank" rel="noopener"><img src="'+esc(r.proposedPhotoUrl)+'" alt="الصورة المقترحة"></a></div></div>'}
@@ -2056,7 +2067,7 @@ function childDraftHasChanges(){
 
 
 // Launch features: public request log, private inbox, and proposal-field conflicts.
-const launchFieldLabels={name:'الاسم',gender:'الجنس',bio:'النبذة',source:'المصدر أو الملاحظة',photo:'الصورة الشخصية',residence_country:'بلد الإقامة',nationality:'الجنسية',reorder:'ترتيب الأبناء',delete:'الحذف',add:'إضافة ابن/ابنة'};
+const launchFieldLabels={name:'الاسم',gender:'الجنس',bio:'النبذة',source:'المصدر أو الملاحظة',photo:'الصورة الشخصية',residence_country:'بلد الإقامة',nationality:'الجنسية',parent_id:'تصحيح الأب',reorder:'ترتيب الأبناء',delete:'الحذف',add:'إضافة ابن/ابنة'};
 const launchStatusLabels={pending:'تحت الإجراء',approved:'معتمد',rejected:'مرفوض'};
 const launchLogColumns='id,reference,request_number,request_code,operation,person_id,parent_id,subject_name,fields,status,submitted_at,event_at,direct';
 const launchDateFormat=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Riyadh'});
@@ -2145,6 +2156,315 @@ const launchBaseBatch=renderProposalBatch;renderProposalBatch=function(){launchB
 const launchBaseControls=cloudUpdateControls;cloudUpdateControls=function(){launchBaseControls();for(const id of ['saveImageBtn','savePdfBtn']){const b=document.getElementById(id);if(b)b.hidden=!adminVerified}const note=document.querySelector('#settingsBack .export-note');if(note)note.hidden=!adminVerified;if(!adminVerified){privateVersion++;privateRows=[];privateUnread=0;privateExpanded.clear();document.getElementById('privateMessagesList').replaceChildren();if(inboxMode==='messages')adminInboxMode('requests')}updateAdminCounts();if(proposalMode&&!cloudAdmin&&activeProfileId)applyPendingLocks(activeProfileId)};
 for(const id of ['saveImageBtn','savePdfBtn']){const btn=document.getElementById(id),original=btn.onclick;btn.onclick=e=>{if(!adminVerified)return;return original.call(btn,e)}}
 const launchBaseSync=syncCloud;syncCloud=async function(){await launchBaseSync();if(adminVerified)loadPrivateMessages(true);if(proposalMode&&!cloudAdmin&&activeProfileId){try{await refreshPendingLocks(true)}catch{}applyPendingLocks(activeProfileId)}if(document.getElementById('aboutPanel').classList.contains('active')&&!document.getElementById('helpLogPage').hidden&&!logBusy)loadPublicLog(true)};
+
+// Family tree features A1 + B7/B8 (Nov 2026): request archive, uncertainty, parent transfers.
+const UNCERTAINTY_PRESETS = {
+  parent: 'نظرًا لعدم وضوح بعض خطوط التفرع في الشجرة الأصلية، تم ربط هذا الشخص وذريته بالفرع الأقرب وفق المعلومات المتاحة. إذا كانت لديك معلومات موثوقة تساعد على تحديد الأب الصحيح، نرجو المساهمة في تصحيح النسب من خلال تقديم طلب تعديل من هذه البطاقة.',
+  name: 'لم يكن اسم هذا الشخص واضحًا بشكل كافٍ في الشجرة الأصلية، لذا تم تسجيله وفق القراءة الأقرب للمصدر. إذا كانت لديك معلومة أدق، نرجو المساهمة في تصحيحه من خلال تقديم طلب تعديل من هذه البطاقة.',
+  gender: 'لم يتسنَّ تحديد جنس هذا الشخص بصورة مؤكدة من المعلومات المتاحة في الشجرة الأصلية، لذا تم تحديده بشكل تقديري استنادًا إلى الاسم. إذا كانت لديك معلومة مؤكدة، نرجو تقديم طلب تعديل من هذه البطاقة.'
+};
+const UNCERTAINTY_TITLES = {parent:'صلة النسب بحاجة إلى توثيق',name:'الاسم بحاجة إلى تأكيد',gender:'الجنس بحاجة إلى تأكيد',custom:'ملاحظة مخصصة'};
+const FAMILY_REQUEST_DATE_FORMAT = new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:true});
+function familyDate(iso){if(!iso)return 'تاريخ غير مسجل';const date=new Date(iso);return isNaN(date.getTime())?'تاريخ غير مسجل':FAMILY_REQUEST_DATE_FORMAT.format(date)}
+function familyFourName(person){if(!person)return 'غير متوفر في الشجرة';const names=[],seen=new Set();let node=person;while(node&&names.length<4&&!seen.has(node.id)){seen.add(node.id);names.push(node.name);node=node.parentId?byId(node.parentId):null}return names.join(' بن ')}
+function familyUncertain(person){if(!person)return null;if(adminVerified&&person.uncertainty?.active)return person.uncertainty;if(person.uncertaintyPublicNote)return {active:true,visibility:'public',note:person.uncertaintyPublicNote,note_kind:person.uncertaintyPublicKind||'custom'};return null}
+
+function renderUncertaintyProfile(id){
+ const person=byId(id),banner=document.getElementById('uncertaintyProfileBanner');if(!banner)return;
+ const entry=familyUncertain(person);banner.hidden=!entry;
+ if(!entry){banner.replaceChildren();return}
+ const text=entry.note||'';
+ const displayText=esc(text.replace(/\s*من خلال تقديم طلب تعديل من هذه البطاقة\.?\s*$/,'').replace(/\s*نرجو تقديم طلب تعديل من هذه البطاقة\.?\s*$/,''));
+ const showAction=entry.note_kind!=='custom';
+ banner.innerHTML='<div class="uncertainty-banner-head"><span class="mark" aria-hidden="true">⚠</span><span>حالة عدم التأكد'+(adminVerified&&entry.visibility==='admin'?' — للمشرف فقط':'')+'</span></div><p>'+displayText+'</p>'+(showAction?'<button type="button" id="openUncertaintyEdit">طلب تعديل</button>':'');
+ const action=banner.querySelector('#openUncertaintyEdit');
+ if(action)action.onclick=()=>{if(adminVerified){openEditName();return}openUncertaintyEditRequest(id,entry.note_kind)};
+}
+function openUncertaintyEditRequest(personId,kind){
+ if(!byId(personId))return;
+ if(!proposalMode)beginProposalMode();
+ if(!proposalMode)return;
+ if(activeProfileId!==personId)openProfile(personId);
+ if(kind==='parent'){openFamilyFatherPicker('visitor',personId);return}
+ if(kind==='name'){const field=document.getElementById('proposalFirstName');field?.focus();field?.scrollIntoView({block:'center',behavior:'smooth'});return}
+ if(kind==='gender'){const f=document.querySelector('#profileBack input[name="profileGender"]:checked')||document.querySelector('#profileBack input[name="profileGender"]');f?.focus();f?.scrollIntoView({block:'center',behavior:'smooth'});return}
+ document.getElementById('proposalBatchPanel')?.scrollIntoView({block:'center',behavior:'smooth'});
+}
+function updateUncertaintyAdminInputs(){
+ const active=document.getElementById('editUncertaintyEnabled').checked;
+ document.getElementById('editUncertaintyDetails').hidden=!active;
+ const free=document.getElementById('editUncertaintyPreset').value==='custom';
+ document.getElementById('editUncertaintyFreeRow').hidden=!active||!free;
+}
+function readAdminUncertainty(){
+ const current=byId(activeProfileId)?.uncertainty||null;
+ const active=document.getElementById('editUncertaintyEnabled').checked;
+ const kind=document.getElementById('editUncertaintyPreset').value || current?.note_kind || 'custom';
+ const text=kind==='custom'?document.getElementById('editUncertaintyFree').value.trim():UNCERTAINTY_PRESETS[kind]||'';
+ const visibility=document.querySelector('input[name="uncertaintyVisibility"]:checked')?.value||'admin';
+ if(active&&!text){toast('اختر ملاحظة عدم التأكد أو اكتبها أولًا');document.getElementById(kind==='custom'?'editUncertaintyFree':'editUncertaintyPreset').focus();return null}
+ return {active,note:active?text:(current?.note||''),note_kind:kind,visibility};
+}
+const familyOriginalEditName=openEditName;
+openEditName=function(){
+ familyOriginalEditName();
+ const p=byId(activeProfileId),entry=p?.uncertainty||null;
+ document.getElementById('editUncertaintyEnabled').checked=!!entry?.active;
+ document.getElementById('editUncertaintyPreset').value=entry?.note_kind||'';
+ document.getElementById('editUncertaintyFree').value=entry?.note||'';
+ document.querySelectorAll('input[name="uncertaintyVisibility"]').forEach(el=>el.checked=el.value===(entry?.visibility||'admin'));
+ adminPendingFatherId=null;document.getElementById('adminFatherSelection').textContent='الأب الحالي: '+familyFourName(byId(p?.parentId));
+ document.getElementById('adminChooseFather').disabled=!p?.parentId;
+ updateUncertaintyAdminInputs();
+};
+document.getElementById('editUncertaintyEnabled').addEventListener('change',updateUncertaintyAdminInputs);
+document.getElementById('editUncertaintyPreset').addEventListener('change',updateUncertaintyAdminInputs);
+
+let adminPendingFatherId=null;
+let fatherPickerContext=null;
+let fatherPickerChoice=null;
+function isAllowedFather(personId,fatherId){
+ const person=byId(personId),father=byId(fatherId);
+ return !!person?.parentId&&!!father&&father.gender==='male'&&fatherId!==personId&&fatherId!==person.parentId&&!descendantIds(personId).includes(fatherId);
+}
+function renderFatherCandidates(){
+ const search=document.getElementById('fatherSearchInput').value.trim();const result=document.getElementById('fatherPickerMatches');
+ const context=fatherPickerContext;
+ if(!context){result.replaceChildren();return}
+ if(search.length<2){result.innerHTML='<div class="small">اكتب حرفين على الأقل لعرض النتائج المطابقة.</div>';return}
+ const key=normalizeSearch(search);
+ const matches=data.people.filter(p=>isAllowedFather(context.personId,p.id)&&normalizeSearch(familyFourName(p)).includes(key)).slice(0,30);
+ result.innerHTML=matches.length?matches.map(p=>'<button type="button" data-pick-father="'+esc(p.id)+'" class="'+(fatherPickerChoice===p.id?'selected':'')+'">'+esc(familyFourName(p))+'</button>').join(''):'<div class="small">لم يظهر أب مطابق في الشجرة. قدّم طلب إضافة الشخص أولًا إذا كان غير مسجل.</div>';
+ result.querySelectorAll('[data-pick-father]').forEach(btn=>btn.onclick=()=>{
+   fatherPickerChoice=btn.dataset.pickFather;
+   renderFatherCandidates();
+   const picked=byId(fatherPickerChoice);
+   document.getElementById('fatherPickerSelection').hidden=false;
+   document.getElementById('fatherPickerSelection').innerHTML='<b>الأب المقترح:</b> '+esc(familyFourName(picked))+'<div><b>الذرية التي ستنتقل:</b> '+descendantIds(context.personId).length+' شخصًا</div>';
+   document.getElementById('confirmFatherChoice').disabled=false;
+ });
+}
+function openFamilyFatherPicker(mode,personId){
+ const person=byId(personId);
+ if(!person?.parentId){toast('لا يمكن تصحيح أب أصل الشجرة');return}
+ if(mode==='visitor'&&!proposalMode){beginProposalMode();if(!proposalMode)return}
+ if(mode==='visitor'&&typeof launchLock==='function'&&typeof pendingLocksReady!=='undefined'&&pendingLocksReady&&launchLock(personId,'parent_id')){toast('يوجد طلب سابق لتصحيح الأب لهذا الشخص');return}
+ fatherPickerContext={mode,personId};fatherPickerChoice=null;
+ document.getElementById('fatherSearchInput').value='';
+ document.getElementById('fatherPickerSubject').innerHTML='<b>الشخص:</b> '+esc(familyFourName(person))+'<div><b>الأب الحالي:</b> '+esc(familyFourName(byId(person.parentId)))+'</div><div><b>عدد الذرية المتأثرة:</b> '+descendantIds(personId).length+'</div>';
+ document.getElementById('fatherPickerSelection').hidden=true;
+ document.getElementById('confirmFatherChoice').disabled=true;
+ document.getElementById('fatherPickerBack').classList.add('open');renderFatherCandidates();
+ document.getElementById('fatherSearchInput').focus();
+}
+document.getElementById('fatherSearchInput').addEventListener('input',renderFatherCandidates);
+document.getElementById('adminChooseFather').onclick=()=>openFamilyFatherPicker('admin',activeProfileId);
+document.getElementById('visitorChooseFather').onclick=()=>openFamilyFatherPicker('visitor',activeProfileId);
+function setDraftProposedFather(personId,fatherId){
+ const person=byId(personId);if(!person)return;
+ let edit=proposalDraft.items.find(x=>x.operation==='edit'&&x.person_id===personId);
+ if(!edit){edit={operation:'edit',person_id:personId,proposed_fields:{}};proposalDraft.items.push(edit)}
+ edit.proposed_fields=edit.proposed_fields||{};
+ if(person.parentId===fatherId)delete edit.proposed_fields.parent_id;
+ else edit.proposed_fields.parent_id=fatherId;
+ if(!Object.keys(edit.proposed_fields).length&&!edit.photoBase64)proposalDraft.items=proposalDraft.items.filter(x=>x!==edit);
+ refreshProposalBatch();
+}
+document.getElementById('confirmFatherChoice').onclick=()=>{
+ const ctx=fatherPickerContext,chosen=fatherPickerChoice;
+ if(!ctx||!chosen||!isAllowedFather(ctx.personId,chosen)){toast('اختر أبًا صحيحًا من الشجرة');return}
+ if(ctx.mode==='admin'){
+   adminPendingFatherId=chosen;
+   document.getElementById('adminFatherSelection').textContent='الأب المقترح: '+familyFourName(byId(chosen))+' — سيُنقل '+descendantIds(ctx.personId).length+' من الذرية عند حفظ البطاقة.';
+ }else{
+   setDraftProposedFather(ctx.personId,chosen);
+   if(activeProfileId===ctx.personId)openProfile(ctx.personId);
+   toast('أُضيف تصحيح الأب إلى طلب التعديل');
+ }
+ closeLayer('fatherPickerBack');fatherPickerContext=null;
+};
+const familyBaseDescriptions=proposalItemDescriptions;
+proposalItemDescriptions=function(item){
+ const parts=familyBaseDescriptions(item);
+ if(item.operation==='edit'&&item.proposed_fields?.parent_id){
+  const p=byId(item.person_id),to=byId(item.proposed_fields.parent_id);
+  parts.push('تصحيح الأب — '+familyFourName(p)+' ← '+familyFourName(to));
+ }
+ return parts;
+};
+
+// The current admin edit form saves uncertainty and (if selected) a parent change.
+document.getElementById('editNameForm').onsubmit=async event=>{
+ event.preventDefault();
+ if(!adminVerified){toast('فعّل وضع المشرف أولًا');return}
+ const p=byId(activeProfileId),name=document.getElementById('editPersonName').value.trim(),gender=document.querySelector('input[name="adminEditGender"]:checked')?.value;
+ const uState=readAdminUncertainty();if(!uState)return;
+ if(!p||!name||!gender){toast('أكمل الاسم والجنس');return}
+ const newFather=adminPendingFatherId;
+ if(newFather&&!isAllowedFather(p.id,newFather)){toast('الأب المقترح لم يعد صالحًا');return}
+ if(newFather){
+  const msg='سيتم نقل «'+familyFourName(p)+'» وجميع ذريته ('+descendantIds(p.id).length+' شخصًا)\nمن: '+familyFourName(byId(p.parentId))+'\nإلى: '+familyFourName(byId(newFather))+'\nهل تعتمد التصحيح؟';
+  if(!confirm(msg))return;
+ }
+ const previous=p.uncertainty||null;
+ const shouldSaveU=!!previous||uState.active;
+ const btn=document.getElementById('saveEditName');btn.disabled=true;
+ try{
+  await treeAdminCall('update_person',{person_id:p.id,fields:{name,gender,bio:document.getElementById('adminEditBio').value.trim(),source:document.getElementById('adminEditSource').value.trim(),residence_country:getCountryValue('adminResidenceCountry'),nationality:getCountryValue('adminNationality')}});
+  if(shouldSaveU)await treeAdminCall('set_uncertainty',{person_id:p.id,state:uState});
+  if(newFather)await treeAdminCall('move_parent',{person_id:p.id,parent_id:newFather});
+  adminPendingFatherId=null;
+  closeLayer('editNameBack');await syncCloud();openProfile(p.id);
+  toast(newFather?'تم تصحيح الأب ونقل الذرية وحفظ التعديل':'تم حفظ بيانات البطاقة وحالة عدم التأكد');
+ }catch(error){toast('تعذر إكمال الحفظ: '+error.message)}finally{btn.disabled=false}
+};
+
+let familyRequestView='pending';
+let reviewFamilyPending=null;
+function familyRequestSubject(request){return byId(request.personId)||byId(request.parentId)||null}
+function familyRequestTitle(request){
+ const fields=request.proposedFields||{};
+ if(request.operation==='add')return 'طلب إضافة ابن/ابنة';
+ if(request.operation==='delete')return 'طلب حذف شخص';
+ if(request.operation==='reorder')return 'طلب تغيير ترتيب الأبناء';
+ if(fields.parent_id)return 'طلب تصحيح الأب';
+ const names=Object.keys(fields).map(k=>launchFieldLabels[k]||k);
+ if(request.proposedPhotoUrl)names.push('الصورة');
+ return names.length?'طلب تعديل '+names.join(' و '):'طلب تعديل البطاقة';
+}
+function requestDiffHtml(request){
+ const target=byId(request.personId),fatherId=request.proposedFields?.parent_id;
+ if(fatherId){
+  return '<div class="family-request-fields"><div><strong>الشخص:</strong> '+esc(familyFourName(target))+'</div><div><strong>الأب الحالي:</strong> '+esc(familyFourName(byId(target?.parentId)))+'</div><div><strong>الأب المقترح:</strong> '+esc(familyFourName(byId(fatherId)))+'</div><div><strong>الذرية التي ستنتقل:</strong> '+(target?descendantIds(target.id).length:0)+' شخصًا</div></div>';
+ }
+ return renderSuggestionDiff(request);
+}
+function familyRequestDataHtml(request){
+ const fields=request.proposedFields||{};
+ const details=Object.keys(fields).map(k=>{
+    let val=fields[k];if(k==='parent_id')val=familyFourName(byId(val));if(k==='gender')val=val==='female'?'أنثى':val==='male'?'ذكر':'غير محدد';
+    return '<div><b>'+esc(launchFieldLabels[k]||k)+':</b> '+esc(val)+'</div>';
+ }).join('');
+ return '<div class="detail"><b>مقدم الطلب:</b> '+esc(request.contributor||'غير مسجل')+'</div>'+
+ '<div class="detail"><b>رقم التواصل:</b> <span dir="ltr">'+esc(request.contributorPhone||'غير مسجل')+'</span></div>'+
+ '<div class="detail"><b>وقت التقديم:</b> '+esc(familyDate(request.submittedAt))+'</div>'+
+ (request.decidedAt?'<div class="detail"><b>وقت الإغلاق:</b> '+esc(familyDate(request.decidedAt))+'</div>':'')+
+ (request.name?'<div class="detail"><b>الاسم في الطلب:</b> '+esc(request.name)+'</div>':'')+
+ (request.source?'<div class="detail"><b>مصدر المعلومات:</b> '+esc(request.source)+'</div>':'')+
+ (request.bio?'<div class="detail"><b>النبذة:</b> '+esc(request.bio)+'</div>':'')+
+ (request.adminNote?'<div class="detail"><b>ملاحظة المشرف:</b> '+esc(request.adminNote)+'</div>':'')+
+ (request.uncertaintyDecision?'<div class="detail"><b>قرار حالة عدم التأكد:</b> '+(request.uncertaintyDecision==='remove'?'إزالتها':'الإبقاء عليها')+'</div>':'')+
+ (request.proposedPhotoUrl?'<div class="detail"><a href="'+esc(request.proposedPhotoUrl)+'" target="_blank" rel="noopener">عرض الصورة المقترحة</a></div>':'')+
+ details;
+}
+function familyRequestRow(request){
+ const status=request.status||'pending';const statusText={pending:'قيد المراجعة',approved:'مقبول',rejected:'مرفوض'}[status]||status;
+ const title=familyRequestTitle(request),subject=familyRequestSubject(request);
+ const actionButtons=status==='pending'?'<div class="family-request-actions"><button type="button" class="btn primary" data-family-approve="'+esc(request.id)+'">اعتماد الطلب</button><button type="button" class="btn danger" data-family-reject="'+esc(request.id)+'">رفض الطلب</button></div>':'';
+ return '<article class="family-request-card"><div class="family-request-header"><div><strong>'+esc(title)+'</strong><div class="small">'+esc(familyFourName(subject))+'</div><div class="small">قُدم في '+esc(familyDate(request.submittedAt))+'</div></div><span class="family-request-status '+esc(status)+'">'+statusText+'</span></div>'+requestDiffHtml(request)+'<details class="family-request-details" '+(status!=='pending'?'':'')+'><summary>بيانات مقدم الطلب والتفاصيل</summary>'+familyRequestDataHtml(request)+'</details>'+actionButtons+'</article>';
+}
+renderRequests=function(){
+ const list=document.getElementById('requestsList');if(!list)return;
+ const pending=data.requests.filter(r=>r.status==='pending'),closed=data.requests.filter(r=>r.status!=='pending');
+ const pBtn=document.getElementById('pendingTreeRequestsBtn'),aBtn=document.getElementById('archiveTreeRequestsBtn'),hBtn=document.getElementById('parentMoveHistoryBtn');
+ pBtn.textContent='المعلقة ('+(adminVerified?pending.length:0)+')';aBtn.textContent='أرشيف الطلبات ('+(adminVerified?closed.length:0)+')';
+ pBtn.classList.toggle('active',familyRequestView==='pending');aBtn.classList.toggle('active',familyRequestView==='archive');hBtn.classList.toggle('active',familyRequestView==='moves');
+ document.getElementById('parentMovesList').hidden=familyRequestView!=='moves';list.hidden=familyRequestView==='moves';
+ if(!adminVerified){list.replaceChildren();return}
+ if(familyRequestView==='moves')return;
+ const rows=(familyRequestView==='pending'?pending:closed).slice().sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
+ const groups=new Map();for(const r of rows){const key=r.batchId||r.id;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r)}
+ list.innerHTML=groups.size?[...groups.values()].map(rows=>'<section class="family-request-batch"><header>'+esc(rows[0].contributor||'مقدم الطلب غير مسجل')+' <span class="small">· '+esc(familyDate(rows[0].submittedAt))+' · '+rows.length+' تغيير/تغييرات</span></header>'+rows.map(familyRequestRow).join('')+'</section>').join(''):'<div class="empty">'+(familyRequestView==='pending'?'لا توجد طلبات معلّقة حاليًا.':'لا توجد طلبات مغلقة في الأرشيف.')+'</div>';
+ list.querySelectorAll('[data-family-approve]').forEach(button=>button.onclick=()=>reviewFamilyRequest(button.dataset.familyApprove,'approve'));
+ list.querySelectorAll('[data-family-reject]').forEach(button=>button.onclick=()=>reviewFamilyRequest(button.dataset.familyReject,'reject'));
+};
+function selectFamilyRequestView(view){familyRequestView=view;renderRequests();if(view==='moves')loadParentMoveHistory()}
+document.getElementById('pendingTreeRequestsBtn').onclick=()=>selectFamilyRequestView('pending');
+document.getElementById('archiveTreeRequestsBtn').onclick=()=>selectFamilyRequestView('archive');
+document.getElementById('parentMoveHistoryBtn').onclick=()=>selectFamilyRequestView('moves');
+function reviewFamilyRequest(id,decision){
+ if(!adminVerified)return;
+ const request=data.requests.find(r=>r.id===id&&r.status==='pending');if(!request)return;
+ const affected=byId(request.personId|| (request.operation==='add'?request.parentId:null));
+ const note=affected?.uncertainty;
+ if(note?.active){
+  reviewFamilyPending={id,decision};
+  document.getElementById('uncertaintyReviewSubject').textContent=familyRequestTitle(request)+' — '+familyFourName(affected);
+  document.getElementById('uncertaintyReviewText').textContent=note.note;
+  document.getElementById('uncertaintyReviewVisibility').textContent='الظهور: '+(note.visibility==='admin'?'للمشرف فقط':'للمشرف والزوار');
+  document.querySelectorAll('input[name="requestUncertaintyDecision"]').forEach(r=>r.checked=false);
+  document.getElementById('uncertaintyReviewConfirm').disabled=true;
+  document.getElementById('uncertaintyReviewConfirm').textContent=decision==='approve'?'اعتماد الطلب':'رفض الطلب';
+  document.getElementById('uncertaintyReviewBack').classList.add('open');
+  return;
+ }
+ performFamilyRequestReview(id,decision,null);
+}
+async function performFamilyRequestReview(id,decision,uncertaintyDecision){
+ const request=data.requests.find(r=>r.id===id&&r.status==='pending');if(!request)return;
+ if(decision==='approve'&&request.proposedFields?.parent_id){
+  const moving=byId(request.personId),next=byId(request.proposedFields.parent_id);
+  if(!moving||!next||!isAllowedFather(moving.id,next.id)){toast('الأب المقترح لم يعد صالحًا؛ راجع الطلب');return}
+  if(!confirm('اعتماد تصحيح الأب؟\nمن: '+familyFourName(byId(moving.parentId))+'\nإلى: '+familyFourName(next)+'\nعدد الذرية: '+descendantIds(moving.id).length))return;
+ }
+ const action=decision==='approve'?'approve_suggestion':'reject_suggestion';
+ const modalButton=document.getElementById('uncertaintyReviewConfirm');modalButton.disabled=true;
+ try{
+  await treeAdminCall(action,{suggestion_id:id,...(uncertaintyDecision?{uncertainty_decision:uncertaintyDecision}:{})});
+  reviewFamilyPending=null;closeLayer('uncertaintyReviewBack');await syncCloud();
+  toast(decision==='approve'?'تم اعتماد الطلب':'تم رفض الطلب وإضافته للأرشيف');
+ }catch(e){toast('تعذرت مراجعة الطلب: '+e.message)}finally{modalButton.disabled=false}
+}
+document.querySelectorAll('input[name="requestUncertaintyDecision"]').forEach(r=>r.onchange=()=>{document.getElementById('uncertaintyReviewConfirm').disabled=!document.querySelector('input[name="requestUncertaintyDecision"]:checked')});
+document.getElementById('uncertaintyReviewCancel').onclick=()=>{reviewFamilyPending=null;closeLayer('uncertaintyReviewBack')};
+document.getElementById('uncertaintyReviewConfirm').onclick=()=>{
+ if(!reviewFamilyPending)return;
+ const choice=document.querySelector('input[name="requestUncertaintyDecision"]:checked')?.value;
+ if(!choice){toast('اختر إبقاء الحالة أو إزالتها أولًا');return}
+ performFamilyRequestReview(reviewFamilyPending.id,reviewFamilyPending.decision,choice);
+};
+
+async function loadParentMoveHistory(){
+ if(!adminVerified)return;const list=document.getElementById('parentMovesList');list.innerHTML='<div class="small">جارٍ تحميل سجل تصحيح الأب…</div>';
+ try{
+  const response=await treeAdminCall('list_parent_moves');const rows=response.rows||[];
+  list.innerHTML=rows.length?rows.map(item=>{
+   return '<article class="family-request-card"><b>'+esc(familyFourName(byId(item.person_id)))+'</b><div class="family-request-fields"><div>من: '+esc(familyFourName(byId(item.old_parent_id)))+'</div><div>إلى: '+esc(familyFourName(byId(item.new_parent_id)))+'</div><div>الذرية: '+Number(item.descendant_count||0)+' شخصًا</div><div>التاريخ: '+esc(familyDate(item.moved_at))+'</div>'+(item.undone_at?'<div>تم التراجع: '+esc(familyDate(item.undone_at))+'</div>':'')+'</div>'+(item.undone_at?'':'<button class="btn danger" type="button" data-family-undo="'+esc(item.id)+'">التراجع عن هذا النقل</button>')+'</article>';
+  }).join(''):'<div class="empty">لم يتم تسجيل عمليات نقل أب حتى الآن.</div>';
+  list.querySelectorAll('[data-family-undo]').forEach(btn=>btn.onclick=async()=>{
+    if(!confirm('هل تريد التراجع عن نقل الأب المسجل؟ ستعود صلة النسب السابقة فقط، ولا تتغير بيانات الشخص أو ذريته.'))return;
+    btn.disabled=true;try{await treeAdminCall('undo_parent_move',{move_id:btn.dataset.familyUndo});await syncCloud();await loadParentMoveHistory();toast('تم التراجع عن نقل الأب')}catch(e){toast('تعذر التراجع: '+e.message);btn.disabled=false}
+  });
+ }catch(e){list.innerHTML='<div class="empty">تعذر تحميل سجل تصحيح الأب: '+esc(e.message)+'</div>'}
+}
+
+function renderUncertaintyCounter(){
+ const button=document.getElementById('uncertaintyCounter');if(!button)return;
+ button.classList.toggle('hidden',!adminVerified);
+ const active=adminVerified?data.people.filter(p=>p.uncertainty?.active):[];
+ document.getElementById('uncertaintyCount').textContent=active.length;
+}
+function showAllUncertaintyCases(){
+ if(!adminVerified)return;const arr=data.people.filter(p=>p.uncertainty?.active).sort((a,b)=>(b.uncertainty.updated_at||'').localeCompare(a.uncertainty.updated_at||''));
+ const list=document.getElementById('uncertaintyCasesList');
+ list.innerHTML=arr.length?arr.map(p=>'<button type="button" data-uncertainty-person="'+esc(p.id)+'"><b>⚠ '+esc(familyFourName(p))+'</b><span class="small">'+esc(UNCERTAINTY_TITLES[p.uncertainty.note_kind]||'ملاحظة مخصصة')+' · '+(p.uncertainty.visibility==='public'?'للمشرف والزوار':'للمشرف فقط')+'</span><span class="small">'+esc(p.uncertainty.note)+'</span></button>').join(''):'<div class="empty">لا توجد حالات عدم تأكد نشطة.</div>';
+ list.querySelectorAll('[data-uncertainty-person]').forEach(button=>button.onclick=()=>{
+  const id=button.dataset.uncertaintyPerson;
+  closeLayer('uncertaintyListBack');activateMainPanel('treePanel');openProfile(id);
+ });
+ document.getElementById('uncertaintyListBack').classList.add('open');
+}
+document.getElementById('uncertaintyCounter').onclick=showAllUncertaintyCases;
+
+const familyBaseOpenProfile=openProfile;
+openProfile=function(id){familyBaseOpenProfile(id);renderUncertaintyProfile(id);const p=byId(id),current=proposalDraft.items.find(x=>x.operation==='edit'&&x.person_id===id)?.proposed_fields?.parent_id;document.getElementById('visitorFatherSelection').textContent=current?'الأب المقترح: '+familyFourName(byId(current)):'الأب الحالي: '+familyFourName(byId(p?.parentId))};
+const familyBaseRender=render;
+render=function(){familyBaseRender();renderUncertaintyCounter()};
+const familyBaseCloudControls=cloudUpdateControls;
+cloudUpdateControls=function(){familyBaseCloudControls();renderUncertaintyCounter()};
+// Keep cached admin-only data out of memory immediately when the administrator logs out.
+const familyOriginalLogout=document.getElementById('lockTreeAdmin').onclick;
+document.getElementById('lockTreeAdmin').onclick=function(event){familyOriginalLogout?.call(this,event);data.people.forEach(person=>{delete person.uncertainty});renderUncertaintyCounter();if(activeProfileId)renderUncertaintyProfile(activeProfileId);localStorage.setItem(KEY,JSON.stringify({...data,people:data.people.map(({uncertainty,...person})=>person),requests:[]}))};
 
 setTimeout(()=>initCloud(),0);
 render();
