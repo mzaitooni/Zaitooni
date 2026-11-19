@@ -2861,4 +2861,68 @@ refresh();
   setUI(false);
 })();
 </script>
+
+<style id="zaiSafariPortraitMiddleBalance20261119">
+/* Safari on iPhone in browser mode, portrait only. The middle group can be
+   visually too close to the feature tiles in the available viewport. Move it
+   inside the existing flexible space without moving its sibling groups. */
+#introPage .zai-intro-middle.zai-safari-middle-balance {
+  transform:translateY(var(--zai-safari-middle-shift,0px));
+}
+</style>
+<script id="zaiSafariPortraitMiddleBalanceCode20261119">
+(()=>{
+  'use strict';
+  const page=document.getElementById('introPage');
+  const middle=page?.querySelector('.zai-intro-middle');
+  const features=page?.querySelector('.intro-features');
+  const archive=page?.querySelector('.intro-archive');
+  if(!page||!middle||!features||!archive)return;
+  // Avoid affecting iPhone Home Screen, other browsers, Android, or iPad.
+  const ua=navigator.userAgent||'';
+  const safariIphone=/iPhone/i.test(ua)&&/Safari/i.test(ua)&&
+    !/(?:CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo)/i.test(ua);
+  if(!safariIphone)return;
+  const displayStandalone=()=>navigator.standalone===true||
+    matchMedia('(display-mode: standalone)').matches;
+  let previousShift=0,scheduled=false;
+  function balance(){
+    scheduled=false;
+    const active=matchMedia('(orientation: portrait)').matches &&
+      !displayStandalone() && !page.classList.contains('zai-intro-focus') &&
+      !document.body.classList.contains('tree-open');
+    if(!active){
+      previousShift=0;
+      middle.style.removeProperty('--zai-safari-middle-shift');
+      middle.classList.remove('zai-safari-middle-balance');
+      return;
+    }
+    middle.classList.add('zai-safari-middle-balance');
+    const f=features.getBoundingClientRect();
+    const m=middle.getBoundingClientRect();
+    const a=archive.getBoundingClientRect();
+    // Remove the existing visual translation from the measured positions.
+    const topGap=m.top-previousShift-f.bottom;
+    const bottomGap=a.top-(m.bottom-previousShift);
+    // Do not move anything if the available space is too short.
+    const room=topGap+bottomGap;
+    const desired=room>40 ? Math.max(10,(bottomGap-topGap)/2) : 0;
+    const shift=Math.max(0,Math.min(60,desired,bottomGap-16));
+    previousShift=shift;
+    middle.style.setProperty('--zai-safari-middle-shift',shift.toFixed(1)+'px');
+  }
+  function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(balance);}}
+  schedule();
+  // Initial reveal animations and late font loading may change actual gaps.
+  setTimeout(schedule,1050);
+  document.fonts?.ready?.then(schedule);
+  addEventListener('resize',schedule,{passive:true});
+  addEventListener('orientationchange',schedule,{passive:true});
+  window.visualViewport?.addEventListener('resize',schedule,{passive:true});
+  if('ResizeObserver' in window){
+    const ro=new ResizeObserver(schedule);
+    ro.observe(page);ro.observe(features);ro.observe(middle);ro.observe(archive);
+  }
+})();
+</script>
 </body></html>
