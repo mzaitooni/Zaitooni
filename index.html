@@ -648,7 +648,7 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 <main class="wrap">
   <div class="sticky-tree-header">
   <header class="hero">
-    <div class="hero-actions"><button class="settings-btn" id="settingsOpen" aria-label="الإعدادات" title="الإعدادات">⚙</button><button class="hero-action tab" data-tab="aboutPanel" type="button"><span class="help-action-icon" aria-hidden="true">؟</span><span id="helpButtonLabel">مساعدة</span></button><button class="hero-action tab" data-tab="requestsPanel" type="button">الطلبات <span id="pendingBadge"></span></button></div><div class="eyebrow">مشروع عائلي قابل للتحديث</div><h1>شجرة آل الزيتوني</h1>
+    <div class="hero-actions"><button class="settings-btn" id="settingsOpen" aria-label="الإعدادات" title="الإعدادات">⚙</button><button class="hero-action tab" data-tab="aboutPanel" type="button"><span class="help-action-icon" aria-hidden="true">؟</span><span id="helpButtonLabel">مساعدة</span></button><button class="hero-action tab" data-tab="requestsPanel" type="button">الطلبات <span id="pendingBadge"></span></button></div><div class="eyebrow">مشروع عائلي قابل للتحديث</div><h1><button type="button" class="tree-heading-intro-link" id="treeHeadingIntroLink" aria-label="العودة إلى صفحة المقدمة" title="العودة إلى صفحة المقدمة">شجرة آل الزيتوني</button></h1>
     <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div><button type="button" class="stat uncertainty-stat hidden" id="uncertaintyCounter" aria-label="عرض حالات عدم التأكد"><b id="uncertaintyCount">0</b><span>⚠ حالات عدم التأكد</span></button></div>
   </header>
   <p class="tree-instruction-line">اضغط على الاسم لعرض بطاقته، وعلى السهم لعرض فروعه أو إخفائها.</p>
@@ -2776,6 +2776,11 @@ render();
  function animateIntroCount(raw){const target=Number(raw);if(!Number.isFinite(target)||target<=0||introTarget===target)return;const old=introTarget===null?0:introTarget;introTarget=target;cancelAnimationFrame(introFrame);if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('tree-open')){introCounterEl.textContent=introFormat.format(target);return}const start=performance.now(),duration=2750;function tick(now){const x=Math.min(1,(now-start)/duration),value=Math.round(old+(target-old)*(1-Math.pow(1-x,3)));introCounterEl.textContent=introFormat.format(value);if(x<1)introFrame=requestAnimationFrame(tick)}introFrame=requestAnimationFrame(tick)}
  window.addEventListener('zaitooni:people-count',e=>animateIntroCount(e.detail?.count));if(introCounterEl.dataset.count)animateIntroCount(introCounterEl.dataset.count);
  
+ document.getElementById('treeHeadingIntroLink')?.addEventListener('click',()=>{
+   // Keep the address consistent with the intro; otherwise refreshing would reopen the tree.
+   if(location.hash==='#tree')history.replaceState({treePage:false},'',location.pathname+location.search);
+   showIntro();
+ });
  document.getElementById('introOpenTree').addEventListener('click',showTree);
  window.addEventListener('popstate',()=>{if(location.hash==='#tree')showTree();else showIntro()});
  const openArchive=()=>{viewer.classList.add('open');viewer.setAttribute('aria-hidden','false')};
@@ -2786,6 +2791,12 @@ render();
  document.addEventListener('keydown',event=>{if(event.key==='Escape')closeArchive()});
 })();
 </script>
+<style id="zaiTreeTitleReturnToIntroStyle20261119">
+/* Keep the approved header title appearance while making it accessible by touch and keyboard. */
+.hero h1 .tree-heading-intro-link{display:inline-block;vertical-align:baseline;border:0;margin:0;padding:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit;text-align:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hero h1 .tree-heading-intro-link:hover{opacity:.94}
+.hero h1 .tree-heading-intro-link:focus-visible{outline:2px solid #f0d99e;outline-offset:5px;border-radius:4px}
+</style>
 <script id="zaiLandscapeFullscreenCode">
 (()=>{
 'use strict';
