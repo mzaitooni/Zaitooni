@@ -764,7 +764,7 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 <style id="familyTreeFeatures178">
 .uncertainty-stat{font:inherit;color:inherit;cursor:pointer;border:1px solid #ffffff5c;background:#ffffff1c;border-radius:13px;padding:7px 14px;align-items:center;min-width:110px}.uncertainty-stat b{font-size:22px}.uncertainty-stat span{font-size:11px}.uncertainty-stat:hover{background:#ffffff2e}
 .tree-uncertainty-mark{display:inline-block;margin-inline-start:5px;font-size:14px;line-height:1;color:#ad2e36;vertical-align:middle}.tree-uncertainty-mark.private{color:#b16a23}
-.uncertainty-profile-banner{background:#fff1f0;border:1px solid #d96b6b;color:#7b1d24;border-radius:13px;padding:13px 14px;margin:4px 0 15px;line-height:1.8}.uncertainty-profile-banner[hidden]{display:none!important}.uncertainty-profile-banner .uncertainty-banner-head{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:800}.uncertainty-profile-banner .uncertainty-banner-head .mark{font-size:24px}.uncertainty-profile-banner p{margin:4px 0 5px;font-size:13px;white-space:pre-wrap}.uncertainty-profile-banner button{font:inherit;font-size:12px;color:#8f2229;cursor:pointer;background:none;padding:0;border:0;text-decoration:underline;font-weight:700}
+.uncertainty-profile-banner{background:#fff1f0;border:1px solid #d96b6b;color:#7b1d24;border-radius:13px;padding:13px 14px;margin:4px 0 15px;line-height:1.8}.uncertainty-profile-banner[hidden]{display:none!important}.uncertainty-profile-banner .uncertainty-banner-head{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:800}.uncertainty-profile-banner .uncertainty-banner-head .mark{font-size:24px}.uncertainty-profile-banner p{margin:4px 0 5px;font-size:13px;white-space:pre-wrap}.uncertainty-profile-banner button{font:inherit;font-size:12px;color:#8f2229;cursor:pointer;background:none;padding:0;border:0;text-decoration:underline;font-weight:700}.uncertainty-profile-banner .uncertainty-action-link{color:#8f2229;text-decoration:underline;font-weight:800;cursor:pointer;text-underline-offset:2px}.uncertainty-profile-banner .uncertainty-action-link:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
 .admin-uncertainty-editor,.admin-father-edit{background:#f7faf7;padding:13px;border:1px solid #d5e1d5;border-radius:13px;margin:15px 0}.admin-uncertainty-editor .uncertainty-check{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800}.admin-uncertainty-editor #editUncertaintyDetails{margin-top:12px}.admin-uncertainty-editor select,.admin-uncertainty-editor textarea{width:100%;max-width:100%;box-sizing:border-box;font:inherit;font-size:16px;min-height:43px;border:1px solid #b9cbbd;border-radius:10px;padding:9px}.uncertainty-visibility{display:flex;flex-wrap:wrap;gap:12px;border:0;padding:8px 0}.uncertainty-visibility legend{font-size:13px;font-weight:700;margin-bottom:5px}.uncertainty-visibility label{font-size:13px}.admin-father-edit h3{margin:0 0 6px;font-size:15px}.admin-father-edit p{margin:0 0 10px}.visitor-father-correction{margin:9px 0 14px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .father-picker-modal{max-height:85dvh;overflow-y:auto}.father-matches{display:flex;flex-direction:column;gap:6px;max-height:235px;overflow-y:auto}.father-matches button{font:inherit;text-align:right;background:#f5f9f5;color:#244736;border:1px solid #d8e5da;padding:10px;border-radius:9px;cursor:pointer}.father-matches button.selected{background:#deefe4;border-color:#3e8063}.father-selection{padding:11px;margin:12px 0;background:#edf7ef;border:1px solid #a8c5b0;border-radius:10px;font-size:13px;line-height:1.8}.uncertainty-case-list{display:flex;flex-direction:column;gap:7px;max-height:65dvh;overflow:auto}.uncertainty-case-list button{font:inherit;cursor:pointer;text-align:right;padding:12px;border:1px solid #dce2d8;border-radius:10px;background:#f8faf7;line-height:1.6}.uncertainty-case-list .small{display:block;color:#66756b}
 .request-history-tabs{flex-wrap:wrap;gap:7px;margin:10px 0 16px}.request-history-tabs .btn{font-size:12px}.family-request-card{border:1px solid #d8e2d9;border-radius:12px;padding:12px;margin:8px 0;background:#fff}.family-request-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.family-request-header .small{font-size:11px;color:#6b786e}.family-request-fields{line-height:1.75;margin:8px 0;font-size:12px;color:#4b594e}.family-request-fields strong{color:#1a4d35}.family-request-status{font-size:11px;font-weight:700;border-radius:8px;padding:3px 7px;background:#f7f2e3;color:#906718;white-space:nowrap}.family-request-status.approved{background:#eaf6ee;color:#276f3b}.family-request-status.rejected{background:#fff0ee;color:#a83538}.family-request-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.family-request-details{margin-top:8px}.family-request-details summary{cursor:pointer;font-size:12px;color:#336249}.family-request-details .detail{white-space:pre-wrap}.family-request-batch{margin:14px 0 20px;padding:9px 12px;background:#f8faf8;border:1px solid #e1e9e1;border-radius:14px}.family-request-batch>header{font-weight:750;font-size:13px;margin:4px 0}.uncertainty-review-note{border:1px solid #d67d7d;border-radius:12px;background:#fff1f1;padding:12px;margin:12px 0;color:#7f262b}.uncertainty-review-note p{font-size:13px;white-space:pre-wrap;line-height:1.75}.uncertainty-radio{display:block;font-size:13px;margin:10px 0}
@@ -2446,15 +2446,32 @@ function renderUncertaintyProfile(id){
  const entry=familyUncertain(person);banner.hidden=!entry;
  if(!entry){banner.replaceChildren();return}
  const text=entry.note||'';
- // The link lives inside the note itself, and always opens the regular person edit mode.
- // Preset and freely written notes ending in "طلب تعديل" use the same route.
- const linkMatch=/(طلب تعديل)(?=\s*(?:من هذه البطاقة)?[.!؟،\s]*$)/.exec(text);
- const bodyText=linkMatch
-   ? esc(text.slice(0,linkMatch.index))+'<button type="button" id="openUncertaintyEdit">طلب تعديل</button>'+esc(text.slice(linkMatch.index+linkMatch[1].length))
-   : esc(text);
+ // Keep notes as escaped text. Turn only known action labels into clickable links.
+ // Older notes ending in "طلب تعديل" remain supported.
+ const tokens=/(طلب تعديل البطاقة|التواصل مع المشرف|طلب تعديل)(?=\s*(?:من هذه البطاقة)?[.!؟،\s]*$)|طلب تعديل البطاقة|التواصل مع المشرف/g;
+ let cursor=0,bodyText='',match;
+ while((match=tokens.exec(text))!==null){
+   bodyText+=esc(text.slice(cursor,match.index));
+   const action=match[0]==='التواصل مع المشرف'?'contact':'edit';
+   const dest=action==='contact'?'#family-help-contact':'#family-request-edit';
+   bodyText+='<a href="'+dest+'" class="uncertainty-action-link" data-uncertainty-action="'+action+'">'+esc(match[0])+'</a>';
+   cursor=match.index+match[0].length;
+ }
+ bodyText+=esc(text.slice(cursor));
  banner.innerHTML='<div class="uncertainty-banner-head"><span class="mark" aria-hidden="true">⚠</span><span>حالة عدم التأكد'+(adminVerified&&entry.visibility==='admin'?' — للمشرف فقط':'')+'</span></div><p>'+bodyText+'</p>';
- const action=banner.querySelector('#openUncertaintyEdit');
- if(action)action.onclick=()=>{if(adminVerified){openEditName();return}openUncertaintyEditRequest(id)};
+ banner.querySelectorAll('[data-uncertainty-action]').forEach(a=>a.addEventListener('click',event=>{
+  event.preventDefault();
+  if(a.dataset.uncertaintyAction==='contact'){
+   // This is the existing private-contact form in Help; not an external link.
+   if(document.getElementById('profileBack')?.classList.contains('open')){
+    profileHistory=[];activeProfileId=null;closeLayer('profileBack');
+   }
+   activateMainPanel('aboutPanel');setHelpPage('contact');
+   return;
+  }
+  if(adminVerified){openEditName();return}
+  openUncertaintyEditRequest(id);
+ }));
 }
 function openUncertaintyEditRequest(personId){
  if(!byId(personId))return;
