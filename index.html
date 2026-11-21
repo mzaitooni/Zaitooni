@@ -691,6 +691,46 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 @media(max-width:620px){.sticky-tree-header .tree-toolbar .tree-fit-width{width:28px;height:29px;min-width:28px;flex-basis:28px;border-radius:8px}.tree-fit-width svg{width:15px;height:15px}}
 @media print{.tree-fit-width{display:none!important}}
 </style>
+<style id="zaitooniAdminSystemStorage20261121">
+/* Admin-only system and storage dashboard */
+#zaiSystemEntry{margin-top:14px;padding-top:13px;border-top:1px solid var(--line,#dbe6de)}
+#zaiSystemEntry .zai-sys-entry{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:right;gap:9px;border:1px solid #d6e4d9;border-radius:12px;background:#f2f8f3;color:#21563d;padding:12px 14px;font:inherit;cursor:pointer;font-weight:750}
+#zaiSystemEntry .zai-sys-entry .arrow{color:#779581;font-size:22px}
+#zaiSystemEntry .zai-sys-mini{font-size:11px;color:#63796e;margin:7px 2px 0;line-height:1.6}
+#systemStorageBack .modal.zai-sys-modal{width:min(820px,calc(100vw - 24px));max-height:calc(100dvh - 30px);overflow:auto;box-sizing:border-box;padding:21px 20px 26px}
+#systemStorageBack .zai-sys-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 4px}
+#systemStorageBack .zai-sys-title h2{margin:0;font-size:21px;color:#1d4936}
+#systemStorageBack .zai-sys-sub{margin:0 0 12px;font-size:12px;line-height:1.7;color:#698274}
+#systemStorageBack .zai-sys-tabs{display:flex;gap:8px;margin:13px 0 14px}
+#systemStorageBack .zai-sys-tabs button{flex:1;min-height:39px;background:#f1f6f2;border:1px solid #d5e2d8;border-radius:10px;font:inherit;font-size:13px;font-weight:700;color:#426b53;cursor:pointer}
+#systemStorageBack .zai-sys-tabs button.active{background:#275b45;color:white;border-color:#275b45}
+#systemStorageBack .zai-sys-banner{border:1px solid #dbe6dd;background:#f5faf6;padding:10px 12px;border-radius:11px;font-size:12px;line-height:1.8;color:#42654d;margin-bottom:13px}
+#systemStorageBack .zai-sys-banner.zai-sys-error{border-color:#ebc6c4;background:#fff5f4;color:#8b3530}
+#systemStorageBack .zai-sys-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:14px}
+#systemStorageBack .zai-sys-stat{border:1px solid #dce7df;border-radius:12px;padding:13px 10px;background:#fff;min-width:0}
+#systemStorageBack .zai-sys-stat span{font-size:11px;display:block;color:#718477;margin-bottom:7px}
+#systemStorageBack .zai-sys-stat b{font-size:22px;font-variant-numeric:tabular-nums;color:#1a563a;display:block;overflow-wrap:anywhere}
+#systemStorageBack .zai-sys-stat small{font-size:10px;color:#87978a}
+#systemStorageBack .zai-sys-line{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:9px 0}
+#systemStorageBack .zai-sys-line .btn{font-size:12px;min-height:33px}
+#systemStorageBack .zai-sys-small{font-size:11px;line-height:1.8;color:#748376}
+#systemStorageBack .zai-sys-searchrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+#systemStorageBack .zai-sys-searchrow input{min-height:40px;flex:1;min-width:140px;border:1px solid #d4e2d7;border-radius:10px;padding:9px;font:inherit;font-size:12px}
+#systemStorageBack .zai-sys-searchrow select{min-height:40px;max-width:100%;background:white;border:1px solid #d4e2d7;border-radius:10px;padding:9px;font:inherit;font-size:12px}
+#systemStorageBack .zai-sys-files{display:grid;gap:8px;margin-top:9px;max-height:330px;overflow:auto}
+#systemStorageBack .zai-sys-file{display:flex;justify-content:space-between;align-items:center;gap:9px;border:1px solid #e1ebe3;background:#fff;border-radius:11px;padding:10px}
+#systemStorageBack .zai-sys-f-info{min-width:0;flex:1;text-align:right}
+#systemStorageBack .zai-sys-f-info b{font-size:12px;color:#314d3c;display:block;overflow-wrap:anywhere;word-break:break-word;line-height:1.5}
+#systemStorageBack .zai-sys-f-info small{font-size:10px;color:#829184;display:block;margin-top:3px}
+#systemStorageBack .zai-sys-f-action{flex:none;min-width:85px;text-align:left}
+#systemStorageBack .zai-sys-chip{display:inline-block;border:1px solid #bcd9c6;color:#2c6a48;background:#eef8ef;border-radius:20px;font-size:10px;padding:3px 8px}
+#systemStorageBack .zai-sys-chip.unlinked{border-color:#eddac4;color:#9c662c;background:#fff8e9}
+#systemStorageBack .zai-sys-delete{border:1px solid #e9b6b4;background:#fff7f7;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:700;color:#a13e38;cursor:pointer;margin-top:6px}
+#systemStorageBack .zai-sys-delete:disabled{opacity:.5;cursor:default}
+#systemStorageBack .zai-sys-foot{padding-top:11px;margin-top:12px;border-top:1px solid #e2eae3}
+#systemStorageBack a.zai-sys-link{color:#246148;text-decoration:underline;font-size:12px}
+@media(max-width:580px){#systemStorageBack .modal.zai-sys-modal{padding:17px 13px 21px;max-height:calc(100dvh - 22px)}#systemStorageBack .zai-sys-title h2{font-size:18px}#systemStorageBack .zai-sys-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}#systemStorageBack .zai-sys-stat{padding:11px}#systemStorageBack .zai-sys-stat b{font-size:21px}}
+</style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
@@ -787,6 +827,37 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
   </section>
   <div class="footer">الشجرة تعرض النسخة المعتمدة المشتركة. الاقتراحات تنتظر مراجعة المشرف.</div>
 </main>
+<div class="modal-back" id="systemStorageBack" role="dialog" aria-modal="true" aria-label="النظام والتخزين" aria-hidden="true">
+ <div class="modal zai-sys-modal">
+  <div class="zai-sys-title"><h2>النظام والتخزين</h2><button class="btn" id="zaiSystemClose" type="button" aria-label="العودة إلى الإعدادات">→ عودة</button></div>
+  <p class="zai-sys-sub">لوحة مراقبة خاصة بالمشرف · البيانات من Supabase عند آخر تحديث</p>
+  <div class="zai-sys-tabs" role="tablist" aria-label="قسم النظام والتخزين"><button id="zaiSystemStatusTab" type="button" class="active" role="tab" aria-selected="true">حالة النظام</button><button id="zaiSystemFilesTab" type="button" role="tab" aria-selected="false">إدارة الملفات</button></div>
+  <div class="zai-sys-line"><span id="zaiSystemChecked" class="zai-sys-small">لم يُجرَ فحص بعد</span><button id="zaiSystemRefresh" class="btn" type="button">↻ تحديث البيانات</button></div>
+  <div id="zaiSystemBanner" class="zai-sys-banner" role="status" aria-live="polite">اضغط «تحديث البيانات» لعرض المؤشرات المباشرة.</div>
+  <div id="zaiSystemStatusContent" role="tabpanel">
+   <div class="zai-sys-grid">
+    <div class="zai-sys-stat"><span>حالة الاتصال</span><b id="zaiSysOnline">—</b><small>قاعدة البيانات والخدمة</small></div>
+    <div class="zai-sys-stat"><span>الأشخاص</span><b id="zaiSysPeople">—</b><small>المعتمدون في الشجرة</small></div>
+    <div class="zai-sys-stat"><span>طلبات معلقة</span><b id="zaiSysPending">—</b><small>بانتظار المراجعة</small></div>
+    <div class="zai-sys-stat"><span>طلبات مؤرشفة</span><b id="zaiSysClosed">—</b><small>مغلقة ومعتمدة أو مرفوضة</small></div>
+    <div class="zai-sys-stat"><span>رسائل الزوار</span><b id="zaiSysMessages">—</b><small>منها <strong id="zaiSysUnread">—</strong> غير مقروءة</small></div>
+    <div class="zai-sys-stat"><span>تخزين الصور والملفات</span><b id="zaiSysBytes">—</b><small><strong id="zaiSysFiles">—</strong> ملف داخل الشجرة</small></div>
+   </div>
+   <div class="zai-sys-banner">الأرقام تخص بيانات الشجرة والملفات الموجودة في مساحاتها فقط. <b>استهلاك الباقة الكامل، وحجم قاعدة البيانات والفوترة</b> يُراجع من لوحة Supabase الرسمية؛ لا نعرض تقديرات كأنها أرقام فعلية.</div>
+  </div>
+  <div id="zaiSystemFilesContent" role="tabpanel" hidden>
+    <div class="zai-sys-grid">
+      <div class="zai-sys-stat"><span>ملفات التخزين</span><b id="zaiSysFileCount">—</b></div>
+      <div class="zai-sys-stat"><span>المساحة المستخدمة</span><b id="zaiSysTotalStorage">—</b></div>
+      <div class="zai-sys-stat"><span>ملفات غير مرتبطة</span><b id="zaiSysOrphans">—</b><small id="zaiSysOrphanBytes"></small></div>
+    </div>
+    <div class="zai-sys-searchrow"><input id="zaiSystemFileSearch" aria-label="بحث في الملفات" placeholder="ابحث عن اسم ملف أو مجلد…"><select id="zaiSystemFileFilter" aria-label="حالة الملفات"><option value="all">جميع الملفات</option><option value="used">الملفات المستخدمة</option><option value="unused">غير مرتبطة</option></select></div>
+    <p class="zai-sys-small">مرتبة من الأكبر إلى الأصغر. الملفات المرتبطة بالأشخاص أو الطلبات محمية من الحذف. الملفات غير المرتبطة لا تُحذف إلا بإجراء يدوي وتأكيد.</p>
+    <div id="zaiSystemFileList" class="zai-sys-files" aria-live="polite"><p class="zai-sys-small">لم تُحمّل القائمة بعد.</p></div>
+  </div>
+  <div class="zai-sys-foot"><a id="zaiSystemSupabaseLink" class="zai-sys-link" href="https://supabase.com/dashboard/project/hjjfbgdodbnctyhmerqy" target="_blank" rel="noopener noreferrer">فتح لوحة Supabase للاستهلاك الكامل</a><p class="zai-sys-small">ملاحظة: لا تُخزَّن أي مفاتيح إدارية سرية داخل الملف. التحقق والصلاحيات تُنفّذ على الخادم.</p></div>
+ </div>
+</div>
 <div class="modal-back" id="requestReceiptBack"><div class="modal proposal-exit-modal"><h2>تم إرسال طلبك بنجاح ✓</h2><p class="sub">احتفظ برقم الطلب لمتابعة حالته. تُراجع التغييرات كلٌّ على حدة.</p><div class="launch-reference receipt-reference" id="receiptReference" dir="ltr"></div><div class="proposal-exit-actions"><button type="button" class="btn primary" id="receiptTrack">متابعة حالة الطلب</button><button type="button" class="btn" id="receiptCopy">نسخ رقم الطلب</button><button type="button" class="btn" id="receiptClose">إغلاق</button></div></div></div><div class="modal-back" id="profileBack"><div class="modal profile-modal"><button class="close-x" id="profileBackButton" type="button" aria-label="عودة" title="عودة"><svg class="back-arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 7-7m-7 7 7 7"/></svg></button><button class="btn profile-return-tree" id="profileReturnTree" type="button" aria-label="إغلاق" title="إغلاق"><span aria-hidden="true">×</span></button><div id="uncertaintyProfileBanner" class="uncertainty-profile-banner" hidden></div><div class="profile-card-toolbar"><h2 id="profileName" class="visually-hidden">بطاقة الشخص</h2><div class="profile-record-actions"><button class="btn soft" id="profileEditName" aria-label="تعديل الاسم">تعديل الاسم</button><button class="btn danger" id="profileDeletePerson" aria-label="حذف الاسم">حذف الاسم</button></div></div><section id="proposalBatchPanel" class="proposal-batch hidden"><div class="proposal-batch-head"><b>طلب التعديلات</b><span id="proposalBatchCount" class="pill">0 تغييرات</span></div><div class="proposal-name-grid"><div class="field"><label for="proposalName0">الاسم الأول</label><input id="proposalName0" autocomplete="given-name" maxlength="50" required></div><div class="field"><label for="proposalName1">اسم الأب</label><input id="proposalName1" maxlength="50" required></div><div class="field"><label for="proposalName2">اسم الجد</label><input id="proposalName2" maxlength="50" required></div><div class="field"><label for="proposalName3">اسم العائلة</label><input id="proposalName3" autocomplete="family-name" maxlength="50" required></div></div><div class="proposal-contact-fields" id="proposalContactFields" aria-label="رقم التواصل لمقدم طلب التعديل"><div class="field proposal-phone-field"><label for="proposalPhone">رقم التواصل مع مفتاح الدولة <span class="proposal-required-star" aria-hidden="true">*</span></label><input id="proposalPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" maxlength="35" required placeholder="+963 9XXXXXXXX" aria-describedby="proposalPhoneHint"></div></div><div class="small proposal-phone-hint" id="proposalPhoneHint">الرقم إلزامي، ويجب أن يبدأ بعلامة + ومفتاح الدولة، مثل +963 9XXXXXXXX أو +966 5XXXXXXXX. لن يظهر الرقم لزوار الشجرة.</div><h3 class="proposal-summary-title" id="proposalSummaryTitle">مختصر طلب/طلبات التعديل</h3><div id="proposalBatchItems" class="proposal-batch-items" aria-live="polite"></div><div class="proposal-batch-actions"><button id="sendProposalBatch" class="btn primary" type="button">إرسال الطلب للمراجعة</button><button id="clearProposalBatch" class="btn danger" type="button">مسح الطلب</button></div></section><div class="profile-identity-row"><div class="profile-name-group"><div class="full-name" id="profileFullName"></div><div class="visitor-father-correction hidden" id="visitorFatherCorrection"><button type="button" class="btn soft" id="visitorChooseFather">تصحيح النسب</button><div class="small" id="visitorFatherSelection"></div></div></div><div class="profile-photo"><div class="photo-preview" id="profilePhotoPreview" aria-label="معاينة صورة الشخص">لا توجد صورة</div><div class="photo-controls"><button class="btn soft" id="chooseProfilePhoto" type="button">إضافة صورة</button><button class="btn danger hidden" id="removeProfilePhoto" type="button">حذف الصورة</button></div><input id="profilePhotoInput" class="hidden" type="file" accept="image/*"></div></div><div class="field bio-field profile-bio-section"><div class="profile-bio-card" id="profileBioCard" aria-label="نبذة الشخص"><div class="profile-bio-title"><b>نبذة عنه</b><span class="profile-generation-badge" id="profileGenerationBadge" aria-label="رقم الجيل" title="يُحسب من الجد الأكبر الذي يُعد الجيل الأول">الجيل —</span></div><div class="profile-bio-text" id="profileBioDisplay">لا توجد نبذة بعد.</div><div class="profile-bio-updated hidden" id="profileBioUpdated" aria-label="تاريخ آخر تحديث معتمد للنبذة"></div><div class="profile-bio-hint">تُعدّل من خيار «اقتراح تعديل»</div></div><div class="profile-bio-editor hidden" id="profileBioEditor"><label for="profileBio">تعديل النبذة</label><textarea id="profileBio" maxlength="300" placeholder="اكتب نبذة قصيرة عنه"></textarea><div class="small bio-counter"><span id="profileBioCount">0</span> / 300 حرف <span class="autosave-hint">· تُحفظ تلقائيًا</span></div></div></div><div id="profileCountries" class="profile-country-fields hidden" aria-label="الجنسية وبلد الإقامة"></div><fieldset class="gender-field profile-gender"><legend>الجنس</legend><label class="radio-choice"><input type="radio" name="profileGender" value="male"><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="profileGender" value="female"><span>أنثى</span></label></fieldset><div class="profile-stats" id="profileStats"></div><section class="children-section" id="profileChildrenSection"><div class="children-heading"><h3>الأبناء</h3><div class="profile-actions"><button class="btn primary" id="profileAddChild">＋ إضافة ابن/ابنة</button></div></div><div class="small order-hint">استخدم السهمين لترتيب الأسماء كما تريد.</div><div id="profileChildren" class="list"></div></section></div></div>
 <div class="modal-back" id="deleteConfirmBack"><div class="modal"><h2>تأكيد الحذف</h2><p id="deleteConfirmMessage" class="sub"></p><div class="right"><button class="btn danger" id="confirmDeleteBtn" type="button">تأكيد الحذف</button><button class="btn" type="button" data-close="deleteConfirmBack">إلغاء</button></div></div></div>
 <div class="modal-back" id="editNameBack"><div class="modal"><button class="close-x" data-close="editNameBack" aria-label="إغلاق">×</button><h2>تعديل بطاقة الشخص</h2><form id="editNameForm"><div class="field"><label for="editPersonName">الاسم الأول</label><input id="editPersonName" required maxlength="100" placeholder="مثال: عبدالله"></div><fieldset class="gender-field"><legend>الجنس</legend><label class="radio-choice"><input type="radio" name="adminEditGender" value="male" required><span>ذكر</span></label><label class="radio-choice"><input type="radio" name="adminEditGender" value="female"><span>أنثى</span></label></fieldset><div class="person-country-fields">
@@ -930,14 +1001,19 @@ function treeNode(person, view, depth = 0) {
   const searchPath = view.visibleIds && kids.some(child => view.visibleIds.has(child.id)) &&
     (!matched || view.nestedMatchIds.has(person.id));
   const ancestorOnly = view.lineage?.has(person.id);
-  const canDrill = view.generations && (depth === generationCount - 1 ||
-    (view.searchFocus && person.id === view.selectedId));
+  // In search, ancestors keep the chosen lineage visible while their arrows
+  // reveal/hide siblings. The last column's arrow navigates to a new window.
+  const searchAncestor = Boolean(view.searchFocus && ancestorOnly);
+  const canDrill = view.generations && depth === generationCount - 1;
   let shownKids = [];
   let childView = view;
   if (view.fullTree) {
     shownKids = kids;
   } else if (ancestorOnly) {
-    shownKids = kids.filter(child => child.id === view.lineage.get(person.id));
+    // Opening a search ancestor exposes *all* children; closing it still
+    // retains the next person on the searched lineage (never lose the result).
+    shownKids = searchAncestor && view.openIds.has(person.id)
+      ? kids : kids.filter(child => child.id === view.lineage.get(person.id));
   } else if (!canDrill) {
     if (searchPath && !searchCollapsedBranches.has(person.id)) {
       if (view.openIds.has(person.id)) {
@@ -956,9 +1032,10 @@ function treeNode(person, view, depth = 0) {
   const id = esc(person.id);
   const ancestor = view.generations ? depth === 0 : !person.parentId;
   const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
-  const actionLabel = canDrill ? `عرض فرع ${name}` : childHtml ? 'إخفاء الأبناء' : 'إظهار الأبناء';
-  const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${Boolean(childHtml)}"`;
-  const toggle = kids.length && !ancestorOnly && !view.fullTree
+  const branchOpen = searchAncestor ? view.openIds.has(person.id) : Boolean(childHtml);
+  const actionLabel = canDrill ? `عرض فرع ${name}` : branchOpen ? 'إخفاء الأبناء' : 'إظهار الأبناء';
+  const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${branchOpen}"`;
+  const toggle = kids.length && (!ancestorOnly || searchAncestor) && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
   return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
@@ -1179,6 +1256,15 @@ function generationView({ root, depthBelow }) {
   // Keep the selected person in the next-to-last column whenever it fits.
   if (path.length >= generationCount - 1) {
     const visiblePath = path.slice(-(generationCount - 1));
+    // When the visitor drills from the last search column, the search is over.
+    // Show the ancestor window as regular navigation, including brothers /
+    // sisters of each generation, not just the old searched person's trail.
+    if (focusedTreeView.includeTopSiblings) {
+      const top = visiblePath[0];
+      return {root:top,roots:top.parentId ? children(top.parentId) : [top],
+        generations:true,openIds:focusedTreeView.openIds ??
+          new Set(visiblePath.map(person=>person.id))};
+    }
     const line = visiblePath.slice(0, -2);
     const lineage = new Map(line.map((person, i) => [person.id, visiblePath[i + 1].id]));
     const parent = visiblePath.at(-2);
@@ -1252,7 +1338,8 @@ function searchMatchingPeople(query) {
 }
 
 function cloneTreeFocus(view) {
-  return { anchorId: view.anchorId ?? null, openIds: view.openIds ? new Set(view.openIds) : null };
+  return { anchorId: view.anchorId ?? null, openIds: view.openIds ? new Set(view.openIds) : null,
+    includeTopSiblings:Boolean(view.includeTopSiblings) };
 }
 function captureTreeState() {
   const viewport = document.getElementById('tree');
@@ -1342,7 +1429,7 @@ function selectedPersonGenerationView(person) {
     current = byId(current.parentId);
   }
   const lineage = new Map(path.slice(0,-1).map((ancestor,i) => [ancestor.id,path[i+1].id]));
-  return {root:path[0],generations:true,lineage,openIds:new Set(),
+  return {root:path[0],generations:true,lineage,openIds:focusedTreeView.openIds ?? new Set(),
     matchIds:new Set([person.id]),selectedId:person.id,searchFocus:true};
 }
 
@@ -1396,7 +1483,7 @@ const hasSelection = Boolean(person);
   } else {
     view = fullTreeSelected ? {fullTree:true} : generationView(tree);
   }
-  const roots = generations ? (view.root ? [view.root] : []) : data.people.filter(row => !row.parentId);
+  const roots = generations ? (view.roots ?? (view.root ? [view.root] : [])) : data.people.filter(row => !row.parentId);
   const html = roots.map(row => treeNode(row,view)).join('');
   viewport.innerHTML = html
     ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><svg class="tree-connectors" aria-hidden="true" focusable="false"><path/></svg><ul>${html}</ul></div></div>`
@@ -1418,13 +1505,16 @@ function toggleTreeBranch(button, viewport, query, view) {
   const id = button.dataset.toggle;
   const previousCards = view.generations ? snapshotTreeCards(viewport) : null;
   if (button.hasAttribute('data-drill')) {
-    // Search is only a shortcut: drilling from the result switches to normal navigation.
-    if (treeSearchSession) dismissSearchWithoutRestoring();
+    // Search is only a shortcut: any arrow in its last column ends search,
+    // even when that person is a side branch rather than the exact match.
+    const leavingSearch=Boolean(selectedTreeSearchId);
+    if (leavingSearch) dismissSearchWithoutRestoring();
     const selected = byId(id);
     const parent = selected && byId(selected.parentId);
     if (!parent) return;
     treeViewHistory.push({ view: focusedTreeView, count: generationCount, top: window.scrollY, right: scrollRightOffset(viewport) });
-    focusedTreeView = { anchorId: id, openIds: null };
+    focusedTreeView = { anchorId: id, openIds: null,
+      includeTopSiblings:leavingSearch || Boolean(focusedTreeView.includeTopSiblings) };
     renderTree();
     moveToTreeStart(viewport);
     animateTreeShift(viewport, previousCards, 1);
@@ -2884,6 +2974,37 @@ cloudUpdateControls=function(){familyBaseCloudControls();renderUncertaintyCounte
 // Keep cached admin-only data out of memory immediately when the administrator logs out.
 const familyOriginalLogout=document.getElementById('lockTreeAdmin').onclick;
 document.getElementById('lockTreeAdmin').onclick=function(event){familyOriginalLogout?.call(this,event);data.people.forEach(person=>{delete person.uncertainty});renderUncertaintyCounter();if(activeProfileId)renderUncertaintyProfile(activeProfileId);localStorage.setItem(KEY,JSON.stringify({...data,people:data.people.map(({uncertainty,...person})=>person),requests:[]}))};
+
+
+// Admin-only system health and safe storage management (6B + 7B).
+const zSysEntry=document.createElement('div');
+zSysEntry.id='zaiSystemEntry';zSysEntry.className='hidden';
+zSysEntry.innerHTML='<button id="zaiSystemOpen" class="zai-sys-entry" type="button"><span>◈ النظام والتخزين</span><span class="arrow" aria-hidden="true">‹</span></button><p class="zai-sys-mini">حالة الاتصال، أعداد السجلات، استخدام الملفات، ومراجعة الملفات غير المرتبطة.</p>';
+adminBox.appendChild(zSysEntry);
+const zSysDialog=document.getElementById('systemStorageBack');
+const zSysStatusArea=document.getElementById('zaiSystemStatusContent');
+const zSysFilesArea=document.getElementById('zaiSystemFilesContent');
+let zSysOverview=null, zSysBusy=false, zSysActiveTab='status';
+const zSysEl=id=>document.getElementById(id);
+function zSysSize(n){n=Number(n)||0;if(n<1024)return n+' ب';if(n<1048576)return (n/1024).toLocaleString('ar-SA',{maximumFractionDigits:1})+' ك.ب';if(n<1073741824)return (n/1048576).toLocaleString('ar-SA',{maximumFractionDigits:2})+' م.ب';return (n/1073741824).toLocaleString('ar-SA',{maximumFractionDigits:2})+' ج.ب'}
+function zSysSetBanner(message,error=false){const el=zSysEl('zaiSystemBanner');el.textContent=message;el.classList.toggle('zai-sys-error',error)}
+function zSysSetTab(tab){zSysActiveTab=tab;const status=tab==='status';zSysStatusArea.hidden=!status;zSysFilesArea.hidden=status;const s=zSysEl('zaiSystemStatusTab'),f=zSysEl('zaiSystemFilesTab');s.classList.toggle('active',status);f.classList.toggle('active',!status);s.setAttribute('aria-selected',String(status));f.setAttribute('aria-selected',String(!status));if(!status)zSysRenderFiles()}
+function zSysOpen(){if(!adminVerified){toast('فعّل وضع المشرف أولًا');return}closeLayer('settingsBack');zSysDialog.classList.add('open');zSysDialog.setAttribute('aria-hidden','false');zSysSetTab('status');zSysRefresh()}
+function zSysClose(showSettings=true){zSysDialog.classList.remove('open');zSysDialog.setAttribute('aria-hidden','true');if(showSettings&&adminVerified)document.getElementById('settingsBack').classList.add('open')}
+async function zSysCall(action,payload={}){if(!adminVerified)throw Error('وضع المشرف غير مفعّل');const key=localStorage.getItem(TREE_ADMIN_STORE)||'';if(!key)throw Error('أعد تسجيل الدخول للمشرف');const res=await fetch(CLOUD_URL+'/functions/v1/family-tree-system',{method:'POST',headers:{...cloudHeaders({'Content-Type':'application/json'}),'x-admin-key':key},body:JSON.stringify({action,...payload}),cache:'no-store'});let result=null;try{result=await res.json()}catch{}if(!res.ok||!result?.ok)throw Error(result?.error||'تعذر التواصل مع خدمة النظام ('+res.status+')');return result}
+async function zSysRefresh(){if(zSysBusy||!adminVerified)return;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('جاري فحص الاتصال وسجلات الشجرة والتخزين…');try{const info=await zSysCall('overview');if(!adminVerified)return;zSysOverview=info;zSysEl('zaiSysOnline').textContent='متصل';zSysEl('zaiSysPeople').textContent=Number(info.peopleCount).toLocaleString('ar-SA');zSysEl('zaiSysPending').textContent=Number(info.pendingRequests).toLocaleString('ar-SA');zSysEl('zaiSysClosed').textContent=Number(info.closedRequests).toLocaleString('ar-SA');zSysEl('zaiSysMessages').textContent=Number(info.messagesCount).toLocaleString('ar-SA');zSysEl('zaiSysUnread').textContent=Number(info.unreadMessages).toLocaleString('ar-SA');zSysEl('zaiSysBytes').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysFiles').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysFileCount').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysTotalStorage').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysOrphans').textContent=Number(info.unlinkedCount).toLocaleString('ar-SA');zSysEl('zaiSysOrphanBytes').textContent=zSysSize(info.unlinkedBytes);zSysEl('zaiSystemChecked').textContent='آخر فحص: '+new Date(info.checkedAt).toLocaleString('ar-SA',{dateStyle:'short',timeStyle:'short'});zSysSetBanner('الاتصال يعمل بنجاح. الإحصاءات والملفات محدّثة من الخادم.');zSysRenderFiles()}catch(e){zSysEl('zaiSysOnline').textContent='تعذر الفحص';zSysSetBanner('تعذر جلب البيانات: '+e.message,true);zSysOverview=null;zSysRenderFiles()}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false}}
+function zSysRenderFiles(){const root=zSysEl('zaiSystemFileList');root.replaceChildren();if(!zSysOverview){const t=document.createElement('p');t.className='zai-sys-small';t.textContent='لا توجد بيانات متاحة بعد. اضغط تحديث البيانات.';root.appendChild(t);return}const filter=zSysEl('zaiSystemFileFilter').value,term=zSysEl('zaiSystemFileSearch').value.trim().toLocaleLowerCase('ar');const items=(zSysOverview.files||[]).filter(f=>(filter==='all'||(filter==='unused'?!f.linked:f.linked))&&(!term||(f.path+' '+f.bucket).toLocaleLowerCase('ar').includes(term)));if(!items.length){const p=document.createElement('p');p.className='zai-sys-small';p.textContent='لا توجد ملفات مطابقة.';root.appendChild(p);return}for(const f of items){const r=document.createElement('div');r.className='zai-sys-file';const info=document.createElement('div');info.className='zai-sys-f-info';const name=document.createElement('b');name.textContent=f.path;info.appendChild(name);const desc=document.createElement('small');desc.textContent=f.bucket+' · '+zSysSize(f.size)+(f.updatedAt?' · '+new Date(f.updatedAt).toLocaleDateString('ar-SA'):'');info.appendChild(desc);r.appendChild(info);const actions=document.createElement('div');actions.className='zai-sys-f-action';const chip=document.createElement('span');chip.className='zai-sys-chip'+(!f.linked?' unlinked':'');chip.textContent=f.linked?'مرتبط':'غير مرتبط';actions.appendChild(chip);if(!f.linked){const del=document.createElement('button');del.type='button';del.className='zai-sys-delete';del.textContent='حذف الملف';del.addEventListener('click',()=>zSysDelete(f,del));actions.appendChild(document.createElement('br'));actions.appendChild(del)}r.appendChild(actions);root.appendChild(r)}}
+async function zSysDelete(f,button){if(!adminVerified||zSysBusy||f.linked)return;const message='حذف الملف نهائيًا؟\n'+f.path+'\n\nسيجري الخادم التحقق مرة أخرى من عدم ارتباطه بأي بطاقة أو طلب. لا يمكن استعادة الملف بعد حذفه.';if(!window.confirm(message))return;button.disabled=true;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('التحقق من ارتباط الملف قبل الحذف…');let zSysDeleteError='';try{await zSysCall('delete_unused',{bucket:f.bucket,path:f.path,confirm:'DELETE_UNUSED_FILE'});}catch(e){zSysDeleteError=e.message}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false;button.disabled=false;await zSysRefresh();zSysSetTab('files');if(zSysDeleteError)zSysSetBanner('لم يُحذف الملف: '+zSysDeleteError,true);else if(zSysOverview)zSysSetBanner('تم حذف الملف غير المرتبط وتحديث القائمة بنجاح.')}}
+zSysEl('zaiSystemOpen').addEventListener('click',zSysOpen);
+zSysEl('zaiSystemClose').addEventListener('click',()=>zSysClose(true));
+zSysDialog.addEventListener('click',e=>{if(e.target===zSysDialog)zSysClose(true)});
+zSysEl('zaiSystemStatusTab').addEventListener('click',()=>zSysSetTab('status'));
+zSysEl('zaiSystemFilesTab').addEventListener('click',()=>zSysSetTab('files'));
+zSysEl('zaiSystemRefresh').addEventListener('click',zSysRefresh);
+zSysEl('zaiSystemFileSearch').addEventListener('input',zSysRenderFiles);
+zSysEl('zaiSystemFileFilter').addEventListener('change',zSysRenderFiles);
+const zSysOriginalCloudUpdate=cloudUpdateControls;
+cloudUpdateControls=function(){zSysOriginalCloudUpdate();zSysEntry.classList.toggle('hidden',!adminVerified);if(!adminVerified&&zSysDialog.classList.contains('open')){zSysClose(false);zSysOverview=null}}
 
 setTimeout(()=>initCloud(),0);
 render();
