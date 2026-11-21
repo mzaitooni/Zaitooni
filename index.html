@@ -817,6 +817,30 @@ body.zai-tree-focus #tree{padding-top:calc(env(safe-area-inset-top) + 54px)!impo
 body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit{font-size:26px!important;font-weight:800!important;background:#205b48!important;color:#fff!important;border-color:#205b48!important;line-height:1!important}
 body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:#184436!important}
 @media(max-width:350px){body.zai-tree-focus .tree-toolbar{gap:3px!important;padding:4px!important}}
+
+/* Visitor statistics: admin-only, visually consistent with system/storage */
+.zai-traffic-section{margin:18px 0 24px;padding:16px 14px;border:1px solid var(--line,#dbe6de);border-radius:16px;background:var(--paper,#fff);color:var(--ink,#18382b)}
+.zai-traffic-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.zai-traffic-head h3{margin:0;font-size:1.08rem;color:var(--green,#154b37)}
+.zai-traffic-tag{font-size:.74rem;padding:4px 9px;border-radius:20px;background:#ecf5ef;color:#255740;font-weight:700}
+.zai-traffic-lead{margin:7px 0 15px;color:var(--muted,#637769);font-size:.83rem;line-height:1.8}
+.zai-traffic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.zai-traffic-stat{min-width:0;display:flex;flex-direction:column;gap:7px;border:1px solid #dbe9dc;background:#f8fbf8;border-radius:12px;padding:13px 10px}
+.zai-traffic-stat span{font-size:.78rem;color:#586c5f}
+.zai-traffic-stat strong{font-size:1.33rem;line-height:1.2;font-variant-numeric:tabular-nums;color:#194a35;word-break:break-word}
+.zai-traffic-graphbox{margin-top:15px;border:1px solid #dbe9dc;border-radius:12px;padding:12px 10px;background:#fff}
+.zai-traffic-graphhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.zai-traffic-graphhead b{font-size:.85rem;color:#194a35}
+.zai-traffic-graphhead span{font-size:.73rem;color:#748477}
+.zai-traffic-graph{display:flex;align-items:flex-end;justify-content:space-between;gap:4px;height:135px;padding:0 3px 0;direction:ltr;border-bottom:1px solid #dbe9dc}
+.zai-traffic-bar-col{height:100%;min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;position:relative}
+.zai-traffic-bar-number{height:15px;line-height:15px;font-size:.64rem;color:#40644f;font-variant-numeric:tabular-nums}
+.zai-traffic-bar{width:70%;min-width:5px;max-width:24px;border-radius:6px 6px 1px 1px;background:linear-gradient(180deg,#c2a363,#286d4d);transition:height .3s}
+.zai-traffic-bar-col[data-today=true] .zai-traffic-bar{background:linear-gradient(180deg,#e1bd6b,#1c5942)}
+.zai-traffic-bar-label{font-size:.61rem;color:#647567;line-height:1.3;min-height:14px;white-space:nowrap;font-variant-numeric:tabular-nums;position:absolute;bottom:-20px}
+.zai-traffic-graph-status{padding:20px 6px;color:#637769;text-align:center;font-size:.83rem}
+.zai-traffic-since{font-size:.75rem;color:#60776a;margin:29px 2px 2px;line-height:1.8}
+@media(max-width:540px){.zai-traffic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.zai-traffic-section{padding:13px 10px}.zai-traffic-stat strong{font-size:1.22rem}.zai-traffic-graph{gap:2px}}
 </style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
@@ -930,6 +954,24 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
     <div class="zai-sys-stat"><span>رسائل الزوار</span><b id="zaiSysMessages">—</b><small>منها <strong id="zaiSysUnread">—</strong> غير مقروءة</small></div>
     <div class="zai-sys-stat"><span>تخزين الصور والملفات</span><b id="zaiSysBytes">—</b><small><strong id="zaiSysFiles">—</strong> ملف داخل الشجرة</small></div>
    </div>
+
+   <section class="zai-traffic-section" id="zaiTrafficPanel" aria-labelledby="zaiTrafficTitle">
+     <div class="zai-traffic-head"><h3 id="zaiTrafficTitle">إحصائيات زوار الموقع</h3><span class="zai-traffic-tag">للمشرف فقط</span></div>
+     <p class="zai-traffic-lead">إحصاءات منذ تفعيل العدّاد. الزيارة جلسة واحدة (تتجدد بعد ٣٠ دقيقة)، أما فتح الصفحة فيُحسب عند كل تحميل. الزائر الفريد تقديري بحسب المتصفح والجهاز، دون جمع الاسم أو رقم التواصل أو عنوان IP داخل قاعدة الإحصاءات.</p>
+     <div class="zai-traffic-grid">
+       <div class="zai-traffic-stat"><span>إجمالي الزيارات</span><strong id="zaiTrafficTotalVisits">—</strong></div>
+       <div class="zai-traffic-stat"><span>الزوار الفريدون</span><strong id="zaiTrafficUniqueAll">—</strong></div>
+       <div class="zai-traffic-stat"><span>مرات فتح الصفحة</span><strong id="zaiTrafficPageViews">—</strong></div>
+       <div class="zai-traffic-stat"><span>زيارات اليوم</span><strong id="zaiTrafficToday">—</strong></div>
+       <div class="zai-traffic-stat"><span>زوار اليوم</span><strong id="zaiTrafficTodayUnique">—</strong></div>
+       <div class="zai-traffic-stat"><span>زيارات آخر ٣٠ يومًا</span><strong id="zaiTrafficMonth">—</strong></div>
+     </div>
+     <div class="zai-traffic-graphbox">
+       <div class="zai-traffic-graphhead"><b>الزيارات اليومية</b><span>آخر ١٤ يومًا · بتوقيت السعودية</span></div>
+       <div id="zaiTrafficGraph" class="zai-traffic-graph" role="img" aria-label="رسم بياني للزيارات اليومية خلال آخر 14 يومًا"><div class="zai-traffic-graph-status">جاري انتظار البيانات…</div></div>
+       <p class="zai-traffic-since" id="zaiTrafficSince">يبدأ تسجيل الزيارات من تاريخ تفعيل هذه الميزة، ولا يشمل الزيارات السابقة.</p>
+     </div>
+   </section>
    <section class="zai-quota-section" id="zaiQuotaPanel" aria-labelledby="zaiQuotaHeading">
     <h3 class="zai-quota-heading" id="zaiQuotaHeading">استهلاك الموارد مقابل المسموح</h3>
     <p class="zai-quota-lead">تُحدَّث أحجام قاعدة البيانات والملفات من Supabase، وحجم مستودع GitHub من بياناته العامة. القيم تخص المشروع أو المستودع الموضح.</p>
@@ -3215,7 +3257,38 @@ async function zSysLoadGithub(){
  }catch(e){console.warn('GitHub repository size unavailable:',e.message)}
  if(adminVerified&&zSysDialog.classList.contains('open'))zSysRenderQuotas();
 }
-async function zSysRefresh(){if(zSysBusy||!adminVerified)return;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('جاري فحص الاتصال وسجلات الشجرة والتخزين…');zSysGithubBytes=null;zSysRenderQuotas();try{const info=await zSysCall('overview');if(!adminVerified)return;zSysOverview=info;zSysEl('zaiSysOnline').textContent='متصل';zSysEl('zaiSysPeople').textContent=Number(info.peopleCount).toLocaleString('ar-SA');zSysEl('zaiSysPending').textContent=Number(info.pendingRequests).toLocaleString('ar-SA');zSysEl('zaiSysClosed').textContent=Number(info.closedRequests).toLocaleString('ar-SA');zSysEl('zaiSysMessages').textContent=Number(info.messagesCount).toLocaleString('ar-SA');zSysEl('zaiSysUnread').textContent=Number(info.unreadMessages).toLocaleString('ar-SA');zSysEl('zaiSysBytes').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysFiles').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysFileCount').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysTotalStorage').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysOrphans').textContent=Number(info.unlinkedCount).toLocaleString('ar-SA');zSysEl('zaiSysOrphanBytes').textContent=zSysSize(info.unlinkedBytes);zSysEl('zaiSystemChecked').textContent='آخر فحص: '+new Date(info.checkedAt).toLocaleString('ar-SA',{dateStyle:'short',timeStyle:'short'});zSysSetBanner('الاتصال يعمل بنجاح. الإحصاءات والملفات محدّثة من الخادم.');zSysRenderQuotas();zSysLoadGithub();zSysRenderFiles()}catch(e){zSysEl('zaiSysOnline').textContent='تعذر الفحص';zSysSetBanner('تعذر جلب البيانات: '+e.message,true);zSysOverview=null;zSysGithubBytes=null;zSysRenderQuotas();zSysRenderFiles()}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false}}
+
+function zSysRenderTraffic(info){
+  const stats=[['zaiTrafficTotalVisits','totalVisits'],['zaiTrafficUniqueAll','uniqueVisitors'],['zaiTrafficPageViews','totalPageViews'],['zaiTrafficToday','visitsToday'],['zaiTrafficTodayUnique','uniqueToday'],['zaiTrafficMonth','visitsLast30']];
+  const graph=zSysEl('zaiTrafficGraph');
+  for(const [id,key] of stats){
+    const el=zSysEl(id);if(!el)continue;
+    const value=info&&info[key]!==null&&info[key]!==undefined?Number(info[key]):NaN;
+    el.textContent=Number.isFinite(value)&&value>=0?value.toLocaleString('ar-SA'):'—';
+  }
+  graph.replaceChildren();
+  if(!info||!Array.isArray(info.daily)||!info.daily.length){
+    const message=document.createElement('div');message.className='zai-traffic-graph-status';
+    message.textContent='تعذر قراءة بيانات الزوار. حدّث الصفحة وحاول مرة أخرى.';
+    graph.appendChild(message);zSysEl('zaiTrafficSince').textContent='يبدأ العدّ منذ تفعيل الميزة، ولا تشمل الإحصاءات أي زيارات سابقة.';return;
+  }
+  const series=info.daily.slice(-14),max=Math.max(1,...series.map(d=>Number(d.visits)||0));
+  const dateFormat=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'numeric',month:'short',timeZone:'Asia/Riyadh'});
+  for(let i=0;i<series.length;i++){
+    const d=series[i];if(!/^\d{4}-\d{2}-\d{2}$/.test(String(d.day)))continue;
+    const visits=Math.max(0,Number(d.visits)||0),col=document.createElement('div');
+    col.className='zai-traffic-bar-col';if(i===series.length-1)col.dataset.today='true';
+    const val=document.createElement('span');val.className='zai-traffic-bar-number';val.textContent=visits?visits.toLocaleString('ar-SA'):'';
+    const bar=document.createElement('div');bar.className='zai-traffic-bar';bar.style.height=(visits?Math.max(4,Math.round(92*visits/max)):2)+'px';
+    const label=document.createElement('span');label.className='zai-traffic-bar-label';
+    label.textContent=(i%2===0||i===series.length-1)?new Intl.NumberFormat('ar-SA',{useGrouping:false}).format(Number(d.day.slice(-2))):'';
+    const day=new Date(d.day+'T12:00:00+03:00');col.title=dateFormat.format(day)+' · '+visits.toLocaleString('ar-SA')+' زيارة · '+Number(d.uniqueVisitors||0).toLocaleString('ar-SA')+' زائر';
+    col.append(val,bar,label);graph.appendChild(col);
+  }
+  const since=info.since&&/^\d{4}-\d{2}-\d{2}$/.test(info.since)?new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{dateStyle:'medium',timeZone:'Asia/Riyadh'}).format(new Date(info.since+'T12:00:00+03:00')):null;
+  zSysEl('zaiTrafficSince').textContent=since?'بداية تسجيل زيارات الموقع: '+since+' · الأرقام تقريبية وقد تختلف بين الأجهزة والمتصفحات.':'لم تُسجّل زيارات بعد. يبدأ التسجيل فور رفع النسخة الجديدة إلى GitHub.';
+}
+async function zSysRefresh(){if(zSysBusy||!adminVerified)return;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('جاري فحص الاتصال وسجلات الشجرة والتخزين…');zSysGithubBytes=null;zSysRenderQuotas();try{const info=await zSysCall('overview');if(!adminVerified)return;zSysOverview=info;zSysEl('zaiSysOnline').textContent='متصل';zSysEl('zaiSysPeople').textContent=Number(info.peopleCount).toLocaleString('ar-SA');zSysEl('zaiSysPending').textContent=Number(info.pendingRequests).toLocaleString('ar-SA');zSysEl('zaiSysClosed').textContent=Number(info.closedRequests).toLocaleString('ar-SA');zSysEl('zaiSysMessages').textContent=Number(info.messagesCount).toLocaleString('ar-SA');zSysEl('zaiSysUnread').textContent=Number(info.unreadMessages).toLocaleString('ar-SA');zSysEl('zaiSysBytes').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysFiles').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysFileCount').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysTotalStorage').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysOrphans').textContent=Number(info.unlinkedCount).toLocaleString('ar-SA');zSysEl('zaiSysOrphanBytes').textContent=zSysSize(info.unlinkedBytes);zSysEl('zaiSystemChecked').textContent='آخر فحص: '+new Date(info.checkedAt).toLocaleString('ar-SA',{dateStyle:'short',timeStyle:'short'});zSysSetBanner('الاتصال يعمل بنجاح. الإحصاءات والملفات محدّثة من الخادم.');zSysRenderQuotas();zSysRenderTraffic(info.visitorMetrics);zSysLoadGithub();zSysRenderFiles()}catch(e){zSysEl('zaiSysOnline').textContent='تعذر الفحص';zSysSetBanner('تعذر جلب البيانات: '+e.message,true);zSysOverview=null;zSysGithubBytes=null;zSysRenderQuotas();zSysRenderTraffic(null);zSysRenderFiles()}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false}}
 function zSysRenderFiles(){const root=zSysEl('zaiSystemFileList');root.replaceChildren();if(!zSysOverview){const t=document.createElement('p');t.className='zai-sys-small';t.textContent='لا توجد بيانات متاحة بعد. اضغط تحديث البيانات.';root.appendChild(t);return}const filter=zSysEl('zaiSystemFileFilter').value,term=zSysEl('zaiSystemFileSearch').value.trim().toLocaleLowerCase('ar');const items=(zSysOverview.files||[]).filter(f=>(filter==='all'||(filter==='unused'?!f.linked:f.linked))&&(!term||(f.path+' '+f.bucket).toLocaleLowerCase('ar').includes(term)));if(!items.length){const p=document.createElement('p');p.className='zai-sys-small';p.textContent='لا توجد ملفات مطابقة.';root.appendChild(p);return}for(const f of items){const r=document.createElement('div');r.className='zai-sys-file';const info=document.createElement('div');info.className='zai-sys-f-info';const name=document.createElement('b');name.textContent=f.path;info.appendChild(name);const desc=document.createElement('small');desc.textContent=f.bucket+' · '+zSysSize(f.size)+(f.updatedAt?' · '+new Date(f.updatedAt).toLocaleDateString('ar-SA'):'');info.appendChild(desc);r.appendChild(info);const actions=document.createElement('div');actions.className='zai-sys-f-action';const chip=document.createElement('span');chip.className='zai-sys-chip'+(!f.linked?' unlinked':'');chip.textContent=f.linked?'مرتبط':'غير مرتبط';actions.appendChild(chip);if(!f.linked){const del=document.createElement('button');del.type='button';del.className='zai-sys-delete';del.textContent='حذف الملف';del.addEventListener('click',()=>zSysDelete(f,del));actions.appendChild(document.createElement('br'));actions.appendChild(del)}r.appendChild(actions);root.appendChild(r)}}
 async function zSysDelete(f,button){if(!adminVerified||zSysBusy||f.linked)return;const message='حذف الملف نهائيًا؟\n'+f.path+'\n\nسيجري الخادم التحقق مرة أخرى من عدم ارتباطه بأي بطاقة أو طلب. لا يمكن استعادة الملف بعد حذفه.';if(!window.confirm(message))return;button.disabled=true;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('التحقق من ارتباط الملف قبل الحذف…');let zSysDeleteError='';try{await zSysCall('delete_unused',{bucket:f.bucket,path:f.path,confirm:'DELETE_UNUSED_FILE'});}catch(e){zSysDeleteError=e.message}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false;button.disabled=false;await zSysRefresh();zSysSetTab('files');if(zSysDeleteError)zSysSetBanner('لم يُحذف الملف: '+zSysDeleteError,true);else if(zSysOverview)zSysSetBanner('تم حذف الملف غير المرتبط وتحديث القائمة بنجاح.')}}
 zSysEl('zaiSystemOpen').addEventListener('click',zSysOpen);
@@ -3511,6 +3584,34 @@ refresh();
   reset.addEventListener('click',()=>setZoom(1));
   img.addEventListener('dblclick',()=>setZoom(zoom===1?2:1));
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&back.classList.contains('open')){e.stopImmediatePropagation();e.preventDefault();dismiss()}},true);
+})();
+</script>
+
+<script id="zaiVisitorAnalytics20261122">
+/* Anonymous site visit measurement. No names, phones, IP or user-agent are sent. */
+(()=>{
+  try{
+    if(location.hostname!=='mzaitooni.github.io')return;
+    if(navigator.doNotTrack==='1'||navigator.globalPrivacyControl===true)return;
+    const idPattern=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const visitorKey='zaitooni-site-visitor-v1',sessionKey='zaitooni-site-session-v1';
+    let visitorId=null;
+    try{visitorId=localStorage.getItem(visitorKey)}catch{}
+    if(!idPattern.test(visitorId||'')){
+      visitorId=crypto.randomUUID();
+      try{localStorage.setItem(visitorKey,visitorId)}catch{}
+    }
+    const now=Date.now();let session=null;
+    try{session=JSON.parse(sessionStorage.getItem(sessionKey)||'null')}catch{}
+    const validSession=!!(session&&idPattern.test(session.id||'')&&Number.isFinite(Number(session.t))&&now>=Number(session.t)&&now-Number(session.t)<30*60*1000);
+    const sessionId=validSession?session.id:crypto.randomUUID();
+    try{sessionStorage.setItem(sessionKey,JSON.stringify({id:sessionId,t:now}))}catch{}
+    fetch('https://hjjfbgdodbnctyhmerqy.supabase.co/functions/v1/family-tree-analytics',{
+      method:'POST',mode:'cors',cache:'no-store',keepalive:true,
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_s-phfOx668QfAf2GOvXl3Q_3J5ATgF_'},
+      body:JSON.stringify({visitorId,sessionId})
+    }).catch(()=>{});
+  }catch(e){/* Visit logging must never interrupt the tree. */}
 })();
 </script>
 </body></html>
