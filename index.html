@@ -763,6 +763,27 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 #systemStorageBack .zai-quota-notice{font-size:10px;line-height:1.8;margin:8px 0 0;color:#718578}
 @media(max-width:650px){#systemStorageBack .zai-quota-grid{grid-template-columns:minmax(0,1fr)}#systemStorageBack .zai-quota-card{padding:12px}#systemStorageBack .zai-quota-numbers strong{font-size:14px}}
 </style>
+
+<style id="zaiHomeButton20261121">
+/* Home shortcut in the persistent tree / help / admin header. */
+.hero-actions .zai-home-btn{
+  display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;padding:0;
+  color:#fff;background:#ffffff18;border:1px solid #ffffff55;
+  border-radius:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;
+}
+.hero-actions .zai-home-btn svg{display:block;width:19px;height:19px;pointer-events:none}
+.hero-actions .zai-home-btn:hover{background:#ffffff2c}
+.hero-actions .zai-home-btn:focus-visible{outline:2px solid #f0d99e;outline-offset:2px}
+@media(max-width:620px){
+  .hero-actions .zai-home-btn{flex-basis:34px;width:34px;height:34px;border-radius:10px}
+  .hero-actions .zai-home-btn svg{width:18px;height:18px}
+}
+@media(orientation:landscape) and (max-height:620px) and (pointer:coarse){
+  body.tree-open .sticky-tree-header .zai-home-btn{flex-basis:27px;width:27px;height:27px;border-radius:8px}
+  body.tree-open .sticky-tree-header .zai-home-btn svg{width:16px;height:16px}
+}
+@media print{.hero-actions .zai-home-btn{display:none!important}}
+</style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
@@ -789,7 +810,7 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 <main class="wrap">
   <div class="sticky-tree-header">
   <header class="hero">
-    <div class="hero-actions"><button class="settings-btn" id="settingsOpen" aria-label="الإعدادات" title="الإعدادات">⚙</button><button class="hero-action tab" data-tab="aboutPanel" type="button"><span class="help-action-icon" aria-hidden="true">؟</span><span id="helpButtonLabel">مساعدة</span></button><button class="hero-action tab" data-tab="requestsPanel" type="button">الطلبات <span id="pendingBadge"></span></button></div><div class="eyebrow">مشروع عائلي قابل للتحديث</div><h1><button type="button" class="tree-heading-intro-link" id="treeHeadingIntroLink" aria-label="العودة إلى صفحة المقدمة" title="العودة إلى صفحة المقدمة">شجرة آل الزيتوني</button></h1>
+    <div class="hero-actions"><button class="settings-btn" id="settingsOpen" aria-label="الإعدادات" title="الإعدادات">⚙</button><button class="zai-home-btn" type="button" id="zaiHomeBtn" aria-label="العودة إلى صفحة المقدمة" title="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.7 10.3 12 3.4l8.3 6.9v9.5a1 1 0 0 1-1 1h-5.2v-6.4H9.9v6.4H4.7a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round"/></svg></button><button class="hero-action tab" data-tab="aboutPanel" type="button"><span class="help-action-icon" aria-hidden="true">؟</span><span id="helpButtonLabel">مساعدة</span></button><button class="hero-action tab" data-tab="requestsPanel" type="button">الطلبات <span id="pendingBadge"></span></button></div><div class="eyebrow">مشروع عائلي قابل للتحديث</div><h1><button type="button" class="tree-heading-intro-link" id="treeHeadingIntroLink" aria-label="العودة إلى صفحة المقدمة" title="العودة إلى صفحة المقدمة">شجرة آل الزيتوني</button></h1>
     <div class="stats"><div class="stat"><b id="pendingCount">0</b><span>اقتراح بانتظارك</span></div><button type="button" class="stat uncertainty-stat hidden" id="uncertaintyCounter" aria-label="عرض حالات عدم التأكد"><b id="uncertaintyCount">0</b><span>⚠ حالات عدم التأكد</span></button></div>
   </header>
   <p class="tree-instruction-line">اضغط على الاسم لعرض بطاقته، وعلى السهم لعرض فروعه أو إخفائها.</p>
@@ -3135,12 +3156,15 @@ render();
  const introCounterEl=document.getElementById('introPeopleCount'),introFormat=new Intl.NumberFormat('ar-SA');let introTarget=null,introFrame=0;
  function animateIntroCount(raw){const target=Number(raw);if(!Number.isFinite(target)||target<=0||introTarget===target)return;const old=introTarget===null?0:introTarget;introTarget=target;cancelAnimationFrame(introFrame);if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('tree-open')){introCounterEl.textContent=introFormat.format(target);return}const start=performance.now(),duration=2750;function tick(now){const x=Math.min(1,(now-start)/duration),value=Math.round(old+(target-old)*(1-Math.pow(1-x,3)));introCounterEl.textContent=introFormat.format(value);if(x<1)introFrame=requestAnimationFrame(tick)}introFrame=requestAnimationFrame(tick)}
  window.addEventListener('zaitooni:people-count',e=>animateIntroCount(e.detail?.count));if(introCounterEl.dataset.count)animateIntroCount(introCounterEl.dataset.count);
- 
- document.getElementById('treeHeadingIntroLink')?.addEventListener('click',()=>{
-   // Keep the address consistent with the intro; otherwise refreshing would reopen the tree.
-   if(location.hash==='#tree')history.replaceState({treePage:false},'',location.pathname+location.search);
-   showIntro();
- });
+  const returnToIntro=()=>{
+    // Reuse the existing intro transition for both the heading and Home button.
+    // Leave full-screen tree focus first so it does not persist after returning.
+    if(document.body.classList.contains('zai-tree-focus'))document.getElementById('zaiFullscreenToggle')?.click();
+    if(location.hash==='#tree')history.replaceState({treePage:false},'',location.pathname+location.search);
+    showIntro();
+  };
+  document.getElementById('treeHeadingIntroLink')?.addEventListener('click',returnToIntro);
+  document.getElementById('zaiHomeBtn')?.addEventListener('click',returnToIntro);
  document.getElementById('introOpenTree').addEventListener('click',showTree);
  window.addEventListener('popstate',()=>{if(location.hash==='#tree')showTree();else showIntro()});
  const openArchive=()=>{viewer.classList.add('open');viewer.setAttribute('aria-hidden','false')};
