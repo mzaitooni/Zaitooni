@@ -12,16 +12,10 @@
   "dir": "rtl",
   "icons": [
     {
-      "src": "./zaitooni_android_192.png",
-      "sizes": "192x192",
+      "src": "./zaitooni-home-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./zaitooni_android_maskable_512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
