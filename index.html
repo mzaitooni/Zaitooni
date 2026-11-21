@@ -677,6 +677,20 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 @media(max-width:670px){#introPage .zai-sources-grid{grid-template-columns:1fr;gap:10px}#introPage .zai-ref-card{min-height:130px;padding:10px;gap:12px}#introPage .zai-ref-image-btn{width:80px;height:106px;flex-basis:80px}#introPage .zai-ref-details h3{font-size:14px}#introPage .zai-sources-lead{margin:16px 0}#introPage .zai-sources-accuracy{margin:19px auto 0;font-size:12px;padding-top:13px}#introPage .zai-sources-head-spacer{min-width:66px}#introPage .zai-sources-back{min-width:66px}#introPage .zai-sources-page{padding-left:14px;padding-right:14px}}
 @media(prefers-reduced-motion:reduce){#introPage .intro-sources-entry{animation:none;transition:none}}
 </style>
+<style id="zaitooniSearchGenerationAndFitWidth20261121">
+/* A1: tiny generation marker uses the same green pill language as the profile. */
+.tree-search-option-top{display:flex;align-items:center;gap:9px;min-width:0}
+.tree-search-option-top .tree-search-option-name{min-width:0;flex:0 1 auto}
+.tree-search-generation{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;padding:3px 8px;min-height:21px;border:1px solid #c8dacd;background:#e9f3ea;color:#285b47;border-radius:999px;font-size:10px;font-weight:750;line-height:1.25;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:390px){.tree-search-option-top{gap:6px}.tree-search-generation{font-size:9px;padding:3px 7px;min-height:20px}}
+/* B8: explicit return to width fit after pinch-to-zoom. */
+.sticky-tree-header .tree-toolbar .tree-fit-width,.tree-fit-width{width:31px;height:31px;min-width:31px;padding:0;display:inline-grid;place-items:center;flex:0 0 31px;border:1px solid #c9dcd0;border-radius:9px;background:#f5faf6;color:#24604b;cursor:pointer}
+.tree-fit-width svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tree-fit-width.is-manual{background:#e1efe4;border-color:#82b89d;color:#174934}
+.tree-fit-width:focus-visible{outline:2px solid #d9a34b;outline-offset:2px}
+@media(max-width:620px){.sticky-tree-header .tree-toolbar .tree-fit-width{width:28px;height:29px;min-width:28px;flex-basis:28px;border-radius:8px}.tree-fit-width svg{width:15px;height:15px}}
+@media print{.tree-fit-width{display:none!important}}
+</style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
@@ -719,6 +733,7 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
       <select id="treeGenerationCount" aria-label="عرض الشجرة">
         <option value="3">٣ أجيال (افتراضي)</option>
       </select>
+      <button id="treeFitWidth" class="tree-fit-width" type="button" title="ملاءمة عرض الشاشة" aria-label="ملاءمة عرض الشاشة" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/><path d="M9 9l-5-5m11 5 5-5M9 15l-5 5m-6-5 5 5"/></svg></button>
       <output id="treeZoomValue" hidden aria-hidden="true"></output>
     </div>
   </div>
@@ -859,12 +874,10 @@ const initial={version:3,people:[
 ],requests:[]};
 function normalize(d){const known={p1:'male',p2:'male',p3:'male',p4:'male',p5:'male',c1:'female',c2:'female',c3:'female',c4:'female',c5:'female',c6:'male',c7:'male',c8:'male',c9:'male',c10:'male'};d.people=d.people.map(p=>({...p,gender:p.gender||known[p.id]||'unknown'}));d.requests=d.requests.map(r=>({...r,gender:r.gender||'unknown'}));return d}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.people)&&Array.isArray(d.requests))return normalize(d)}catch{}return structuredClone(initial)}
-let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const DEFAULT_TREE_ZOOM = 0.74;
-const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
-let treeZoom = DEFAULT_TREE_ZOOM;
+let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
+let treeZoom = 1; // Measured from content width when the tree is rendered.
 const DEFAULT_GENERATIONS = 3;
-const FOUR_GENERATION_ZOOM = 0.54;
-const TREE_STAGE_GUTTER = { left:22, right:4, top:16, bottom:5 };
+const TREE_STAGE_GUTTER = { top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
 let generationCount = DEFAULT_GENERATIONS;
@@ -1004,51 +1017,76 @@ function centerTreeLineage(root) {
   }
 }
 
-function automaticTreeZoom(viewport, root) {
-  if (!root.classList.contains('tree-generations')) {
-    return Math.min(DEFAULT_TREE_ZOOM, viewport.clientWidth / (root.offsetWidth + TREE_STAGE_GUTTER.left + TREE_STAGE_GUTTER.right));
+// A1/B8 (21 Nov 2026): Fit the ACTUAL visible tree across the viewport WIDTH.
+// Height is deliberately unrestricted, and the visitor can scroll vertically.
+// Account for disclosure arrows protruding outside their cards and for a fixed
+// visible safety margin on both screen edges. Never use a generations-to-zoom table.
+const TREE_FIT_SCREEN_MARGIN = 16;
+const TREE_FIT_MAX_AUTO_ZOOM = 1;
+let lastTreeFitViewportWidth = 0;
+function treeHorizontalBounds(root) {
+  const rootWidth=root.offsetWidth;
+  const rect=root.getBoundingClientRect();
+  const effectiveScale=rect.width/rootWidth || treeZoom || 1;
+  let minX=0, maxX=rootWidth;
+  // Cards are normally in the root's layout width. The floating chevrons are
+  // not; include their actual painted extents rather than guessing 10/13 px.
+  for(const element of root.querySelectorAll('.kids-count')){
+    const box=element.getBoundingClientRect();
+    if(!box.width)continue;
+    minX=Math.min(minX,(box.left-rect.left)/effectiveScale);
+    maxX=Math.max(maxX,(box.right-rect.left)/effectiveScale);
   }
-  if (generationCount === DEFAULT_GENERATIONS) return DEFAULT_TREE_ZOOM;
-  if (generationCount === 4) return FOUR_GENERATION_ZOOM;
-
-  const styles = getComputedStyle(root);
-  const leading = parseFloat(styles.getPropertyValue('--root-card-width'));
-  const step = parseFloat(styles.getPropertyValue('--generation-card-width')) +
-    parseFloat(styles.getPropertyValue('--generation-gap'));
-  const sides = TREE_STAGE_GUTTER.left + TREE_STAGE_GUTTER.right;
-  const width = leading + step * (generationCount - 1) + sides;
-  const targetWidth = Math.min(FOUR_GENERATION_ZOOM * (leading + step * 3 + sides), viewport.clientWidth);
-  return targetWidth / width;
+  return {left:Math.max(0,-minX),right:Math.max(0,maxX-rootWidth)};
 }
-
+function automaticTreeZoom(viewport, root, bounds) {
+  // The viewport's clientWidth is the usable inside width, independent of the
+  // phone model, portrait/landscape orientation and device pixel ratio.
+  const usable=Math.max(1,viewport.clientWidth-2*TREE_FIT_SCREEN_MARGIN);
+  const actualWidth=root.offsetWidth+bounds.left+bounds.right;
+  return Math.min(TREE_FIT_MAX_AUTO_ZOOM,Math.max(.01,usable/Math.max(1,actualWidth)));
+}
+function updateTreeFitButton() {
+  const button=document.getElementById('treeFitWidth');
+  if(!button)return;
+  const manual=treePinchZoom!==null;
+  button.classList.toggle('is-manual',manual);
+  button.title=manual?'العودة إلى ملاءمة عرض الشاشة':'ملاءمة عرض الشاشة';
+  button.setAttribute('aria-label',button.title);
+  button.setAttribute('aria-pressed',String(!manual));
+}
 function layoutTree() {
-  const viewport = document.getElementById('tree');
-  const stage = viewport.querySelector('.tree-stage');
-  const root = stage?.querySelector('.tree-root');
-  if (!root?.offsetWidth || !root.offsetHeight) return;
+  const viewport=document.getElementById('tree');
+  const stage=viewport.querySelector('.tree-stage');
+  const root=stage?.querySelector('.tree-root');
+  if (!root?.offsetWidth || !root.offsetHeight || !viewport.clientWidth)return;
 
-  treeZoom = treePinchZoom ?? automaticTreeZoom(viewport, root);
-  const zoomLabel = document.getElementById('treeZoomValue');
-  const percent = treeZoomFormat.format(treeZoom);
-  if (zoomLabel.textContent !== percent) zoomLabel.textContent = percent;
+  const bounds=treeHorizontalBounds(root);
+  treeZoom=treePinchZoom ?? automaticTreeZoom(viewport,root,bounds);
+  const zoomLabel=document.getElementById('treeZoomValue');
+  const percent=treeZoomFormat.format(treeZoom);
+  if(zoomLabel && zoomLabel.textContent!==percent)zoomLabel.textContent=percent;
+  updateTreeFitButton();
 
-  root.style.transform = `scale(${treeZoom})`;
-  // Reserve room inside the stage for chevrons that overhang the top and left.
-  const { left, right, top, bottom } = TREE_STAGE_GUTTER;
-  root.style.top = `${top * treeZoom}px`;
-  root.style.right = `${right * treeZoom}px`;
-  stage.style.width = `${(root.offsetWidth + left + right) * treeZoom}px`;
-  const contentHeight = (root.offsetHeight + top + bottom) * treeZoom;
-  const headerHeight = document.querySelector('.sticky-tree-header').offsetHeight;
-  const minimumHeight = root.classList.contains('tree-generations') && generationCount > DEFAULT_GENERATIONS
-    ? window.innerHeight - headerHeight - 35
-    : 0;
-  stage.style.height = `${Math.max(contentHeight, minimumHeight)}px`;
+  root.style.transform=`scale(${treeZoom})`;
+  // The stage clips overflowing contents. Reserve all chevron overhang plus
+  // 16 physical CSS pixels of unobstructed space at each end.
+  const leftSpace=bounds.left*treeZoom+TREE_FIT_SCREEN_MARGIN;
+  const rightSpace=bounds.right*treeZoom+TREE_FIT_SCREEN_MARGIN;
+  root.style.top=`${TREE_STAGE_GUTTER.top*treeZoom}px`;
+  root.style.right=`${rightSpace}px`;
+  stage.style.width=`${root.offsetWidth*treeZoom+leftSpace+rightSpace}px`;
+  const contentHeight=(root.offsetHeight+TREE_STAGE_GUTTER.top+TREE_STAGE_GUTTER.bottom)*treeZoom;
+  const headerHeight=document.querySelector('.sticky-tree-header').offsetHeight;
+  const minimumHeight=root.classList.contains('tree-generations') && generationCount>DEFAULT_GENERATIONS
+    ? window.innerHeight-headerHeight-35 : 0;
+  stage.style.height=`${Math.max(contentHeight,minimumHeight)}px`;
   centerTreeLineage(root);
   drawTreeBranches(root);
 }
 
 function observeTreeGeometry(viewport) {
+  if(!lastTreeFitViewportWidth)lastTreeFitViewportWidth=viewport.clientWidth;
   treeGeometryObserver.disconnect();
   const root = viewport.querySelector('.tree-root');
   if (root) {
@@ -1058,7 +1096,16 @@ function observeTreeGeometry(viewport) {
 }
 
 let lineageFrame = 0;
-window.addEventListener('resize', layoutTree);
+window.addEventListener('resize', () => {
+  const viewport=document.getElementById('tree');
+  const currentWidth=viewport?.clientWidth || 0;
+  // A device rotation/viewport-width change re-enters auto-fit, even if a
+  // visitor had been pinching to zoom. Height-only changes preserve manual zoom.
+  if(currentWidth && lastTreeFitViewportWidth && Math.abs(currentWidth-lastTreeFitViewportWidth)>2)
+    treePinchZoom=null;
+  lastTreeFitViewportWidth=currentWidth;
+  layoutTree();
+});
 window.addEventListener('scroll', () => {
   if (lineageFrame || generationCount <= DEFAULT_GENERATIONS) return;
   lineageFrame = requestAnimationFrame(() => {
@@ -1556,6 +1603,12 @@ function changeTreeDisplay(selection) {
   }
 }
 generationSelect.onchange = () => changeTreeDisplay(generationSelect.value);
+document.getElementById('treeFitWidth').addEventListener('click',()=>{
+  const viewport=document.getElementById('tree');
+  treePinchZoom=null;
+  layoutTree();
+  setScrollRightOffset(viewport,0);
+});
 document.getElementById('treeFullBtn').onclick = () =>
   changeTreeDisplay(fullTreeSelected ? String(generationCount) : 'all');
 function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
@@ -1943,7 +1996,11 @@ function refreshTreeSearchResults(open=true) {
   const total=currentTreeSearchMatches.length;
   treeSearchResults.innerHTML=total
     ? `<div class="tree-search-results-head">${generationNumber.format(total)} ${total===1?'نتيجة مطابقة':'نتيجة مطابقة'} — اختر الشخص المقصود</div>`+
-      currentTreeSearchMatches.map((person,i)=>`<div class="tree-search-option" role="option" id="treeSearchOption${i}" aria-selected="false" data-search-person="${esc(person.id)}" data-search-index="${i}" tabindex="-1"><span class="tree-search-option-name">${esc(person.name)}</span><span class="tree-search-option-chain" title="${esc(fullName(person))}">${esc(fullName(person))}</span></div>`).join('')
+      currentTreeSearchMatches.map((person,i)=>{
+        const generation=personGenerationNumber(person);
+        const generationText=generation===null?'الجيل —':'الجيل '+generationNumber.format(generation);
+        return `<div class="tree-search-option" role="option" id="treeSearchOption${i}" aria-selected="false" data-search-person="${esc(person.id)}" data-search-index="${i}" tabindex="-1"><div class="tree-search-option-top"><span class="tree-search-option-name">${esc(person.name)}</span><span class="tree-search-generation" aria-label="${esc(generationText)}">${esc(generationText)}</span></div><span class="tree-search-option-chain" title="${esc(fullName(person))}">${esc(fullName(person))}</span></div>`;
+      }).join('')
     : `<div class="tree-search-no-results">ما لقينا الاسم. جرّب كتابة الاسم مع اسم الأب أو الجد.</div>`;
   treeSearchResults.hidden=false;
   treeSearchInput.setAttribute('aria-expanded','true');
