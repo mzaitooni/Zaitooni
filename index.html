@@ -731,6 +731,38 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 #systemStorageBack a.zai-sys-link{color:#246148;text-decoration:underline;font-size:12px}
 @media(max-width:580px){#systemStorageBack .modal.zai-sys-modal{padding:17px 13px 21px;max-height:calc(100dvh - 22px)}#systemStorageBack .zai-sys-title h2{font-size:18px}#systemStorageBack .zai-sys-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}#systemStorageBack .zai-sys-stat{padding:11px}#systemStorageBack .zai-sys-stat b{font-size:21px}}
 </style>
+<style id="zaiResourceQuota20261121">
+/* Compact, administrator-only resource quota comparisons. */
+#systemStorageBack .zai-quota-section{margin:16px 0 14px}
+#systemStorageBack .zai-quota-heading{font-size:15px;color:#264c38;margin:0 0 5px;font-weight:800}
+#systemStorageBack .zai-quota-lead{margin:0 0 11px;font-size:11px;color:#697f71;line-height:1.8}
+#systemStorageBack .zai-quota-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#systemStorageBack .zai-quota-card{border:1px solid #dbe8de;border-radius:13px;background:#fff;padding:13px 13px 12px;min-width:0}
+#systemStorageBack .zai-quota-card-header{display:flex;justify-content:space-between;gap:9px;align-items:baseline;margin-bottom:10px}
+#systemStorageBack .zai-quota-card-header b{font-size:13px;font-weight:800;color:#244d37}
+#systemStorageBack .zai-quota-source{font-size:10px;color:#718879;background:#f1f7f2;padding:3px 7px;border-radius:20px;white-space:nowrap}
+#systemStorageBack .zai-quota-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#systemStorageBack .zai-quota-numbers>div{min-width:0}
+#systemStorageBack .zai-quota-numbers span{display:block;font-size:10px;color:#7c9081;margin-bottom:3px}
+#systemStorageBack .zai-quota-numbers strong{font-size:13px;display:block;color:#244c37;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+#systemStorageBack .zai-quota-meter{height:8px;background:#e9f0ea;border-radius:12px;overflow:hidden;margin:11px 0 7px;direction:ltr}
+#systemStorageBack .zai-quota-meter-fill{display:block;height:100%;width:0;background:#378966;border-radius:12px;transition:width .45s ease}
+#systemStorageBack .zai-quota-meter-fill.warn{background:#bb8a39}
+#systemStorageBack .zai-quota-meter-fill.critical{background:#bf5552}
+#systemStorageBack .zai-quota-meta{font-size:11px;line-height:1.65;color:#627c6c;margin:0}
+#systemStorageBack .zai-quota-footnote{font-size:10px;line-height:1.65;color:#849589;margin-top:6px}
+#systemStorageBack .zai-quota-monthly{margin-top:15px}
+#systemStorageBack .zai-quota-monthly-row{border:1px solid #dce8df;background:#fff;border-radius:10px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:6px;padding:9px 11px;align-items:center;margin-bottom:6px}
+#systemStorageBack .zai-quota-monthly-row>div{font-size:11px;color:#365641;min-width:0;overflow-wrap:anywhere;line-height:1.5}
+#systemStorageBack .zai-quota-monthly-row>div:not(:first-child){text-align:center}
+#systemStorageBack .zai-quota-monthly-row.zai-quota-th{background:#f2f7f3;border:0;padding-top:8px;padding-bottom:8px}
+#systemStorageBack .zai-quota-monthly-row.zai-quota-th>div{font-weight:700;font-size:10px;color:#74877a}
+#systemStorageBack .zai-quota-na{color:#9b7b4c!important;font-size:10px!important}
+#systemStorageBack a.zai-quota-link{color:#276c4d;font-size:11px;text-decoration:underline;text-underline-offset:2px}
+#systemStorageBack .zai-quota-links{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin:11px 0 0}
+#systemStorageBack .zai-quota-notice{font-size:10px;line-height:1.8;margin:8px 0 0;color:#718578}
+@media(max-width:650px){#systemStorageBack .zai-quota-grid{grid-template-columns:minmax(0,1fr)}#systemStorageBack .zai-quota-card{padding:12px}#systemStorageBack .zai-quota-numbers strong{font-size:14px}}
+</style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
@@ -830,7 +862,7 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
 <div class="modal-back" id="systemStorageBack" role="dialog" aria-modal="true" aria-label="النظام والتخزين" aria-hidden="true">
  <div class="modal zai-sys-modal">
   <div class="zai-sys-title"><h2>النظام والتخزين</h2><button class="btn" id="zaiSystemClose" type="button" aria-label="العودة إلى الإعدادات">→ عودة</button></div>
-  <p class="zai-sys-sub">لوحة مراقبة خاصة بالمشرف · البيانات من Supabase عند آخر تحديث</p>
+  <p class="zai-sys-sub">لوحة خاصة بالمشرف · أرقام الاستخدام المباشرة من Supabase وGitHub، مع توضيح مؤشرات الاستهلاك غير المتاحة آليًا.</p>
   <div class="zai-sys-tabs" role="tablist" aria-label="قسم النظام والتخزين"><button id="zaiSystemStatusTab" type="button" class="active" role="tab" aria-selected="true">حالة النظام</button><button id="zaiSystemFilesTab" type="button" role="tab" aria-selected="false">إدارة الملفات</button></div>
   <div class="zai-sys-line"><span id="zaiSystemChecked" class="zai-sys-small">لم يُجرَ فحص بعد</span><button id="zaiSystemRefresh" class="btn" type="button">↻ تحديث البيانات</button></div>
   <div id="zaiSystemBanner" class="zai-sys-banner" role="status" aria-live="polite">اضغط «تحديث البيانات» لعرض المؤشرات المباشرة.</div>
@@ -843,7 +875,54 @@ body.zai-tree-focus .tree-toolbar{position:fixed!important;left:50%!important;ri
     <div class="zai-sys-stat"><span>رسائل الزوار</span><b id="zaiSysMessages">—</b><small>منها <strong id="zaiSysUnread">—</strong> غير مقروءة</small></div>
     <div class="zai-sys-stat"><span>تخزين الصور والملفات</span><b id="zaiSysBytes">—</b><small><strong id="zaiSysFiles">—</strong> ملف داخل الشجرة</small></div>
    </div>
-   <div class="zai-sys-banner">الأرقام تخص بيانات الشجرة والملفات الموجودة في مساحاتها فقط. <b>استهلاك الباقة الكامل، وحجم قاعدة البيانات والفوترة</b> يُراجع من لوحة Supabase الرسمية؛ لا نعرض تقديرات كأنها أرقام فعلية.</div>
+   <section class="zai-quota-section" id="zaiQuotaPanel" aria-labelledby="zaiQuotaHeading">
+    <h3 class="zai-quota-heading" id="zaiQuotaHeading">استهلاك الموارد مقابل المسموح</h3>
+    <p class="zai-quota-lead">تُحدَّث أحجام قاعدة البيانات والملفات من Supabase، وحجم مستودع GitHub من بياناته العامة. القيم تخص المشروع أو المستودع الموضح.</p>
+    <div class="zai-quota-grid">
+      <div class="zai-quota-card" id="zaiQuotaDatabaseCard">
+        <div class="zai-quota-card-header"><b>قاعدة بيانات Supabase</b><span class="zai-quota-source">خطة Free</span></div>
+        <div class="zai-quota-numbers"><div><span>المستهلك</span><strong id="zaiQuotaDbUsed">—</strong></div><div><span>المسموح</span><strong>500 م.ب</strong></div><div><span>المتبقي</span><strong id="zaiQuotaDbLeft">—</strong></div></div>
+        <div class="zai-quota-meter" id="zaiQuotaDbMeter" role="progressbar" aria-label="استهلاك قاعدة بيانات Supabase" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="zai-quota-meter-fill" id="zaiQuotaDbBar"></span></div>
+        <p class="zai-quota-meta" id="zaiQuotaDbPct">بانتظار قراءة الحجم</p>
+        <div class="zai-quota-footnote">حجم قاعدة بيانات المشروع كاملًا، ويشمل تطبيقاته الأخرى.</div>
+      </div>
+      <div class="zai-quota-card" id="zaiQuotaStorageCard">
+        <div class="zai-quota-card-header"><b>تخزين ملفات Supabase</b><span class="zai-quota-source">خطة Free</span></div>
+        <div class="zai-quota-numbers"><div><span>المستهلك</span><strong id="zaiQuotaStorageUsed">—</strong></div><div><span>المسموح</span><strong>1 ج.ب</strong></div><div><span>المتبقي</span><strong id="zaiQuotaStorageLeft">—</strong></div></div>
+        <div class="zai-quota-meter" id="zaiQuotaStorageMeter" role="progressbar" aria-label="استهلاك تخزين Supabase" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="zai-quota-meter-fill" id="zaiQuotaStorageBar"></span></div>
+        <p class="zai-quota-meta" id="zaiQuotaStoragePct">بانتظار قراءة الحجم</p>
+        <div class="zai-quota-footnote">جميع مخازن ملفات المشروع، وليس صور الشجرة وحدها.</div>
+      </div>
+      <div class="zai-quota-card" id="zaiQuotaGithubCard">
+        <div class="zai-quota-card-header"><b>مستودع GitHub</b><span class="zai-quota-source">حد موصى به</span></div>
+        <div class="zai-quota-numbers"><div><span>المستهلك</span><strong id="zaiQuotaGithubUsed">—</strong></div><div><span>الموصى به</span><strong>1 ج.ب</strong></div><div><span>المتبقي إليه</span><strong id="zaiQuotaGithubLeft">—</strong></div></div>
+        <div class="zai-quota-meter" id="zaiQuotaGithubMeter" role="progressbar" aria-label="حجم مستودع GitHub بالنسبة للحجم الموصى به" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="zai-quota-meter-fill" id="zaiQuotaGithubBar"></span></div>
+        <p class="zai-quota-meta" id="zaiQuotaGithubPct">بانتظار قراءة GitHub</p>
+        <div class="zai-quota-footnote">حجم المستودع يتضمن تاريخه؛ ليس قياسًا لحجم الموقع المنشور. الحد الموصى به ليس باقة شهرية.</div>
+      </div>
+      <div class="zai-quota-card" id="zaiQuotaSiteCard">
+        <div class="zai-quota-card-header"><b>الموقع المنشور (GitHub Pages)</b><span class="zai-quota-source">حد حجم</span></div>
+        <div class="zai-quota-numbers"><div><span>المستهلك</span><strong>غير متاح</strong></div><div><span>الحد</span><strong>1 ج.ب</strong></div><div><span>المتبقي</span><strong>—</strong></div></div>
+        <div class="zai-quota-meter" aria-label="لا تتوفر بيانات قياس الحجم المنشور"><span class="zai-quota-meter-fill" style="width:0"></span></div>
+        <p class="zai-quota-meta">الحجم الفعلي للملفات المنشورة غير مقاس تلقائيًا.</p>
+        <div class="zai-quota-footnote">مختلف عن حجم المستودع. <a class="zai-quota-link" href="https://github.com/mzaitooni/Zaitooni/settings/pages" target="_blank" rel="noopener noreferrer">إعدادات Pages</a></div>
+      </div>
+    </div>
+    <div class="zai-quota-monthly">
+      <h4 class="zai-quota-heading">الاستهلاك الشهري ونقل البيانات</h4>
+      <p class="zai-quota-lead">هذه مؤشرات استخدام شهرية، وليست مساحة تخزين؛ لا يوجد لدينا وصول آمن لأرقامها المباشرة، لذلك لا نحسب المتبقي أو النسبة تقديريًا.</p>
+      <div class="zai-quota-monthly-row zai-quota-th"><div>المؤشر</div><div>المستهلك</div><div>المسموح</div><div>المتبقي</div></div>
+      <div class="zai-quota-monthly-row"><div>Supabase · نقل بيانات غير مخزّن مؤقتًا</div><div class="zai-quota-na">لوحة Usage</div><div>5 ج.ب / شهر</div><div>—</div></div>
+      <div class="zai-quota-monthly-row"><div>Supabase · نقل بيانات مخزّن مؤقتًا</div><div class="zai-quota-na">لوحة Usage</div><div>5 ج.ب / شهر</div><div>—</div></div>
+      <div class="zai-quota-monthly-row"><div>Supabase · استدعاءات Edge Functions</div><div class="zai-quota-na">لوحة Usage</div><div>500,000 / شهر</div><div>—</div></div>
+      <div class="zai-quota-monthly-row"><div>GitHub Pages · نقل البيانات</div><div class="zai-quota-na">غير متاح</div><div>100 ج.ب / شهر*</div><div>—</div></div>
+      <p class="zai-quota-notice">* حد GitHub Pages شهري مرن (Soft Limit)، ولا توفر لنا GitHub قراءة مباشرة للاستهلاك. حدود Supabase المعروضة لخطة Free، وقد تتغير إذا تغيرت الباقة. الأرقام غير المتاحة لا تعني أن الاستهلاك صفر.</p>
+      <div class="zai-quota-links">
+        <a class="zai-quota-link" href="https://supabase.com/dashboard/org/lheqpqjwstebmvmgaeak/usage" target="_blank" rel="noopener noreferrer">عرض الاستهلاك الشهري في Supabase</a>
+        <a class="zai-quota-link" href="https://github.com/mzaitooni/Zaitooni" target="_blank" rel="noopener noreferrer">فتح مستودع GitHub</a>
+      </div>
+    </div>
+   </section>
   </div>
   <div id="zaiSystemFilesContent" role="tabpanel" hidden>
     <div class="zai-sys-grid">
@@ -2979,7 +3058,7 @@ document.getElementById('lockTreeAdmin').onclick=function(event){familyOriginalL
 // Admin-only system health and safe storage management (6B + 7B).
 const zSysEntry=document.createElement('div');
 zSysEntry.id='zaiSystemEntry';zSysEntry.className='hidden';
-zSysEntry.innerHTML='<button id="zaiSystemOpen" class="zai-sys-entry" type="button"><span>◈ النظام والتخزين</span><span class="arrow" aria-hidden="true">‹</span></button><p class="zai-sys-mini">حالة الاتصال، أعداد السجلات، استخدام الملفات، ومراجعة الملفات غير المرتبطة.</p>';
+zSysEntry.innerHTML='<button id="zaiSystemOpen" class="zai-sys-entry" type="button"><span>◈ النظام والتخزين</span><span class="arrow" aria-hidden="true">‹</span></button><p class="zai-sys-mini">المستهلك والمسموح والمتبقي، حدود الباقة الشهرية، وإدارة الملفات بأمان.</p>';
 adminBox.appendChild(zSysEntry);
 const zSysDialog=document.getElementById('systemStorageBack');
 const zSysStatusArea=document.getElementById('zaiSystemStatusContent');
@@ -2992,7 +3071,38 @@ function zSysSetTab(tab){zSysActiveTab=tab;const status=tab==='status';zSysStatu
 function zSysOpen(){if(!adminVerified){toast('فعّل وضع المشرف أولًا');return}closeLayer('settingsBack');zSysDialog.classList.add('open');zSysDialog.setAttribute('aria-hidden','false');zSysSetTab('status');zSysRefresh()}
 function zSysClose(showSettings=true){zSysDialog.classList.remove('open');zSysDialog.setAttribute('aria-hidden','true');if(showSettings&&adminVerified)document.getElementById('settingsBack').classList.add('open')}
 async function zSysCall(action,payload={}){if(!adminVerified)throw Error('وضع المشرف غير مفعّل');const key=localStorage.getItem(TREE_ADMIN_STORE)||'';if(!key)throw Error('أعد تسجيل الدخول للمشرف');const res=await fetch(CLOUD_URL+'/functions/v1/family-tree-system',{method:'POST',headers:{...cloudHeaders({'Content-Type':'application/json'}),'x-admin-key':key},body:JSON.stringify({action,...payload}),cache:'no-store'});let result=null;try{result=await res.json()}catch{}if(!res.ok||!result?.ok)throw Error(result?.error||'تعذر التواصل مع خدمة النظام ('+res.status+')');return result}
-async function zSysRefresh(){if(zSysBusy||!adminVerified)return;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('جاري فحص الاتصال وسجلات الشجرة والتخزين…');try{const info=await zSysCall('overview');if(!adminVerified)return;zSysOverview=info;zSysEl('zaiSysOnline').textContent='متصل';zSysEl('zaiSysPeople').textContent=Number(info.peopleCount).toLocaleString('ar-SA');zSysEl('zaiSysPending').textContent=Number(info.pendingRequests).toLocaleString('ar-SA');zSysEl('zaiSysClosed').textContent=Number(info.closedRequests).toLocaleString('ar-SA');zSysEl('zaiSysMessages').textContent=Number(info.messagesCount).toLocaleString('ar-SA');zSysEl('zaiSysUnread').textContent=Number(info.unreadMessages).toLocaleString('ar-SA');zSysEl('zaiSysBytes').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysFiles').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysFileCount').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysTotalStorage').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysOrphans').textContent=Number(info.unlinkedCount).toLocaleString('ar-SA');zSysEl('zaiSysOrphanBytes').textContent=zSysSize(info.unlinkedBytes);zSysEl('zaiSystemChecked').textContent='آخر فحص: '+new Date(info.checkedAt).toLocaleString('ar-SA',{dateStyle:'short',timeStyle:'short'});zSysSetBanner('الاتصال يعمل بنجاح. الإحصاءات والملفات محدّثة من الخادم.');zSysRenderFiles()}catch(e){zSysEl('zaiSysOnline').textContent='تعذر الفحص';zSysSetBanner('تعذر جلب البيانات: '+e.message,true);zSysOverview=null;zSysRenderFiles()}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false}}
+const zSysLimitDb=500*1024*1024;
+const zSysLimitStorage=1024*1024*1024;
+const zSysLimitGithub=1024*1024*1024;
+let zSysGithubBytes=null;
+function zSysQuotaPercent(used,limit){return Math.min(100,Math.max(0,100*(used/limit)))}
+function zSysUpdateQuota(key,used,limit){
+ const val=Number(used),valid=used!==null&&used!==undefined&&Number.isFinite(val)&&val>=0;
+ const usedEl=zSysEl('zaiQuota'+key+'Used'),leftEl=zSysEl('zaiQuota'+key+'Left');
+ const pctEl=zSysEl('zaiQuota'+key+'Pct'),bar=zSysEl('zaiQuota'+key+'Bar'),meter=zSysEl('zaiQuota'+key+'Meter');
+ if(!valid){usedEl.textContent='غير متاح';leftEl.textContent='—';pctEl.textContent='تعذرت القراءة المباشرة · حاول التحديث';bar.style.width='0%';bar.classList.remove('warn','critical');meter.removeAttribute('aria-valuenow');return;}
+ const percent=zSysQuotaPercent(val,limit),remaining=Math.max(0,limit-val);
+ usedEl.textContent=zSysSize(val);leftEl.textContent=zSysSize(remaining);
+ pctEl.textContent=(100*val/limit).toLocaleString('ar-SA',{maximumFractionDigits:2})+'٪ مستخدم'+(val>limit?' · تجاوزت المستوى المرجعي':'');
+ bar.style.width=percent+'%';bar.classList.toggle('warn',percent>=80&&percent<95);bar.classList.toggle('critical',percent>=95);meter.setAttribute('aria-valuenow',percent.toFixed(2));
+}
+function zSysRenderQuotas(){
+ zSysUpdateQuota('Db',zSysOverview?.databaseBytes,zSysLimitDb);
+ zSysUpdateQuota('Storage',zSysOverview?.projectStorageBytes,zSysLimitStorage);
+ zSysUpdateQuota('Github',zSysGithubBytes,zSysLimitGithub);
+}
+async function zSysLoadGithub(){
+ zSysGithubBytes=null;zSysRenderQuotas();
+ try{
+  const r=await fetch('https://api.github.com/repos/mzaitooni/Zaitooni',{headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});
+  if(!r.ok)throw Error('Github HTTP '+r.status);
+  const repo=await r.json();if(!Number.isFinite(Number(repo.size))||Number(repo.size)<0)throw Error('No size');
+  if(!adminVerified||!zSysDialog.classList.contains('open'))return;
+  zSysGithubBytes=Number(repo.size)*1024;
+ }catch(e){console.warn('GitHub repository size unavailable:',e.message)}
+ if(adminVerified&&zSysDialog.classList.contains('open'))zSysRenderQuotas();
+}
+async function zSysRefresh(){if(zSysBusy||!adminVerified)return;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('جاري فحص الاتصال وسجلات الشجرة والتخزين…');zSysGithubBytes=null;zSysRenderQuotas();try{const info=await zSysCall('overview');if(!adminVerified)return;zSysOverview=info;zSysEl('zaiSysOnline').textContent='متصل';zSysEl('zaiSysPeople').textContent=Number(info.peopleCount).toLocaleString('ar-SA');zSysEl('zaiSysPending').textContent=Number(info.pendingRequests).toLocaleString('ar-SA');zSysEl('zaiSysClosed').textContent=Number(info.closedRequests).toLocaleString('ar-SA');zSysEl('zaiSysMessages').textContent=Number(info.messagesCount).toLocaleString('ar-SA');zSysEl('zaiSysUnread').textContent=Number(info.unreadMessages).toLocaleString('ar-SA');zSysEl('zaiSysBytes').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysFiles').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysFileCount').textContent=Number(info.fileCount).toLocaleString('ar-SA');zSysEl('zaiSysTotalStorage').textContent=zSysSize(info.storageBytes);zSysEl('zaiSysOrphans').textContent=Number(info.unlinkedCount).toLocaleString('ar-SA');zSysEl('zaiSysOrphanBytes').textContent=zSysSize(info.unlinkedBytes);zSysEl('zaiSystemChecked').textContent='آخر فحص: '+new Date(info.checkedAt).toLocaleString('ar-SA',{dateStyle:'short',timeStyle:'short'});zSysSetBanner('الاتصال يعمل بنجاح. الإحصاءات والملفات محدّثة من الخادم.');zSysRenderQuotas();zSysLoadGithub();zSysRenderFiles()}catch(e){zSysEl('zaiSysOnline').textContent='تعذر الفحص';zSysSetBanner('تعذر جلب البيانات: '+e.message,true);zSysOverview=null;zSysGithubBytes=null;zSysRenderQuotas();zSysRenderFiles()}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false}}
 function zSysRenderFiles(){const root=zSysEl('zaiSystemFileList');root.replaceChildren();if(!zSysOverview){const t=document.createElement('p');t.className='zai-sys-small';t.textContent='لا توجد بيانات متاحة بعد. اضغط تحديث البيانات.';root.appendChild(t);return}const filter=zSysEl('zaiSystemFileFilter').value,term=zSysEl('zaiSystemFileSearch').value.trim().toLocaleLowerCase('ar');const items=(zSysOverview.files||[]).filter(f=>(filter==='all'||(filter==='unused'?!f.linked:f.linked))&&(!term||(f.path+' '+f.bucket).toLocaleLowerCase('ar').includes(term)));if(!items.length){const p=document.createElement('p');p.className='zai-sys-small';p.textContent='لا توجد ملفات مطابقة.';root.appendChild(p);return}for(const f of items){const r=document.createElement('div');r.className='zai-sys-file';const info=document.createElement('div');info.className='zai-sys-f-info';const name=document.createElement('b');name.textContent=f.path;info.appendChild(name);const desc=document.createElement('small');desc.textContent=f.bucket+' · '+zSysSize(f.size)+(f.updatedAt?' · '+new Date(f.updatedAt).toLocaleDateString('ar-SA'):'');info.appendChild(desc);r.appendChild(info);const actions=document.createElement('div');actions.className='zai-sys-f-action';const chip=document.createElement('span');chip.className='zai-sys-chip'+(!f.linked?' unlinked':'');chip.textContent=f.linked?'مرتبط':'غير مرتبط';actions.appendChild(chip);if(!f.linked){const del=document.createElement('button');del.type='button';del.className='zai-sys-delete';del.textContent='حذف الملف';del.addEventListener('click',()=>zSysDelete(f,del));actions.appendChild(document.createElement('br'));actions.appendChild(del)}r.appendChild(actions);root.appendChild(r)}}
 async function zSysDelete(f,button){if(!adminVerified||zSysBusy||f.linked)return;const message='حذف الملف نهائيًا؟\n'+f.path+'\n\nسيجري الخادم التحقق مرة أخرى من عدم ارتباطه بأي بطاقة أو طلب. لا يمكن استعادة الملف بعد حذفه.';if(!window.confirm(message))return;button.disabled=true;zSysBusy=true;zSysEl('zaiSystemRefresh').disabled=true;zSysSetBanner('التحقق من ارتباط الملف قبل الحذف…');let zSysDeleteError='';try{await zSysCall('delete_unused',{bucket:f.bucket,path:f.path,confirm:'DELETE_UNUSED_FILE'});}catch(e){zSysDeleteError=e.message}finally{zSysBusy=false;zSysEl('zaiSystemRefresh').disabled=false;button.disabled=false;await zSysRefresh();zSysSetTab('files');if(zSysDeleteError)zSysSetBanner('لم يُحذف الملف: '+zSysDeleteError,true);else if(zSysOverview)zSysSetBanner('تم حذف الملف غير المرتبط وتحديث القائمة بنجاح.')}}
 zSysEl('zaiSystemOpen').addEventListener('click',zSysOpen);
