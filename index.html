@@ -178,7 +178,9 @@ body.tree-open>main.wrap{animation:none}
 .generation-controls select{font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px;min-height:29px}
 .generation-controls #treeZoomValue{padding-inline:3px;font-size:11px}
 .tree-root.tree-generations{--root-card-width:205px;--generation-card-width:116px;--generation-gap:52px}
-.tree-root.tree-generations .person[data-lineage]{transform:translateY(var(--lineage-offset,0px))}
+/* Center each father between the first and last immediately visible child. */
+.tree-root li[data-branch-id] > .person{transform:translateY(var(--zai-family-center,0px))}
+.tree-root.tree-generations .person[data-lineage]{transform:translateY(var(--zai-family-center,0px))}
 @media(max-width:620px){
   .tree-root.tree-generations{--root-card-width:172px;--generation-card-width:96px;--generation-gap:42px}
   .generation-controls{font-size:11px}
@@ -880,6 +882,78 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
 #zaiProfilePhotoViewerClose:focus-visible{outline:3px solid #30785e;outline-offset:3px}
 @media(max-width:520px){#zaiProfilePhotoViewerBack{padding:16px}#zaiProfilePhotoViewerDialog{max-width:86vw;max-height:72dvh}#zaiProfilePhotoViewerImage{max-width:86vw;max-height:72dvh;min-width:170px}}
 </style>
+
+<style id="zaiFirstColumnFullLineage20261123">
+/* Display rule: ONLY the first (rightmost) column has a thin vertically
+   rotated card, when exactly one root person is currently displayed.
+   The single-line text shows this person's entire recorded parent chain
+   up to the oldest ancestor; it reads bottom to top. All other columns
+   retain their original horizontal cards. */
+.tree-root > ul > li.zai-first-column{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+  gap:0;
+  width:auto;
+}
+.tree-root > ul > li.zai-first-column > .person{
+  display:block;
+  position:relative;
+  flex:0 0 44px !important;
+  width:44px !important;
+  min-width:44px !important;
+  max-width:44px !important;
+  height:var(--zai-ancestor-card-height,290px);
+  min-height:0;
+  padding:0 !important;
+  border-radius:14px;
+  overflow:visible;
+  align-self:center;
+  z-index:1;
+}
+.tree-root > ul > li.zai-first-column > .person > .person-name{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:max-content !important;
+  max-width:none !important;
+  min-width:0 !important;
+  display:inline-block;
+  white-space:nowrap !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+  direction:rtl;
+  padding:0 !important;
+  margin:0;
+  line-height:1.45;
+  text-align:center;
+  transform-origin:center center;
+  transform:translate(-50%,-50%) rotate(90deg);
+}
+.tree-root > ul > li.zai-first-column > .person > .kids-count{
+  left:-13px;
+  top:calc(50% - 13px);
+}
+.tree-root > ul > li.zai-first-column > ul{
+  align-self:center;
+  margin:0 34px 0 0;
+  width:max-content;
+}
+@media(max-width:620px){
+  .tree-root > ul > li.zai-first-column > .person{
+    flex-basis:40px !important;
+    width:40px !important;
+    min-width:40px !important;
+    max-width:40px !important;
+  }
+  .tree-root > ul > li.zai-first-column > .person > .kids-count{
+    left:-11px;
+    top:calc(50% - 12.5px);
+  }
+  .tree-root > ul > li.zai-first-column > ul{margin-right:24px;}
+}
+</style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
@@ -1194,7 +1268,9 @@ const DEFAULT_GENERATIONS = 3;
 const TREE_STAGE_GUTTER = { top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
-let generationCount = DEFAULT_GENERATIONS;
+const ZAI_MAX_GENERATIONS = 5;
+const ZAI_START_GENERATIONS = 4;
+let generationCount = ZAI_START_GENERATIONS;
 let maxGenerationCount = DEFAULT_GENERATIONS;
 let fullTreeSelected = false;
 let treePinchZoom = null;
@@ -1339,7 +1415,7 @@ function treeNode(person, view, depth = 0) {
   const toggle = kids.length && (!ancestorOnly || searchAncestor) && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
-  return `<li data-branch-id="${id}"><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
+  return `<li data-branch-id="${id}"${depth === 0 ? ' class="zai-top-ancestor"' : ''}><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
 }
 function drawTreeBranches(root) {
   if (root.hasAttribute('data-shifting')) return;
@@ -1376,25 +1452,35 @@ function drawTreeBranches(root) {
 }
 
 function centerTreeLineage(root) {
-  if (root.hasAttribute('data-shifting')) return;
-  const cards = [...root.querySelectorAll('[data-lineage]')];
-  if (!cards.length) return;
-  const stageBox = root.parentElement.getBoundingClientRect();
-  const headerBottom = document.querySelector('.sticky-tree-header').getBoundingClientRect().bottom;
-  const top = Math.max(0, headerBottom, stageBox.top);
-  const bottom = Math.min(window.innerHeight, stageBox.bottom);
-  if (bottom <= top) return;
-
-  for (const card of cards) {
-    const box = card.getBoundingClientRect();
-    const oldOffset = parseFloat(card.style.getPropertyValue('--lineage-offset')) || 0;
-    const target = Math.min(stageBox.bottom - box.height / 2,
-      Math.max(stageBox.top + box.height / 2, (top + bottom) / 2));
-    const offset = oldOffset + (target - box.top - box.height / 2) / treeZoom;
-    card.style.setProperty('--lineage-offset', `${offset}px`);
+  // Center each father at the midpoint of the FIRST and LAST
+  // immediately visible child card. Descendants further down are deliberately
+  // ignored; an unopened branch contributes no hidden children.
+  //
+  // Process from the leaves upward, so each level uses already-centered
+  // child cards. Offsets are visual-only and contained inside each parent's
+  // existing tree row; this preserves sibling spacing and connector layout.
+  // A scroll does not recalculate offsets or make ancestors follow the screen.
+  if (root.hasAttribute('data-shifting') || root.hasAttribute('data-zai-lineage-centered')) return;
+  const scale = root.getBoundingClientRect().width / (root.offsetWidth || 1) || treeZoom || 1;
+  const rows = [...root.querySelectorAll('li[data-branch-id]')];
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const row = rows[i];
+    const parent = row.querySelector(':scope > .person');
+    const children = row.querySelector(':scope > ul');
+    if (!parent || !children) continue;
+    const direct = [...children.children].filter(child => child.matches('li[data-branch-id]'))
+      .map(child => child.querySelector(':scope > .person')).filter(Boolean);
+    if (!direct.length) continue;
+    const first = direct[0].getBoundingClientRect();
+    const last = direct[direct.length - 1].getBoundingClientRect();
+    const target = ((first.top + first.bottom) / 2 + (last.top + last.bottom) / 2) / 2;
+    const current = parent.getBoundingClientRect();
+    const dy = (target - (current.top + current.bottom) / 2) / scale;
+    if (Math.abs(dy) > 0.15)
+      parent.style.setProperty('--zai-family-center', `${dy.toFixed(2)}px`);
   }
+  root.setAttribute('data-zai-lineage-centered', '');
 }
-
 // A1/B8 (21 Nov 2026): Fit the ACTUAL visible tree across the viewport WIDTH.
 // Height is deliberately unrestricted, and the visitor can scroll vertically.
 // Account for disclosure arrows protruding outside their cards and for a fixed
@@ -1479,8 +1565,11 @@ window.addEventListener('resize', () => {
   const currentWidth=viewport?.clientWidth || 0;
   // A device rotation/viewport-width change re-enters auto-fit, even if a
   // visitor had been pinching to zoom. Height-only changes preserve manual zoom.
-  if(currentWidth && lastTreeFitViewportWidth && Math.abs(currentWidth-lastTreeFitViewportWidth)>2)
+  if(currentWidth && lastTreeFitViewportWidth && Math.abs(currentWidth-lastTreeFitViewportWidth)>2) {
     treePinchZoom=null;
+    // Width/orientation changes can alter card measurements; recenter fathers once.
+    document.querySelector('#tree .tree-root')?.removeAttribute('data-zai-lineage-centered');
+  }
   lastTreeFitViewportWidth=currentWidth;
   layoutTree();
 });
@@ -1489,9 +1578,11 @@ window.addEventListener('scroll', () => {
   lineageFrame = requestAnimationFrame(() => {
     lineageFrame = 0;
     const root = document.querySelector('#tree .tree-generations');
-    if (!root?.offsetWidth) return;
+    if (!root?.offsetWidth || root.hasAttribute('data-zai-lineage-centered')) return;
+    // Only catch initial geometry if the tree was hidden before it was shown.
+    // Once centered, scrolling is entirely passive and changes no card positions.
     centerTreeLineage(root);
-    drawTreeBranches(root);
+    if (root.hasAttribute('data-zai-lineage-centered')) drawTreeBranches(root);
   });
 }, {passive:true});
 
@@ -1521,13 +1612,13 @@ function getTreeGenerations() {
 }
 
 function updateGenerationOptions(max) {
-  const ceiling = Math.max(DEFAULT_GENERATIONS, max);
+  const ceiling = Math.min(ZAI_MAX_GENERATIONS, Math.max(DEFAULT_GENERATIONS, max));
   generationCount = Math.min(generationCount, ceiling);
   if (maxGenerationCount !== ceiling) {
     maxGenerationCount = ceiling;
     const options = [];
     for (let n = DEFAULT_GENERATIONS; n <= ceiling; n++) {
-      const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا') + (n === DEFAULT_GENERATIONS ? ' (افتراضي)' : '');
+      const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا') + (n === ZAI_START_GENERATIONS ? ' (افتراضي)' : '');
       options.push(new Option(label, String(n)));
     }
     generationSelect.replaceChildren(...options);
@@ -1769,6 +1860,67 @@ function updateTreeNavigation() {
   document.getElementById('treeNavigation').hidden = !helpOpen && !treeOpen;
 }
 
+function markZaiFirstColumnCard(viewport) {
+  // This feature rotates only the current rightmost / first column.
+  // If multiple root cards share that column, leave them horizontal to
+  // avoid crowding and keep the pre-existing family tree layout intact.
+  const rootList=viewport.querySelector('.tree-root > ul');
+  if(!rootList)return;
+  const roots=Array.from(rootList.children).filter(row=>row.matches('li[data-branch-id]'));
+  for(const row of roots)row.classList.remove('zai-first-column');
+  if(roots.length!==1)return;
+  const row=roots[0];
+  const person=byId(row.dataset.branchId);
+  const nameButton=row.querySelector(':scope > .person > .person-name');
+  if(!person||!nameButton)return;
+  // Replace only the text node: preserve the profile button, warning mark,
+  // and its handlers without parsing user text as HTML.
+  const chain=fullName(person);
+  const textNode=Array.from(nameButton.childNodes).find(node=>node.nodeType===Node.TEXT_NODE);
+  if(textNode)textNode.textContent=chain;
+  else nameButton.prepend(document.createTextNode(chain));
+  nameButton.setAttribute('aria-label',chain);
+  row.classList.add('zai-first-column');
+}
+function sizeZaiRightmostAncestorCard(viewport) {
+  // At launch the tree can be display:none behind the intro screen. In that case
+  // scrollWidth/offsetWidth are zero and the rotated name escapes its short card.
+  // Measure an invisible off-screen copy instead; it works before the tree is visible.
+  const probe=document.createElement('span');
+  probe.style.cssText='position:fixed;left:-100000px;top:0;display:inline-block;white-space:nowrap;width:max-content;max-width:none;visibility:hidden;pointer-events:none;transform:none;direction:rtl;';
+  document.body.appendChild(probe);
+  try {
+    for (const card of viewport.querySelectorAll('li.zai-first-column > .person')) {
+      const name=card.querySelector(':scope > .person-name');
+      if(!name)continue;
+      const font=getComputedStyle(name);
+      probe.textContent=name.textContent;
+      probe.style.fontFamily=font.fontFamily;
+      probe.style.fontSize=font.fontSize;
+      probe.style.fontWeight=font.fontWeight;
+      probe.style.fontStyle=font.fontStyle;
+      probe.style.letterSpacing=font.letterSpacing;
+      probe.style.lineHeight=font.lineHeight;
+      const lineWidth=Math.max(probe.getBoundingClientRect().width,name.scrollWidth,name.offsetWidth,48);
+      const height=Math.ceil(lineWidth+30)+'px';
+      if(card.style.getPropertyValue('--zai-ancestor-card-height')!==height)
+        card.style.setProperty('--zai-ancestor-card-height',height);
+    }
+  } finally {probe.remove();}
+}
+function refreshZaiAncestorAfterTreeOpens(){
+  if(!document.body.classList.contains('tree-open'))return;
+  const viewport=document.getElementById('tree');
+  if(!viewport||!viewport.querySelector('li.zai-first-column'))return;
+  sizeZaiRightmostAncestorCard(viewport);
+  requestAnimationFrame(()=>layoutTree());
+}
+new MutationObserver(()=>{if(document.body.classList.contains('tree-open'))
+  requestAnimationFrame(refreshZaiAncestorAfterTreeOpens);
+}).observe(document.body,{attributes:true,attributeFilter:['class']});
+document.fonts?.ready?.then(refreshZaiAncestorAfterTreeOpens);
+window.addEventListener('load',refreshZaiAncestorAfterTreeOpens,{once:true});
+
 function renderTree(query = '') {
   const viewport = document.getElementById('tree');
   const person = byId(selectedTreeSearchId);
@@ -1790,6 +1942,8 @@ const hasSelection = Boolean(person);
     ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><svg class="tree-connectors" aria-hidden="true" focusable="false"><path/></svg><ul>${html}</ul></div></div>`
     : `<div class="tree-empty">لا توجد أسماء بعد.</div>`;
 
+  markZaiFirstColumnCard(viewport);
+  sizeZaiRightmostAncestorCard(viewport);
   updateTreeNavigation();
   observeTreeGeometry(viewport);
   viewport.querySelectorAll('[data-toggle]').forEach(button => {
