@@ -178,7 +178,7 @@ body.tree-open>main.wrap{animation:none}
 .generation-controls select{font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px;min-height:29px}
 .generation-controls #treeZoomValue{padding-inline:3px;font-size:11px}
 .tree-root.tree-generations{--root-card-width:205px;--generation-card-width:116px;--generation-gap:52px}
-/* Center each father between the first and last immediately visible child. */
+/* Each father is vertically centered between his DIRECT visible children. */
 .tree-root li[data-branch-id] > .person{transform:translateY(var(--zai-family-center,0px))}
 .tree-root.tree-generations .person[data-lineage]{transform:translateY(var(--zai-family-center,0px))}
 @media(max-width:620px){
@@ -884,7 +884,7 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
 </style>
 
 <style id="zaiFirstColumnFullLineage20261123">
-/* Display rule: ONLY the first (rightmost) column has a thin vertically
+/* ONLY the first (rightmost) column has a thin vertically
    rotated card, when exactly one root person is currently displayed.
    The single-line text shows this person's entire recorded parent chain
    up to the oldest ancestor; it reads bottom to top. All other columns
@@ -953,6 +953,66 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
   }
   .tree-root > ul > li.zai-first-column > ul{margin-right:24px;}
 }
+</style>
+
+<style id="zaiAdminRequestsLinksHistory20261123">
+/* Admin request links, source notes, profile history and child preview. */
+.zai-admin-request-link{display:inline;border:0;background:none;color:#185c4a;text-decoration:underline;text-underline-offset:3px;font:inherit;font-weight:750;cursor:pointer;padding:2px 1px;text-align:inherit}
+.zai-admin-request-link:focus-visible{outline:2px solid #2b846c;border-radius:4px}
+.zai-admin-source-note{margin:10px 0 8px;padding:10px 12px;background:#f4f9f3;border:1px solid #d6e8d9;border-radius:11px;font-size:12px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.zai-admin-source-note strong{display:block;font-size:12px;color:#22563d;margin-bottom:2px}
+.zai-admin-request-preview-badge{display:inline-block;padding:5px 11px;background:#fff2da;color:#7a5114;border-radius:100px;font-size:12px;font-weight:800;margin:8px 0}
+.zai-admin-profile-history{margin:18px 0 6px;padding-top:14px;border-top:1px solid #d6e4d9}
+.zai-admin-profile-history h3{font-size:17px;margin:0 0 4px;color:#194b3e}
+.zai-admin-history-hint{color:#77857b;font-size:12px;margin:0 0 10px}
+.zai-admin-history-item{border:1px solid #dce7dd;border-radius:12px;background:#fff;margin:9px 0;overflow:hidden}
+.zai-admin-history-item summary{cursor:pointer;padding:12px 13px;background:#f9fbf8;list-style-position:inside;font-size:13px;font-weight:750;line-height:1.8}
+.zai-admin-history-item summary .zai-admin-history-date{display:block;font-size:11px;font-weight:400;color:#6b786e}
+.zai-admin-history-body{padding:11px 13px;font-size:12px;line-height:1.85;overflow-wrap:anywhere}
+.zai-admin-history-body .request-diff{margin-top:9px}
+#zaiChildRequestPreviewBack{z-index:31}
+#zaiChildRequestPreviewBack .modal{max-width:530px;position:relative;padding-top:23px}
+.zai-admin-child-fullname{font-size:16px;line-height:1.9;border:1px solid #dce7dd;border-radius:12px;padding:12px;margin:10px 0;overflow-wrap:anywhere;background:#f7faf7}
+.zai-admin-child-field{padding:7px 0;border-bottom:1px solid #edf0ed;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.zai-admin-child-field b{color:#25533e}
+.zai-admin-child-photo{max-width:140px;max-height:150px;object-fit:cover;border-radius:12px;margin:8px auto;display:block}
+#zaiChildRequestPreviewBack .close-x{z-index:2}
+ /* iOS request-navigation mode: the background never changes scroll position. */
+ body.zai-request-modal-open #profileBack .modal,
+ body.zai-request-modal-open #zaiChildRequestPreviewBack .modal{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+@media(max-width:620px){.zai-admin-source-note{padding:9px}.zai-admin-history-item summary{padding:10px}}
+</style>
+<style id="zaiFocusBelowToolbarExport20261123">
+/* Display: The tree has a real scrolling viewport BELOW the fixed fullscreen toolbar.
+   It cannot move behind the toolbar while the document scrolls or on mobile landscape. */
+body.zai-tree-focus{overflow:hidden!important}
+body.zai-tree-focus .sticky-tree-header{z-index:1301!important}
+body.zai-tree-focus #treePanel #tree{
+  position:fixed!important;
+  top:var(--zai-focus-tree-top, 70px)!important;
+  bottom:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:1!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:auto!important;
+  overflow-anchor:none;
+  padding:12px 0 calc(env(safe-area-inset-bottom) + 28px)!important;
+  margin:0!important;
+  background:#f3f6f2!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+#zaiTreeDownloadPNG{display:none!important;align-items:center;justify-content:center;flex:0 0 33px;min-width:33px;width:33px;height:32px;padding:0;border-radius:9px;border:1px solid #b9d6c2;background:#e8f2eb;color:#1f5c49;cursor:pointer}
+body.zai-tree-focus #zaiTreeDownloadPNG{display:inline-flex!important}
+#zaiTreeDownloadPNG svg{width:19px;height:19px;display:block;stroke:currentColor;fill:none;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+#zaiTreeDownloadPNG:disabled{opacity:.55;cursor:wait}
+#zaiTreeDownloadPNG:focus-visible{outline:2px solid #d8a24c;outline-offset:2px}
+@media(orientation:landscape) and (max-height:620px) and (pointer:coarse){#zaiTreeDownloadPNG{height:29px;min-width:30px;width:30px;flex-basis:30px}}
+@media print{body.zai-tree-focus #treePanel #tree{position:static!important;overflow:visible!important}#zaiTreeDownloadPNG{display:none!important}}
 </style>
 </head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
@@ -1249,6 +1309,12 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
 .family-request-uncertainty .family-uncertainty-hint{font-size:11px;color:#856d70;margin:5px 0 0}
 .family-request-actions button:disabled{opacity:.6;cursor:wait}
 </style>
+<div class="modal-back" id="zaiChildRequestPreviewBack" role="dialog" aria-modal="true" aria-label="بطاقة الابن المقترحة" aria-hidden="true">
+ <div class="modal profile-modal" id="zaiChildRequestPreviewModal">
+  <button type="button" class="close-x" id="zaiChildRequestPreviewClose" aria-label="إغلاق البطاقة">×</button>
+  <div id="zaiChildRequestPreviewContent"></div>
+ </div>
+</div>
 <script>
 (()=>{
 const KEY='alzaitooni-family-tree-v1';
@@ -1265,11 +1331,11 @@ function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.is
 let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfileId=null,profileHistory=[];const treeZoomFormat = new Intl.NumberFormat('ar-SA', {style: 'percent'});
 let treeZoom = 1; // Measured from content width when the tree is rendered.
 const DEFAULT_GENERATIONS = 3;
+const ZAI_MAX_GENERATIONS = 5; // Generation selector limit; full-tree view stays available.
+const ZAI_START_GENERATIONS = 4;
 const TREE_STAGE_GUTTER = { top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
-const ZAI_MAX_GENERATIONS = 5;
-const ZAI_START_GENERATIONS = 4;
 let generationCount = ZAI_START_GENERATIONS;
 let maxGenerationCount = DEFAULT_GENERATIONS;
 let fullTreeSelected = false;
@@ -1381,6 +1447,10 @@ function treeNode(person, view, depth = 0) {
   // In search, ancestors keep the chosen lineage visible while their arrows
   // reveal/hide siblings. The last column's arrow navigates to a new window.
   const searchAncestor = Boolean(view.searchFocus && ancestorOnly);
+  // A lineage ancestor always keeps the selected descendant visible, but its
+  // arrow may expand or collapse the OTHER directly related children.
+  const lineageExpanded = Boolean(ancestorOnly && (searchAncestor
+    ? view.openIds.has(person.id) : view.lineageExpandedIds?.has(person.id)));
   const canDrill = view.generations && depth === generationCount - 1;
   let shownKids = [];
   let childView = view;
@@ -1389,7 +1459,7 @@ function treeNode(person, view, depth = 0) {
   } else if (ancestorOnly) {
     // Opening a search ancestor exposes *all* children; closing it still
     // retains the next person on the searched lineage (never lose the result).
-    shownKids = searchAncestor && view.openIds.has(person.id)
+    shownKids = lineageExpanded
       ? kids : kids.filter(child => child.id === view.lineage.get(person.id));
   } else if (!canDrill) {
     if (searchPath && !searchCollapsedBranches.has(person.id)) {
@@ -1409,10 +1479,12 @@ function treeNode(person, view, depth = 0) {
   const id = esc(person.id);
   const ancestor = view.generations ? depth === 0 : !person.parentId;
   const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
-  const branchOpen = searchAncestor ? view.openIds.has(person.id) : Boolean(childHtml);
-  const actionLabel = canDrill ? `عرض فرع ${name}` : branchOpen ? 'إخفاء الأبناء' : 'إظهار الأبناء';
+  const branchOpen = ancestorOnly ? lineageExpanded : Boolean(childHtml);
+  const actionLabel = canDrill ? `عرض فرع ${name}` : ancestorOnly
+    ? (lineageExpanded ? 'إخفاء بقية الأبناء' : 'إظهار بقية الأبناء')
+    : branchOpen ? 'إخفاء الأبناء' : 'إظهار الأبناء';
   const disclosure = canDrill ? ' data-drill="true"' : ` aria-expanded="${branchOpen}"`;
-  const toggle = kids.length && (!ancestorOnly || searchAncestor) && !view.fullTree
+  const toggle = kids.length && (!ancestorOnly || view.generations) && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
   return `<li data-branch-id="${id}"${depth === 0 ? ' class="zai-top-ancestor"' : ''}><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
@@ -1533,19 +1605,30 @@ function layoutTree() {
   updateTreeFitButton();
 
   root.style.transform=`scale(${treeZoom})`;
-  // The stage clips overflowing contents. Reserve all chevron overhang plus
-  // 16 physical CSS pixels of unobstructed space at each end.
+  // Position the parent cards first. Their visual translateY does NOT change
+  // the tree's offsetHeight: without reserving the painted vertical bounds,
+  // a long rotated ancestor could be cut at the top of the stage.
+  centerTreeLineage(root);
+  const rootBox=root.getBoundingClientRect();
+  let paintedTop=0,paintedBottom=root.offsetHeight;
+  for(const el of root.querySelectorAll('li[data-branch-id] > .person, li[data-branch-id] > .person > .person-name, li[data-branch-id] > .person > .kids-count')){
+    const r=el.getBoundingClientRect();
+    if(!r.height)continue;
+    paintedTop=Math.min(paintedTop,(r.top-rootBox.top)/treeZoom-2);
+    paintedBottom=Math.max(paintedBottom,(r.bottom-rootBox.top)/treeZoom+2);
+  }
+  // The stage clips overflow, so reserve actual painted height, not just
+  // the untransformed rows. This also makes the clipped area scrollable.
   const leftSpace=bounds.left*treeZoom+TREE_FIT_SCREEN_MARGIN;
   const rightSpace=bounds.right*treeZoom+TREE_FIT_SCREEN_MARGIN;
-  root.style.top=`${TREE_STAGE_GUTTER.top*treeZoom}px`;
+  root.style.top=`${(TREE_STAGE_GUTTER.top-paintedTop)*treeZoom}px`;
   root.style.right=`${rightSpace}px`;
   stage.style.width=`${root.offsetWidth*treeZoom+leftSpace+rightSpace}px`;
-  const contentHeight=(root.offsetHeight+TREE_STAGE_GUTTER.top+TREE_STAGE_GUTTER.bottom)*treeZoom;
+  const contentHeight=(paintedBottom-paintedTop+TREE_STAGE_GUTTER.top+TREE_STAGE_GUTTER.bottom)*treeZoom;
   const headerHeight=document.querySelector('.sticky-tree-header').offsetHeight;
   const minimumHeight=root.classList.contains('tree-generations') && generationCount>DEFAULT_GENERATIONS
     ? window.innerHeight-headerHeight-35 : 0;
   stage.style.height=`${Math.max(contentHeight,minimumHeight)}px`;
-  centerTreeLineage(root);
   drawTreeBranches(root);
 }
 
@@ -1661,7 +1744,8 @@ function generationView({ root, depthBelow }) {
     const lineage = new Map(line.map((person, i) => [person.id, visiblePath[i + 1].id]));
     const parent = visiblePath.at(-2);
     const openIds = focusedTreeView.openIds ?? new Set([parent.id, anchor.id]);
-    return { root: visiblePath[0], generations:true, lineage, openIds };
+    return { root: visiblePath[0], generations:true, lineage, openIds,
+      lineageExpandedIds:focusedTreeView.lineageExpandedIds ?? new Set() };
   }
 
   // When there are too few ancestors, continue through the active branch.
@@ -1679,7 +1763,8 @@ function generationView({ root, depthBelow }) {
   const lineage = new Map(prefix.slice(0, -1).map((person, i) => [person.id, prefix[i + 1].id]));
   const pivot = prefix.at(-1);
   const openIds = focusedTreeView.openIds ?? new Set(pivot ? [pivot.id, ...children(pivot.id).map(child => child.id)] : []);
-  return { root: prefix[0], generations:true, lineage, openIds };
+  return { root: prefix[0], generations:true, lineage, openIds,
+    lineageExpandedIds:focusedTreeView.lineageExpandedIds ?? new Set() };
 }
 
 function matchNameChain(tokens) {
@@ -1861,7 +1946,7 @@ function updateTreeNavigation() {
 }
 
 function markZaiFirstColumnCard(viewport) {
-  // This feature rotates only the current rightmost / first column.
+  // Rotate only the current rightmost / first column.
   // If multiple root cards share that column, leave them horizontal to
   // avoid crowding and keep the pre-existing family tree layout intact.
   const rootList=viewport.querySelector('.tree-root > ul');
@@ -1980,7 +2065,12 @@ function toggleTreeBranch(button, viewport, query, view) {
   const wasOpen = button.getAttribute('aria-expanded') === 'true';
   const right = scrollRightOffset(viewport);
   const cardTop = button.parentElement.getBoundingClientRect().top;
-  if (view.generations) {
+  if (view.generations && view.lineage?.has(id) && !view.searchFocus) {
+    const lineageExpandedIds = new Set(focusedTreeView.lineageExpandedIds ?? []);
+    if (wasOpen) lineageExpandedIds.delete(id);
+    else lineageExpandedIds.add(id);
+    focusedTreeView = { ...focusedTreeView, lineageExpandedIds };
+  } else if (view.generations) {
     const openIds = new Set(view.openIds);
     if (wasOpen) openIds.delete(id);
     else openIds.add(id);
@@ -2980,8 +3070,14 @@ function childDraftHasChanges(){
  const overlays=Array.from(document.querySelectorAll('.modal-back'));
  let savedY=0,locked=false;
  function sync(){
-  const anyOpen=overlays.some(el=>el.classList.contains('open'));
-  if(anyOpen&&!locked){
+   // Request-linked cards are an exception: keep the Requests page at its
+   // original scroll position instead of freezing the body with position:fixed.
+   // This prevents small jumps when iOS Safari collapses/expands its toolbar.
+   const opened=overlays.filter(el=>el.classList.contains('open'));
+   const requestModalOnly=Boolean(window.zaiRequestModalNoPageLock)&&opened.length>0&&opened.every(el=>el.id==='profileBack'||el.id==='zaiChildRequestPreviewBack');
+   document.body.classList.toggle('zai-request-modal-open',requestModalOnly);
+   const anyOpen=opened.length>0&&!requestModalOnly;
+   if(anyOpen&&!locked){
    savedY=window.scrollY||document.documentElement.scrollTop||0;
    document.body.style.position='fixed';
    document.body.style.top='-'+savedY+'px';
@@ -3000,6 +3096,12 @@ function childDraftHasChanges(){
  const observer=new MutationObserver(sync);
  overlays.forEach(el=>observer.observe(el,{attributes:true,attributeFilter:['class']}));
  sync();
+ // Modal backdrops cover the entire background; prevent swipes on the
+  // backdrop itself while preserving native scrolling inside the dialog.
+ document.addEventListener('touchmove',event=>{
+   if(!document.body.classList.contains('zai-request-modal-open'))return;
+   if(!event.target.closest('#profileBack .modal, #zaiChildRequestPreviewBack .modal'))event.preventDefault();
+ },{capture:true,passive:false});
 })();
 
 
@@ -3584,6 +3686,207 @@ zSysEl('zaiSystemFileFilter').addEventListener('change',zSysRenderFiles);
 const zSysOriginalCloudUpdate=cloudUpdateControls;
 cloudUpdateControls=function(){zSysOriginalCloudUpdate();zSysEntry.classList.toggle('hidden',!adminVerified);if(!adminVerified&&zSysDialog.classList.contains('open')){zSysClose(false);zSysOverview=null}}
 
+
+;
+/* Admin request links, request history and child-preview. Pending children are previewed without changing approved tree data. */
+(()=>{
+ 'use strict';
+ const list=document.getElementById('requestsList');
+ const profile=document.getElementById('profileBack');
+ const previewBack=document.getElementById('zaiChildRequestPreviewBack');
+ const previewContent=document.getElementById('zaiChildRequestPreviewContent');
+ let returnToRequests=null;
+ const getRequest=id=>(data.requests||[]).find(r=>String(r.id)===String(id));
+ const noteText=r=>String((r.source||r.proposedFields?.source||'')).trim();
+ const sourceBlock=r=>{const note=noteText(r);return note?'<div class="zai-admin-source-note"><strong>المصدر أو ملاحظة مقدم الطلب</strong>'+esc(note)+'</div>':''};
+ const codeText=r=>adminOfficialCode(r)?'رقم الطلب: '+esc(adminOfficialCode(r)):'معرّف الطلب: '+esc(r.id||r.batchId||'غير متاح');
+ // Only resolve an approved added child to its actual recorded card.
+ // Ambiguous duplicate-name matches are not linked to the wrong person.
+ function approvedChild(r){
+  if(r.operation!=='add'||r.status!=='approved')return null;
+  const known=r.approvedPersonId||r.approved_person_id||r.createdPersonId||r.added_person_id;
+  if(known){const p=byId(known);if(p)return p;}
+  const possible=data.people.filter(p=>p.parentId===r.parentId&&p.name===r.name&&(!r.gender||p.gender===r.gender));
+  return possible.length===1?possible[0]:null;
+ }
+ function requestBelongsToPerson(r,id){
+  if(r.personId===id)return true;
+  if(r.operation==='add'){
+   if(r.parentId===id)return true; // parent receives a child-addition request
+   return approvedChild(r)?.id===id; // approved child also gets their own history
+  }
+  return false;
+ }
+ function statusText(r){return ({pending:'معلّق',approved:'مقبول',rejected:'مرفوض'})[r.status]||r.status||'معلّق'}
+ function historyEntry(r){
+  const title=familyRequestTitle(r);
+  return '<details class="zai-admin-history-item"><summary>'+esc(title)+' <span class="family-request-status '+esc(r.status||'pending')+'">'+esc(statusText(r))+'</span><span class="zai-admin-history-date">'+esc(familyDate(r.submittedAt))+' · '+codeText(r)+'</span></summary><div class="zai-admin-history-body">'+
+   '<div><b>البطاقة المرتبطة:</b> '+esc(familyRequestCardFullName(r))+'</div>'+
+   '<div><b>التاريخ:</b> '+esc(familyDate(r.submittedAt))+'</div>'+
+   '<div><b>'+codeText(r)+'</b></div>'+
+   familyRequestDataHtml(r)+sourceBlock(r)+requestDiffHtml(r)+familyRequestExtraDetailsHtml(r)+
+   '</div></details>';
+ }
+ function renderZaiHistory(id){
+  const section=document.getElementById('zaiAdminProfileRequestsHistory');if(!section)return;
+  if(!adminVerified){section.hidden=true;section.replaceChildren();return;}
+  section.hidden=false;
+  const rows=(data.requests||[]).filter(r=>requestBelongsToPerson(r,id)).slice().sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
+  section.innerHTML='<h3>سجل الطلبات ('+rows.length+')</h3><p class="zai-admin-history-hint">للمشرف فقط · اضغط عنوان الطلب لعرض كامل التفاصيل</p>'+
+    (rows.length?rows.map(historyEntry).join(''):'<div class="small">لا توجد طلبات مرتبطة بهذه البطاقة.</div>');
+ }
+ // Reuse the existing profile view. This is a wrapper, not a replacement.
+ const beforeProfile=openProfile;
+ openProfile=function(id){const result=beforeProfile(id);if(byId(id))renderZaiHistory(id);return result};
+ // The card history must sit below the Children section for every person.
+ const history=document.createElement('section');history.className='zai-admin-profile-history';history.id='zaiAdminProfileRequestsHistory';history.hidden=true;
+ document.getElementById('profileChildrenSection').after(history);
+ // Preserve the exact request position, not just the Requests tab. On iOS,
+ // body is position:fixed while a modal is open, so scrolling back *before*
+ // the global modal-lock observer has unlocked the page may silently fail.
+ function rememberOrigin(button){
+  const row=button.closest('[data-family-request-card]');
+  const scroll=document.scrollingElement||document.documentElement;
+  const viewportOffset=window.visualViewport?.offsetTop||0;
+  returnToRequests={
+   windowY:window.scrollY||scroll.scrollTop||0,
+   listTop:list.scrollTop,
+   requestId:row?.dataset.familyRequestCard||null,
+   rowViewportTop:(row?.getBoundingClientRect().top??0)-viewportOffset,
+   buttonViewportTop:button.getBoundingClientRect().top-viewportOffset,
+   button,
+   view:familyRequestView
+  };
+  // The global modal observer must see this flag before the dialog opens.
+  // Avoiding the position:fixed body lock is the reliable way to keep the
+  // exact pixel position in iOS Files, Safari and standalone home-screen mode.
+  window.zaiRequestModalNoPageLock=true;
+ }
+ function restoreOrigin(){
+  const context=returnToRequests;returnToRequests=null;
+  window.zaiRequestModalNoPageLock=false;
+  if(!context)return;
+  const panel=document.getElementById('requestsPanel');
+  if(!panel.classList.contains('active'))activateMainPanel('requestsPanel');
+  if(familyRequestView!==context.view)selectFamilyRequestView(context.view);
+  let stopped=false,attempts=0;
+  const findRow=()=>context.requestId?[...list.querySelectorAll('[data-family-request-card]')].find(el=>el.dataset.familyRequestCard===context.requestId):null;
+  const stop=()=>{
+   stopped=true;
+   window.removeEventListener('touchstart',stop,true);
+   window.removeEventListener('wheel',stop,true);
+   window.removeEventListener('pointerdown',stop,true);
+  };
+  // Never fight a user who begins scrolling immediately after dismissing.
+  window.addEventListener('touchstart',stop,{capture:true,passive:true,once:true});
+  window.addEventListener('wheel',stop,{capture:true,passive:true,once:true});
+  window.addEventListener('pointerdown',stop,{capture:true,passive:true,once:true});
+  function restoreFrame(){
+   if(stopped)return;
+   if(profile.classList.contains('open')||previewBack.classList.contains('open')){stop();return;}
+   // A different dialog may still be closing; wait until any *real* lock
+   // releases before attempting to correct a displaced viewport.
+   if(document.body.style.position==='fixed'){
+    if(++attempts<40)requestAnimationFrame(restoreFrame);else stop();
+    return;
+   }
+   const row=findRow();
+   const anchor=context.button?.isConnected?context.button:row;
+   list.scrollTop=context.listTop;
+   const visualTop=anchor?.getBoundingClientRect().top-(window.visualViewport?.offsetTop||0);
+   const expected=context.button?.isConnected?context.buttonViewportTop:context.rowViewportTop;
+   if(anchor&&Number.isFinite(expected)&&Number.isFinite(visualTop)){
+    const delta=visualTop-expected;
+    // Most returns need *no* scroll change. Only compensate if the browser
+    // actually moved the clicked link (e.g. after Safari toolbar resizing).
+    if(Math.abs(delta)>.5){
+     const scrolling=document.scrollingElement||document.documentElement;
+     const destination=Math.max(0,(window.scrollY||scrolling.scrollTop||0)+delta);
+     window.scrollTo({left:0,top:destination,behavior:'instant'});
+     // Some Files previews report scrollY late; set the scrolling element too.
+     if(Math.abs((window.scrollY||0)-destination)>1)scrolling.scrollTop=destination;
+    }
+   }else if(Math.abs((window.scrollY||0)-context.windowY)>1){
+    window.scrollTo({left:0,top:context.windowY,behavior:'instant'});
+   }
+   // Permit a few layout/toolbar frames to settle, but do not re-focus the
+   // link: iOS can scroll an ancestor as an unintended side effect of focus().
+   if(++attempts<10)requestAnimationFrame(restoreFrame);else stop();
+  }
+  requestAnimationFrame(restoreFrame);
+ }
+ function openActualProfile(id,fromRequest){
+  if(!byId(id)){toast('هذه البطاقة غير موجودة في الشجرة الحالية');return;}
+  if(fromRequest){profileHistory.length=0;activeProfileId=null;}
+  openProfile(id);
+ }
+ function renderChildPreview(r){
+  const parent=byId(r.parentId);
+  const childName=esc(r.name||'الاسم غير مسجل');
+  let photo='';
+  if(r.proposedPhotoUrl&&/^(data:image\/|blob:)/i.test(r.proposedPhotoUrl))photo='<img class="zai-admin-child-photo" alt="الصورة المقترحة" src="'+esc(r.proposedPhotoUrl)+'">';
+  else if(r.proposedPhotoUrl)photo=photoCompare(r,null);
+  const pieces=[['الاسم الأول',r.name],['الجنس',familyArchiveFormatValue('gender',r.gender)],['الأب',parent?fullName(parent):'غير مسجل'],['النبذة',r.bio],['المصدر أو الملاحظة',noteText(r)],['بلد الإقامة',r.residence_country],['الجنسية',r.nationality],['تاريخ الميلاد',r.birth_date?zaiBirthFormat(r.birth_date):'']];
+  previewContent.innerHTML='<h2>بطاقة '+childName+'</h2><span class="zai-admin-request-preview-badge">بطاقة مقترحة · لم تُعتمد بعد</span>'+
+    '<div class="zai-admin-child-fullname">'+childName+(parent?' بن '+esc(fullName(parent)):'')+'</div>'+photo+
+    pieces.filter(([,value])=>value!==undefined&&value!==null&&String(value).trim()).map(([label,value])=>'<div class="zai-admin-child-field"><b>'+esc(label)+':</b> '+esc(value)+'</div>').join('')+
+    '<div class="zai-admin-child-field"><b>مقدم الطلب:</b> '+esc(r.contributor||'غير مسجل')+'</div>'+
+    '<div class="zai-admin-child-field"><b>'+codeText(r)+'</b></div>';
+ }
+ function closePreview(){previewBack.classList.remove('open');previewBack.setAttribute('aria-hidden','true');if(!profile.classList.contains('open'))restoreOrigin()}
+ document.getElementById('zaiChildRequestPreviewClose').addEventListener('click',closePreview);
+ previewBack.addEventListener('click',e=>{if(e.target===previewBack)closePreview()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&previewBack.classList.contains('open')){e.preventDefault();closePreview()}},true);
+ // Augment existing request rendering, without touching the approve/reject flows.
+ const formerRequestRow=familyRequestRow;
+ familyRequestRow=function(r){
+  let html=formerRequestRow(r);
+  const subject=familyRequestSubject(r);
+  if(subject){
+   const original='<b>البطاقة:</b> '+esc(familyRequestCardFullName(r));
+   const link='<button type="button" class="zai-admin-request-link" data-zai-request-profile="'+esc(subject.id)+'" aria-label="فتح البطاقة المرتبطة">البطاقة</button>: <button type="button" class="zai-admin-request-link" data-zai-request-profile="'+esc(subject.id)+'">'+esc(familyRequestCardFullName(r))+'</button>';
+   html=html.replace(original,link);
+  }
+  if(r.operation==='add'&&r.status!=='rejected'){
+   const child=approvedChild(r);
+   const handler=r.status==='pending'?'data-zai-request-preview="'+esc(r.id)+'"':child?'data-zai-request-profile="'+esc(child.id)+'"':'';
+   if(handler){
+    const link='<button type="button" class="zai-admin-request-link" '+handler+'>عرض</button>';
+    html=html.replace('<div class="request-diff-title">بيانات الابن المقترح</div>','<div class="request-diff-title">بيانات الابن المقترح · '+link+'</div>');
+   }
+  }
+  // For edit requests too, show the submitted source/note in both pending and archive.
+  // Existing add request details already show it; keep a common prominent strip.
+  if(noteText(r))html=html.replace('<details class="family-request-details"><summary>بيانات مقدم الطلب</summary>',sourceBlock(r)+'<details class="family-request-details"><summary>بيانات مقدم الطلب</summary>');
+  return html;
+ };
+ const formerRenderRequests=renderRequests;
+ renderRequests=function(){const value=formerRenderRequests();return value};
+ list.addEventListener('click',e=>{
+  const button=e.target.closest('[data-zai-request-profile],[data-zai-request-preview]');
+  if(!button||!adminVerified)return;
+  e.preventDefault();
+  rememberOrigin(button);
+  if(button.dataset.zaiRequestProfile){openActualProfile(button.dataset.zaiRequestProfile,true);return}
+  const r=getRequest(button.dataset.zaiRequestPreview);
+  if(!r||r.status!=='pending'||r.operation!=='add'){restoreOrigin();toast('المعاينة غير متاحة لهذا الطلب');return}
+  renderChildPreview(r);
+  previewBack.classList.add('open');previewBack.setAttribute('aria-hidden','false');
+ });
+ document.addEventListener('click',e=>{
+  if(!returnToRequests||previewBack.classList.contains('open'))return;
+  const clicked=e.target;
+  if(!clicked.closest('#profileBackButton,#profileReturnTree')&&clicked!==profile)return;
+  setTimeout(()=>{if(!profile.classList.contains('open'))restoreOrigin()},0);
+ });
+ // Profile can also be dismissed through the other existing controls.
+ document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape'||!returnToRequests||previewBack.classList.contains('open'))return;
+  setTimeout(()=>{if(!profile.classList.contains('open'))restoreOrigin()},0);
+ });
+ setTimeout(()=>{if(adminVerified)renderRequests()},0);
+})();
+
 setTimeout(()=>initCloud(),0);
 render();
 })();
@@ -3648,6 +3951,205 @@ function onNativeChange(){if(!nativeElement()&&nativeRequested){nativeRequested=
 document.addEventListener('fullscreenchange',onNativeChange);document.addEventListener('webkitfullscreenchange',onNativeChange);
 refresh();
 })();</script>
+<style id="zaiFullscreenPreviousGeneration20261123">
+/* The extra back icon is the same height as Fit and PNG, not a taller toolbar. */
+#zaiFullscreenPreviousGen{display:none!important;flex:0 0 32px;width:32px;height:32px;min-width:32px;padding:0;border:1px solid #c5dbcb;border-radius:9px;background:#eff7f0;color:#205b48;align-items:center;justify-content:center;cursor:pointer}
+#zaiFullscreenPreviousGen svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+body.zai-tree-focus #zaiFullscreenPreviousGen:not([hidden]){display:inline-flex!important}
+@media(max-width:620px){#zaiFullscreenPreviousGen{flex-basis:28px;width:28px;height:28px;min-width:28px}}
+@media(orientation:landscape) and (max-height:620px) and (pointer:coarse){#zaiFullscreenPreviousGen{flex-basis:29px;width:29px;height:29px;min-width:29px}}
+</style>
+<script id="zaiFullscreenPreviousGenerationCode20261123">
+(()=>{
+ const toolbar=document.getElementById('treeToolbar');
+ const back=document.getElementById('treeBackBtn');
+ const fit=document.getElementById('treeFitWidth');
+ if(!toolbar||!back||!fit||document.getElementById('zaiFullscreenPreviousGen'))return;
+ const btn=document.createElement('button');
+ btn.id='zaiFullscreenPreviousGen';btn.type='button';
+ btn.title='العودة إلى الجيل السابق';btn.setAttribute('aria-label','العودة إلى الجيل السابق');
+ btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>';
+ toolbar.insertBefore(btn,fit);
+ const sync=()=>{btn.hidden=back.hidden};
+ btn.addEventListener('click',()=>{if(!back.hidden){back.click();sync();}});
+ new MutationObserver(sync).observe(back,{attributes:true,attributeFilter:['hidden']});
+ sync();
+})();
+</script>
+<script id="zaiFocusTreePNG20261123">
+(()=>{
+'use strict';
+const body=document.body;
+const toolbar=document.getElementById('treeToolbar');
+const viewport=document.getElementById('tree');
+if(!body||!toolbar||!viewport||document.getElementById('zaiTreeDownloadPNG'))return;
+const btn=document.createElement('button');
+btn.type='button';btn.id='zaiTreeDownloadPNG';btn.title='حفظ صورة PNG للشجرة المعروضة';
+btn.setAttribute('aria-label','تنزيل صورة الشجرة المعروضة');
+btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></svg>';
+const fullBtn=document.getElementById('zaiFullscreenToggle');
+if(fullBtn)fullBtn.before(btn);else toolbar.appendChild(btn);
+// Position the independent fullscreen tree scroller under the ACTUAL toolbar,
+// rather than assuming the toolbar is always 40px high on every device.
+let scheduled=false;
+function updateClearance(){
+ scheduled=false;
+ if(!body.classList.contains('zai-tree-focus'))return;
+ const bounds=toolbar.getBoundingClientRect();
+ if(!bounds.height)return;
+ const top=Math.max(48,Math.ceil(bounds.bottom+10));
+ const px=Math.min(top,Math.max(48,window.innerHeight-80))+'px';
+ if(document.documentElement.style.getPropertyValue('--zai-focus-tree-top')!==px)
+   document.documentElement.style.setProperty('--zai-focus-tree-top',px);
+}
+function scheduleClearance(){if(scheduled)return;scheduled=true;requestAnimationFrame(updateClearance)}
+new MutationObserver(scheduleClearance).observe(body,{attributes:true,attributeFilter:['class']});
+new ResizeObserver(scheduleClearance).observe(toolbar);
+window.addEventListener('resize',scheduleClearance,{passive:true});
+window.visualViewport?.addEventListener('resize',scheduleClearance,{passive:true});
+document.addEventListener('fullscreenchange',scheduleClearance);
+document.addEventListener('webkitfullscreenchange',scheduleClearance);
+scheduleClearance();
+
+const roundRect=(ctx,x,y,w,h,r)=>{
+ const R=Math.min(r,w/2,h/2);
+ ctx.beginPath();
+ if(typeof ctx.roundRect==='function')ctx.roundRect(x,y,w,h,R);
+ else{ctx.moveTo(x+R,y);ctx.arcTo(x+w,y,x+w,y+h,R);ctx.arcTo(x+w,y+h,x,y+h,R);ctx.arcTo(x,y+h,x,y,R);ctx.arcTo(x,y,x+w,y,R);}
+};
+function wrapWords(ctx,text,maxWidth){
+ const words=String(text||'').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+ const lines=[];let line='';
+ for(const word of words){
+  const joined=line?line+' '+word:word;
+  if(line&&ctx.measureText(joined).width>maxWidth){lines.push(line);line=word;}else line=joined;
+ }
+ if(line)lines.push(line);
+ return lines.length?lines:[''];
+}
+function renderTreePNG(){
+ const root=viewport.querySelector('.tree-root');
+ if(!root||!root.offsetWidth||!root.offsetHeight)throw new Error('افتح الشجرة أولًا قبل حفظ الصورة.');
+ const cards=[...root.querySelectorAll('li[data-branch-id] > .person')]
+   .filter(el=>el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden');
+ if(!cards.length)throw new Error('لا توجد بطاقات ظاهرة لتصديرها.');
+ const origin=root.getBoundingClientRect();
+ const zoom=origin.width/(root.offsetWidth||1)||1;
+ const px=b=>( {x:(b.left-origin.left)/zoom,y:(b.top-origin.top)/zoom,w:b.width/zoom,h:b.height/zoom} );
+ let minX=0,minY=0,maxX=root.offsetWidth,maxY=root.offsetHeight;
+ for(const card of cards){
+   for(const e of [card,card.querySelector('.kids-count')].filter(Boolean)){
+    const b=px(e.getBoundingClientRect());
+    minX=Math.min(minX,b.x);minY=Math.min(minY,b.y);
+    maxX=Math.max(maxX,b.x+b.w);maxY=Math.max(maxY,b.y+b.h);
+   }
+ }
+ const margin=34,header=64;
+ const contentWidth=Math.ceil(maxX-minX),contentHeight=Math.ceil(maxY-minY);
+ const width=contentWidth+margin*2,height=contentHeight+margin*2+header;
+ const scale=Math.min(2,14000/width,14000/height,Math.sqrt(26000000/(width*height)));
+ if(scale<0.6)throw new Error('العرض كبير جدًا لصورة واحدة على هذا الجهاز. قلّل الفروع الظاهرة ثم حاول مجددًا.');
+ const canvas=document.createElement('canvas');
+ canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));
+ const ctx=canvas.getContext('2d');
+ if(!ctx)throw new Error('هذا المتصفح لا يدعم إنشاء صورة الشجرة.');
+ ctx.setTransform(scale,0,0,scale,0,0);
+ ctx.fillStyle='#f3f6f2';ctx.fillRect(0,0,width,height);
+ ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='middle';
+ ctx.font='bold 21px Tahoma,Arial,sans-serif';ctx.fillStyle='#173d35';
+ ctx.fillText('شجرة آل الزيتوني',width-margin,29);
+ ctx.font='12px Tahoma,Arial,sans-serif';ctx.fillStyle='#71817a';
+ ctx.fillText('العرض الحالي للشجرة',width-margin,50);
+ const dx=margin-minX,dy=margin+header-minY;
+ ctx.save();ctx.translate(dx,dy);
+ // The existing SVG connector path is already in the unscaled tree coordinate system.
+ const path=root.querySelector('.tree-connectors path');
+ if(path?.getAttribute('d')){
+   ctx.strokeStyle='#b8cbbd';ctx.lineWidth=1.3;ctx.lineJoin='round';ctx.lineCap='round';
+   try{ctx.stroke(new Path2D(path.getAttribute('d')));}catch(_){/* card text still exports */}
+ }
+ for(const card of cards){
+   const box=px(card.getBoundingClientRect()),style=getComputedStyle(card);
+   ctx.save();
+   ctx.fillStyle=style.backgroundColor&&style.backgroundColor!=='rgba(0, 0, 0, 0)'?style.backgroundColor:'#fff';
+   ctx.strokeStyle=style.borderTopColor||'#d9e5db';
+   ctx.lineWidth=Math.max(1,parseFloat(style.borderTopWidth)||1);
+   roundRect(ctx,box.x,box.y,box.w,box.h,Math.min(14,parseFloat(style.borderTopLeftRadius)||14));ctx.fill();ctx.stroke();
+   const nameButton=card.querySelector(':scope > .person-name');
+   if(nameButton){
+     const fontStyle=getComputedStyle(nameButton);
+     const fs=parseFloat(fontStyle.fontSize)||14;
+     const weight=fontStyle.fontWeight||'700';
+     ctx.font=`${weight} ${fs}px Tahoma,Arial,sans-serif`;
+     ctx.fillStyle=fontStyle.color||'#18332d';
+     ctx.textBaseline='middle';ctx.textAlign='center';ctx.direction='rtl';
+     const name=[...nameButton.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim()||nameButton.textContent.trim();
+     if(card.parentElement?.classList.contains('zai-first-column')){
+       ctx.translate(box.x+box.w/2,box.y+box.h/2);ctx.rotate(Math.PI/2);
+       ctx.fillText(name,0,0,Math.max(10,box.h-24));
+     }else{
+       const nb=px(nameButton.getBoundingClientRect());
+       const maxWidth=Math.max(35,Math.min(nb.w||box.w-16,box.w-12));
+       const lines=wrapWords(ctx,name,maxWidth);
+       const lh=Number.parseFloat(fontStyle.lineHeight)||fs*1.45;
+       // Fit all lines inside the card without changing any tree data.
+       const textTop=box.y+(box.h-(lines.length-1)*lh)/2;
+       ctx.textAlign='right';
+       const rx=Math.min(box.x+box.w-7,nb.x+nb.w);
+       lines.forEach((line,i)=>ctx.fillText(line,rx,textTop+i*lh,maxWidth));
+     }
+   }
+   ctx.restore();
+ }
+ // Disclosure icons and warning signs remain visible in the exported tree.
+ for(const card of cards){
+   const circle=card.querySelector(':scope > .kids-count');if(!circle)continue;
+   const b=px(circle.getBoundingClientRect());const style=getComputedStyle(circle);
+   const x=b.x+b.w/2,y=b.y+b.h/2,r=Math.min(b.w,b.h)/2;
+   ctx.save();ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+   ctx.fillStyle=style.backgroundColor||'#eaf2eb';ctx.fill();
+   ctx.strokeStyle=style.borderTopColor||'#b8d0bc';ctx.lineWidth=1;ctx.stroke();
+   ctx.strokeStyle=style.color||'#1c5949';ctx.lineWidth=1.6;
+   ctx.beginPath();
+   const reversed=circle.getAttribute('aria-expanded')==='true';
+   if(reversed){ctx.moveTo(x+2,y-4);ctx.lineTo(x-2,y);ctx.lineTo(x+2,y+4)}
+   else{ctx.moveTo(x-2,y-4);ctx.lineTo(x+2,y);ctx.lineTo(x-2,y+4)}
+   ctx.stroke();ctx.restore();
+ }
+ ctx.restore();
+ return canvas;
+}
+function downloadBlob(blob){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='شجرة-آل-الزيتوني-العرض-الحالي.png';
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+btn.addEventListener('click',async()=>{
+ if(btn.disabled)return;
+ btn.disabled=true;
+ try{
+   // Ensure the already-drawn connectors represent the current branch state.
+   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+   const canvas=renderTreePNG();
+   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('تعذّر تحويل الصورة إلى PNG.')),'image/png'));
+   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||
+      (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+   if(isIOS&&typeof navigator.share==='function'&&typeof navigator.canShare==='function'){
+     const file=new File([blob],'شجرة-آل-الزيتوني.png',{type:'image/png'});
+     if(navigator.canShare({files:[file]})){
+       try{await navigator.share({files:[file],title:'شجرة آل الزيتوني'});return;}
+       catch(error){if(error?.name==='AbortError')return;}
+     }
+   }
+   downloadBlob(blob);
+   if(isIOS&&typeof toast==='function')toast('إذا نُزّلت الصورة في الملفات، افتحها ثم اختر حفظ الصورة');
+ }catch(error){
+   alert(error?.message||'تعذّر حفظ صورة الشجرة على هذا الجهاز.');
+ }finally{btn.disabled=false;}
+});
+})();
+</script>
 <script id="zaiIntroFullscreenCode20261119">
 (()=>{
   'use strict';
@@ -3950,4 +4452,7 @@ refresh();
   },true);
 })();
 </script>
+
+
+
 </body></html>
