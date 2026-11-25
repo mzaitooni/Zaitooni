@@ -3538,9 +3538,16 @@ function requestDiffHtml(request){
  });
  let photo='';
  if(request.proposedPhotoUrl){
-  const originalWasPhoto=original?Boolean(original._had_photo):request.status==='pending'&&Boolean(current?.photo);
-  const oldPhoto=originalWasPhoto?'كانت هناك صورة':'غير مسجل';
-  photo=familyRequestDiffValues('الصورة الشخصية',original?oldPhoto:(request.status==='pending'?oldPhoto:beforeUnknown),'صورة جديدة مقترحة')+photoCompare(request,null);
+  const pending=request.status==='pending';
+  const savedPhoto=original?.photo_url||original?._photo_url||original?.photo||'';
+  const previousPhoto=pending?(current?.photo||''):savedPhoto;
+  const hadPhoto=Boolean(previousPhoto||original?._had_photo);
+  const knownAbsent=pending?Boolean(current&&!current.photo):original?._had_photo===false;
+  const oldPhoto=hadPhoto?'كانت هناك صورة':knownAbsent?'غير مسجل':beforeUnknown;
+  let comparison=photoCompare(request,{photo:previousPhoto});
+  if(!pending)comparison=comparison.replace('الصورة الحالية','الصورة السابقة').replace('alt="الصورة الحالية"','alt="الصورة السابقة"');
+  if(!previousPhoto&&!knownAbsent)comparison=comparison.replace('لا توجد صورة',hadPhoto?'الصورة السابقة غير متاحة':'لم تُحفظ الصورة السابقة');
+  photo=familyRequestDiffValues('الصورة الشخصية',oldPhoto,'صورة جديدة مقترحة')+comparison;
  }
  const extra=request.status==='pending'&&Object.prototype.hasOwnProperty.call(fields,'parent_id')&&current?'<div class="request-diff-empty">الذرية التي ستنتقل مع تصحيح الأب: '+descendantIds(current.id).length+' شخصًا</div>':'';
  return '<div class="request-diff"><div class="request-diff-title">التغييرات المقترحة — قبل وبعد</div><div class="request-diff-list">'+lines.join('')+photo+'</div>'+extra+'</div>';
