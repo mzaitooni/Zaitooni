@@ -885,9 +885,9 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
 
 <style id="zaiFirstColumnFullLineage20261123">
 /* ONLY the first (rightmost) column has a thin vertically
-   rotated card, when exactly one root person is currently displayed.
+   rotated card, for every displayed root person.
    The single-line text shows this person's entire recorded parent chain
-   up to the oldest ancestor; it reads bottom to top. All other columns
+   using up to three recorded names; it reads bottom to top. All other columns
    retain their original horizontal cards. */
 .tree-root > ul > li.zai-first-column{
   display:flex;
@@ -917,6 +917,8 @@ body.zai-tree-focus .zai-fullscreen-toggle.zai-fullscreen-exit:hover{background:
   top:50%;
   left:50%;
   width:max-content !important;
+  text-overflow:clip !important;
+  overflow:visible !important;
   max-width:none !important;
   min-width:0 !important;
   display:inline-block;
@@ -1054,7 +1056,25 @@ body.family-help-visible .zai-contribution-tip,body.zai-tree-focus .zai-contribu
 .tree-root > ul > li > ul li > ul { padding-block:13px; }
 @media(max-width:620px){.tree-root > ul > li > ul li > ul { padding-block:10px; }}
 </style>
-</head>
+<style id="zai-test-family-colors">
+.tree-root .person[data-zai-family-tone="neutral"]:not(.search-match){background:#f1eee7;color:#403b31;border-color:#bcb5a7}
+.tree-root .person[data-zai-family-tone="dark"]:not(.search-match){background:#52683c;color:#fff;border-color:#455b32}
+.tree-root .person[data-zai-family-tone="light"]:not(.search-match){background:#dce6ca;color:#403b31;border-color:#a2b583}
+</style>
+<style id="zaiThreeGenerationNav">
+#treeNavigation{display:grid;grid-template-columns:1fr 1fr;direction:rtl;gap:6px}
+#treeNavigation #treeBackBtn{grid-column:1;justify-self:start}
+#treeNavigation #treeNextBtn{grid-column:2;justify-self:end}
+#treeNavigation :is(#treeNextBtn,#treeBackBtn){display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;flex-wrap:nowrap}
+#treeNavigation #helpBackToTree{grid-column:1/-1;justify-self:start}
+#treeNavigation .btn:disabled,:is(#treeNextBtn,#treeBackBtn)[aria-disabled="true"]{opacity:.38;cursor:pointer;pointer-events:auto!important}
+.tree-root li[data-branch-id]{padding-block:7px;}
+.tree-root > ul{gap:20px;}
+
+:is(#treeNextBtn,#treeBackBtn) .next-reason-icon{display:none}
+:is(#treeNextBtn,#treeBackBtn)[aria-disabled="true"]{opacity:1;color:#929e98;background:#f5f7f5;border-color:#e2e8e3}
+:is(#treeNextBtn,#treeBackBtn)[aria-disabled="true"] .next-reason-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border:1px solid #52745f;border-radius:50%;color:#52745f;font:bold 11px Arial,sans-serif;vertical-align:middle;margin-inline-start:0;flex-shrink:0}
+</style></head>
 <body><section id="introPage" class="intro-screen" aria-label="مقدمة شجرة آل الزيتوني"><span class="intro-orbit intro-orbit-a" aria-hidden="true"></span><span class="intro-orbit intro-orbit-b" aria-hidden="true"></span><header class="intro-header"><div class="intro-brand">آل الزيتوني</div><div class="zai-intro-header-actions"><div class="intro-status">مشروع عائلي لجمع وتحديث المعلومات</div><button id="zaiIntroFullscreen" class="zai-intro-fullscreen" type="button" aria-pressed="false" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4M21 16v4a1 1 0 0 1-1 1h-4"/></svg></button></div></header><div class="intro-content"><div class="zai-intro-top"><section class="intro-hero"><h1 class="intro-title">شجرة آل الزيتوني</h1><div class="intro-rule"></div><p class="intro-desc">امتدادًا لجهود التوثيق التي بدأت على الورق، نواصل اليوم حفظ إرث العائلة في شجرة إلكترونية تجمع الأجيال، وتُستكمل بمساهمات أبنائها.</p></section><div class="intro-features" aria-label="مميزات الشجرة الرقمية"><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.2 4.2"/></svg></span><span>تصفح وبحث أسهل</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9a7 7 0 0 1 11.8-2L20 9M4 15l2.7 2a7 7 0 0 0 11.8-2"/></svg></span><span>تحديث مستمر</span></article><article class="intro-feature"><span class="intro-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m4 17 5-4 3 2 3-3 5 5"/></svg></span><span>صور ونبذات تعريفية</span></article></div></div><div class="zai-intro-middle"><div class="intro-people-counter" role="group" aria-label="إجمالي المسجلين في الشجرة"><b class="intro-people-number" id="introPeopleCount" aria-live="off">…</b><span class="intro-people-label">إجمالي المسجلين في الشجرة</span></div><button class="intro-cta" id="introOpenTree" type="button"><span>انتقل إلى الشجرة الرقمية</span><span aria-hidden="true">←</span></button></div><div class="zai-intro-bottom"><button class="intro-sources-entry" id="introOpenSources" type="button" aria-label="فتح المراجع والمصادر"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7a5 5 0 0 0-9-2v14a5 5 0 0 1 9 0M12 7a5 5 0 0 1 9-2v14a5 5 0 0 0-9 0"/><path d="M12 7v12"/></svg><span>المراجع والمصادر</span><span class="intro-sources-arrow" aria-hidden="true">‹</span></button></div></div><p class="intro-coordinator-credit">تنسيق وإدارة الشجرة الإلكترونية: محمد هشام عبدالله الزيتوني.</p>
 <div class="zai-sources-page" id="introSourcesPage" role="dialog" aria-modal="true" aria-labelledby="zaiSourcesTitle" aria-hidden="true" hidden>
   <div class="zai-sources-shell">
@@ -1102,9 +1122,9 @@ body.family-help-visible .zai-contribution-tip,body.zai-tree-focus .zai-contribu
     </div>
   </div>
   <div class="tree-navigation" id="treeNavigation" hidden>
-    <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span> العودة إلى الجيل السابق</button>
+    <button class="btn" type="button" id="treeBackBtn"><span aria-hidden="true">→</span><span>الجيل السابق</span><span class="next-reason-icon" aria-hidden="true">i</span></button>
     <button class="btn" type="button" id="helpBackToTree" hidden><span aria-hidden="true">→</span> العودة إلى الشجرة</button>
-    <button class="btn tree-full-btn" type="button" id="treeFullBtn" aria-pressed="false">كامل الشجرة</button>
+    <button class="btn" type="button" id="treeNextBtn"><span class="next-reason-icon" aria-hidden="true">i</span><span>الجيل التالي</span><span aria-hidden="true">←</span></button>
   </div>
   </div>
   <section class="panel active" id="treePanel">
@@ -1373,7 +1393,7 @@ let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfi
 let treeZoom = 1; // Measured from content width when the tree is rendered.
 const DEFAULT_GENERATIONS = 3;
 const ZAI_MAX_GENERATIONS = 5; // Generation selector limit; full-tree view stays available.
-const ZAI_START_GENERATIONS = 4;
+const ZAI_START_GENERATIONS = 3;
 const TREE_STAGE_GUTTER = { top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
@@ -1479,7 +1499,7 @@ function renderPersonGenerationBadge(person){
 
 function render(){const peopleCounter=document.getElementById('peopleCount');if(peopleCounter)peopleCounter.textContent=data.people.length;const introCounter=document.getElementById('introPeopleCount');if(introCounter&&(cloudOnline||data.people.length>initial.people.length)){introCounter.dataset.count=String(data.people.length);window.dispatchEvent(new CustomEvent('zaitooni:people-count',{detail:{count:data.people.length}}))}const pending=data.requests.filter(r=>r.status==='pending').length;document.getElementById('pendingCount').textContent=pending;document.getElementById('pendingBadge').textContent=pending?`(${pending})`:'';renderTree();refreshTreeSearchResults();renderRequests()}
 function normalizeSearch(v){return String(v||'').toLowerCase().replace(/[ًٌٍَُِّْـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[،,]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(w=>w&&w!=='بن'&&w!=='ابن'&&w!=='بنت').join(' ')}
-function treeNode(person, view, depth = 0) {
+function treeNode(person, view, depth = 0, familyColors = new Map(), siblingColor = 0) {
   const kids = children(person.id);
   const matched = view.matchIds?.has(person.id);
   const searchPath = view.visibleIds && kids.some(child => view.visibleIds.has(child.id)) &&
@@ -1519,7 +1539,9 @@ function treeNode(person, view, depth = 0) {
   const name = esc(person.name);
   const id = esc(person.id);
   const ancestor = view.generations ? depth === 0 : !person.parentId;
-  const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1)).join('');
+  const groupColor = familyColors.get(depth) || 0;
+  if (shownKids.length) familyColors.set(depth, groupColor + 1);
+  const childHtml = shownKids.map(child => treeNode(child, childView, depth + 1, familyColors, groupColor % 2)).join('');
   const branchOpen = ancestorOnly ? lineageExpanded : Boolean(childHtml);
   const actionLabel = canDrill ? `عرض فرع ${name}` : ancestorOnly
     ? (lineageExpanded ? 'إخفاء بقية الأبناء' : 'إظهار بقية الأبناء')
@@ -1528,7 +1550,7 @@ function treeNode(person, view, depth = 0) {
   const toggle = kids.length && (!ancestorOnly || view.generations) && !view.fullTree
     ? `<button type="button" class="kids-count" data-toggle="${id}"${disclosure} aria-label="${actionLabel}"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`
     : '';
-  return `<li data-branch-id="${id}"${depth === 0 ? ' class="zai-top-ancestor"' : ''}><div class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
+  return `<li data-branch-id="${id}"${depth === 0 ? ' class="zai-top-ancestor"' : ''}><div data-zai-family-depth="${depth}" data-zai-family-group="${siblingColor === 0 ? 'dark' : 'light'}" data-zai-family-tone="neutral" class="person${ancestor ? ' ancestor' : ''}${matched ? ' search-match' : ''}${searchPath ? ' search-path' : ''}"${ancestorOnly && generationCount > DEFAULT_GENERATIONS ? ' data-lineage' : ''}${matched ? ' data-search-match="true"' : ''}><button class="person-name" data-profile="${id}">${name}${(person.uncertaintyPublicNote||(adminVerified&&person.uncertainty?.active))?`<span class="tree-uncertainty-mark ${(adminVerified&&person.uncertainty?.active&&person.uncertainty.visibility==='admin')?'private':''}" aria-label="حالة عدم تأكد">⚠</span>`:''}</button>${toggle}</div>${childHtml ? `<ul>${childHtml}</ul>` : ''}</li>`;
 }
 function drawTreeBranches(root) {
   if (root.hasAttribute('data-shifting')) return;
@@ -1599,7 +1621,7 @@ function centerTreeLineage(root) {
 // Account for disclosure arrows protruding outside their cards and for a fixed
 // visible safety margin on both screen edges. Never use a generations-to-zoom table.
 const TREE_FIT_SCREEN_MARGIN = 16;
-const TREE_FIT_MAX_AUTO_ZOOM = 1;
+const TREE_FIT_MAX_AUTO_ZOOM = Infinity;
 let lastTreeFitViewportWidth = 0;
 function treeHorizontalBounds(root) {
   const rootWidth=root.offsetWidth;
@@ -1745,14 +1767,23 @@ function updateGenerationOptions(max) {
       const label = generationNumber.format(n) + (n < 11 ? ' أجيال' : ' جيلًا') + (n === ZAI_START_GENERATIONS ? ' (افتراضي)' : '');
       options.push(new Option(label, String(n)));
     }
+    options.push(new Option("كامل الشجرة", "all"));
     generationSelect.replaceChildren(...options);
   }
-  // The independent full-tree button keeps the last selected generation count.
-  const selection = String(generationCount);
+  const selection = fullTreeSelected ? "all" : String(generationCount);
   if (generationSelect.value !== selection) generationSelect.value = selection;
 }
 
+function zaiGenerationLevel(person) {
+  let depth=0; const seen=new Set();
+  while(person?.parentId && !seen.has(person.id)){seen.add(person.id);person=byId(person.parentId);if(!person)break;depth++;}
+  return depth;
+}
 function generationView({ root, depthBelow }) {
+  if(Array.isArray(focusedTreeView.windowRootIds)) {
+    const roots=focusedTreeView.windowRootIds.map(byId).filter(Boolean);
+    return {roots,root:roots[0],generations:true,openIds:focusedTreeView.openIds ?? new Set(data.people.map(p=>p.id))};
+  }
   const path = [];
   let current = byId(focusedTreeView.anchorId);
   const seen = new Set();
@@ -1857,7 +1888,7 @@ function searchMatchingPeople(query) {
 
 function cloneTreeFocus(view) {
   return { anchorId: view.anchorId ?? null, openIds: view.openIds ? new Set(view.openIds) : null,
-    includeTopSiblings:Boolean(view.includeTopSiblings) };
+    includeTopSiblings:Boolean(view.includeTopSiblings), windowRootIds:view.windowRootIds?.slice(), lineageExpandedIds:view.lineageExpandedIds ? new Set(view.lineageExpandedIds) : undefined };
 }
 function captureTreeState() {
   const viewport = document.getElementById('tree');
@@ -1976,37 +2007,42 @@ function focusChosenPerson(viewport, id) {
 function updateTreeNavigation() {
   const helpOpen = document.getElementById('aboutPanel').classList.contains('active');
   const treeOpen = document.getElementById('treePanel').classList.contains('active');
-  const canGoBack = treeOpen && !fullTreeSelected && treeViewHistory.length > 0;
-  document.getElementById('treeBackBtn').hidden = !canGoBack;
+  const canGoBack = treeOpen && !fullTreeSelected && canReturnCompleteWindow();
+  document.getElementById('treeBackBtn').hidden = !treeOpen;
+  document.getElementById('treeBackBtn').disabled = false;
+  document.getElementById('treeBackBtn').setAttribute('aria-disabled', String(!canGoBack));
+  const next=document.getElementById('treeNextBtn');
+  next.hidden=!treeOpen;
+  next.disabled=false;
+  next.setAttribute("aria-disabled",String(!treeOpen || fullTreeSelected || !nextCompleteWindowRoots(document.getElementById("tree")).length));
   document.getElementById('helpBackToTree').hidden = !helpOpen;
-  const fullButton=document.getElementById('treeFullBtn');
-  fullButton.hidden=!treeOpen;
-  fullButton.classList.toggle('is-active',fullTreeSelected);
-  fullButton.setAttribute('aria-pressed',String(fullTreeSelected));
   document.getElementById('treeNavigation').hidden = !helpOpen && !treeOpen;
 }
 
 function markZaiFirstColumnCard(viewport) {
   // Rotate only the current rightmost / first column.
-  // If multiple root cards share that column, leave them horizontal to
-  // avoid crowding and keep the pre-existing family tree layout intact.
+  // Rotate every first-column card, including sibling roots.
   const rootList=viewport.querySelector('.tree-root > ul');
   if(!rootList)return;
   const roots=Array.from(rootList.children).filter(row=>row.matches('li[data-branch-id]'));
   for(const row of roots)row.classList.remove('zai-first-column');
-  if(roots.length!==1)return;
-  const row=roots[0];
+  for(const row of roots){
   const person=byId(row.dataset.branchId);
   const nameButton=row.querySelector(':scope > .person > .person-name');
-  if(!person||!nameButton)return;
+  if(!person||!nameButton)continue;
   // Replace only the text node: preserve the profile button, warning mark,
   // and its handlers without parsing user text as HTML.
-  const chain=fullName(person);
+  const names=[person.name];
+  let cur=person;
+  for(let i=0;i<2;i++){const parent=byId(cur.parentId);if(!parent)break;names.push(parent.name);cur=parent;}
+  const chain=names.map((name,i)=>i===0?name:(i===1&&person.gender==='female'?'بنت ':'بن ')+name).join(" ");
   const textNode=Array.from(nameButton.childNodes).find(node=>node.nodeType===Node.TEXT_NODE);
   if(textNode)textNode.textContent=chain;
   else nameButton.prepend(document.createTextNode(chain));
   nameButton.setAttribute('aria-label',chain);
   row.classList.add('zai-first-column');
+  row.querySelector(':scope > .person').dataset.zaiFamilyTone='neutral';
+  }
 }
 function sizeZaiRightmostAncestorCard(viewport) {
   // At launch the tree can be display:none behind the intro screen. In that case
@@ -2028,7 +2064,7 @@ function sizeZaiRightmostAncestorCard(viewport) {
       probe.style.letterSpacing=font.letterSpacing;
       probe.style.lineHeight=font.lineHeight;
       const lineWidth=Math.max(probe.getBoundingClientRect().width,name.scrollWidth,name.offsetWidth,48);
-      const height=Math.ceil(lineWidth+30)+'px';
+      const height=Math.ceil(lineWidth+40)+'px';
       if(card.style.getPropertyValue('--zai-ancestor-card-height')!==height)
         card.style.setProperty('--zai-ancestor-card-height',height);
     }
@@ -2063,11 +2099,19 @@ const hasSelection = Boolean(person);
     view = fullTreeSelected ? {fullTree:true} : generationView(tree);
   }
   const roots = generations ? (view.roots ?? (view.root ? [view.root] : [])) : data.people.filter(row => !row.parentId);
-  const html = roots.map(row => treeNode(row,view)).join('');
+  const familyColors=new Map();
+  const html = roots.map(row => treeNode(row,view,0,familyColors)).join('');
   viewport.innerHTML = html
     ? `<div class="tree-stage"><div class="tree-root${generations ? ' tree-generations' : ''}"><svg class="tree-connectors" aria-hidden="true" focusable="false"><path/></svg><ul>${html}</ul></div></div>`
     : `<div class="tree-empty">لا توجد أسماء بعد.</div>`;
 
+  // Color only the final generation column, never earlier terminal branches.
+  const familyCards = Array.from(viewport.querySelectorAll('[data-zai-family-depth]'));
+  const lastFamilyDepth = generations ? generationCount - 1 : familyCards.reduce((max, card) => Math.max(max, Number(card.dataset.zaiFamilyDepth)), 0);
+  for (const card of familyCards) {
+    const depth = Number(card.dataset.zaiFamilyDepth);
+    card.dataset.zaiFamilyTone = depth > 0 && depth === lastFamilyDepth ? card.dataset.zaiFamilyGroup : 'neutral';
+  }
   markZaiFirstColumnCard(viewport);
   sizeZaiRightmostAncestorCard(viewport);
   updateTreeNavigation();
@@ -2258,21 +2302,77 @@ function animateTreeShift(viewport, previous, direction) {
   Promise.allSettled(moves.map(move => move.finished)).then(() => {
     if (!root.isConnected) return;
     root.removeAttribute('data-shifting');
+    if(treePinchZoom===null){root.style.transform='scale(1)';layoutTree();}
     centerTreeLineage(root);
     drawTreeBranches(root);
   });
 }
 
+function nextWindowRoots(viewport) {
+  return Array.from(viewport.querySelectorAll('.tree-root > ul > li > ul > li[data-branch-id]'))
+    .map(row=>row.dataset.branchId).filter(id=>children(id).length>0);
+}
+function zaiSiblingRoots(ids){
+  if(ids.length<=1)return true;
+  const parent=byId(ids[0])?.parentId;
+  return Boolean(parent) && ids.every(id=>byId(id)?.parentId===parent);
+}
+function nextCompleteWindowRoots(viewport){
+  const ids=nextWindowRoots(viewport);
+  if(!zaiSiblingRoots(ids))return [];
+  const depths=getTreeGenerations().depthBelow;
+  return ids.some(id=>(depths.get(id)||0)>=generationCount)?ids:[];
+}
+function showNextGenerationReason(message){
+  let panel=document.getElementById('nextGenerationReason');
+  if(!panel){
+    panel=document.createElement('div');panel.id='nextGenerationReason';panel.setAttribute('role','alert');
+    panel.style.cssText='position:fixed;inset:0;z-index:2147483647;background:#0006;display:flex;align-items:center;justify-content:center;padding:24px;direction:rtl';
+    const box=document.createElement('div');box.style.cssText='background:white;color:#18332d;border-radius:18px;padding:22px;max-width:360px;width:100%;text-align:center;line-height:1.8;box-shadow:0 8px 30px #0003';
+    const msg=document.createElement('p');msg.id='nextGenerationReasonText';box.append(msg);
+    const close=document.createElement('button');close.type='button';close.className='btn';close.textContent='حسنًا';close.onclick=()=>panel.remove();box.append(close);panel.append(box);document.body.append(panel);
+  }
+  document.getElementById('nextGenerationReasonText').textContent=message;
+}
+document.getElementById('treeNextBtn').onclick = () => {
+  const viewport=document.getElementById('tree');
+  const ids=nextCompleteWindowRoots(viewport);
+  if(!ids.length || fullTreeSelected){
+    const candidates=nextWindowRoots(viewport);
+    showNextGenerationReason(fullTreeSelected ? 'حدّد عدد الأجيال لتتمكن من التنقل بينها.' : !zaiSiblingRoots(candidates) ? 'اختر فرعًا واحدًا باستخدام السهم بجانب الاسم لتتمكن من الانتقال إلى الجيل التالي.' : 'وصلت إلى آخر جيل في هذا الفرع.');
+    return;
+  }
+  const previousCards=snapshotTreeCards(viewport);
+  treeViewHistory.push({view:cloneTreeFocus(focusedTreeView),count:generationCount,top:window.scrollY,right:scrollRightOffset(viewport),searchId:selectedTreeSearchId});
+  dismissSearchWithoutRestoring();
+  focusedTreeView={anchorId:null,openIds:null,windowRootIds:ids};
+  treePinchZoom=null;
+  renderTree();moveToTreeStart(viewport);animateTreeShift(viewport,previousCards,1);
+};
+function canReturnCompleteWindow(){
+  const previous=treeViewHistory.at(-1);if(!previous)return false;
+  const tree=getTreeGenerations();const saved=focusedTreeView;
+  try{focusedTreeView=previous.count===generationCount?previous.view:{...previous.view,openIds:null};
+    const view=generationView(tree);const roots=view.roots??(view.root?[view.root]:[]);
+    if(!zaiSiblingRoots(roots.map(row=>row.id)))return false;
+    const html=roots.map(row=>treeNode(row,view)).join('');
+    return html.includes('data-zai-family-depth=\"'+(generationCount-1)+'\"');
+  }finally{focusedTreeView=saved;}
+}
 document.getElementById('treeBackBtn').onclick = () => {
+  if(fullTreeSelected){showNextGenerationReason('حدّد عدد الأجيال لتتمكن من التنقل بينها.');return;}
+  if(!canReturnCompleteWindow()){showNextGenerationReason(treeViewHistory.length ? 'لا يمكن الرجوع مع المحافظة على عدد الأجيال المختار. غيّر عدد الأجيال أو اختر فرعًا آخر.' : 'أنت في بداية العرض الحالي، ولا يوجد جيل سابق للرجوع إليه.');return;}
   const viewport = document.getElementById('tree');
   const previous = treeViewHistory.pop();
   if (!previous) return;
   const previousCards = snapshotTreeCards(viewport);
   // After back, the name and highlight disappear, but we return ONE step only.
   dismissSearchWithoutRestoring();
+  if(previous.searchId) selectedTreeSearchId=previous.searchId;
   focusedTreeView = previous.count === generationCount
     ? previous.view
-    : { anchorId: previous.view.anchorId, openIds: null };
+    : { ...previous.view, openIds: null };
+  treePinchZoom=null;
   renderTree();
   setScrollRightOffset(viewport, previous.right);
   window.scrollTo({top: previous.top, behavior:'instant'});
@@ -2321,8 +2421,6 @@ document.getElementById('treeFitWidth').addEventListener('click',()=>{
   setScrollRightOffset(viewport,Math.min(scrollRightOffset(viewport),remaining));
   requestAnimationFrame(()=>{if(treePinchZoom===null)layoutTree()});
 });
-document.getElementById('treeFullBtn').onclick = () =>
-  changeTreeDisplay(fullTreeSelected ? String(generationCount) : 'all');
 function detectRtlScrollMode(){const outer=document.createElement('div'),inner=document.createElement('div');outer.dir='rtl';outer.style.cssText='position:absolute;left:-10000px;top:-10000px;width:4px;height:4px;overflow:scroll;visibility:hidden';inner.style.cssText='width:8px;height:8px';outer.appendChild(inner);document.body.appendChild(outer);let mode;const initial=outer.scrollLeft;if(initial>0)mode='default';else{outer.scrollLeft=1;mode=outer.scrollLeft===0?'negative':'reverse'}outer.remove();return mode}
 const rtlScrollMode=detectRtlScrollMode();function scrollRightOffset(el){const max=Math.max(0,el.scrollWidth-el.clientWidth);return rtlScrollMode==='negative'?-el.scrollLeft:rtlScrollMode==='reverse'?el.scrollLeft:max-el.scrollLeft}function setScrollRightOffset(el,value){const max=Math.max(0,el.scrollWidth-el.clientWidth),v=Math.max(0,Math.min(max,value));el.scrollLeft=rtlScrollMode==='negative'?-v:rtlScrollMode==='reverse'?v:max-v}
 // Anchor the pinch to the midpoint in the tree's own coordinates.
@@ -4041,18 +4139,12 @@ body.zai-tree-focus #zaiFullscreenPreviousGen:not([hidden]){display:inline-flex!
 <script id="zaiFullscreenPreviousGenerationCode20261123">
 (()=>{
  const toolbar=document.getElementById('treeToolbar');
- const back=document.getElementById('treeBackBtn');
- const fit=document.getElementById('treeFitWidth');
- if(!toolbar||!back||!fit||document.getElementById('zaiFullscreenPreviousGen'))return;
- const btn=document.createElement('button');
- btn.id='zaiFullscreenPreviousGen';btn.type='button';
- btn.title='العودة إلى الجيل السابق';btn.setAttribute('aria-label','العودة إلى الجيل السابق');
- btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>';
- toolbar.insertBefore(btn,fit);
- const sync=()=>{btn.hidden=back.hidden};
- btn.addEventListener('click',()=>{if(!back.hidden){back.click();sync();}});
- new MutationObserver(sync).observe(back,{attributes:true,attributeFilter:['hidden']});
- sync();
+ for(const [sourceId,id,arrow] of [['treeBackBtn','zaiFullscreenPreviousGen','→'],['treeNextBtn','zaiFullscreenNextGen','←']]){
+ const source=document.getElementById(sourceId); if(!toolbar||!source)continue;
+ const btn=document.createElement('button');btn.id=id;btn.type='button';btn.className='zai-focus-gen';
+ const sync=()=>{const blocked=source.getAttribute('aria-disabled')==='true';btn.hidden=source.hidden;btn.setAttribute('aria-disabled',String(blocked));btn.title=source.textContent.trim();btn.setAttribute('aria-label',sourceId==='treeBackBtn'?'الجيل السابق':'الجيل التالي');btn.textContent=sourceId==='treeBackBtn'?arrow+(blocked?' ⓘ':''):(blocked?'ⓘ ':'')+arrow;};
+ btn.onclick=()=>source.click();toolbar.append(btn);new MutationObserver(sync).observe(source,{attributes:true,attributeFilter:['hidden','disabled','aria-disabled']});sync();
+ }
 })();
 </script>
 <script id="zaiFocusTreePNG20261123">
@@ -4577,4 +4669,18 @@ const ZAI_CONTRIBUTION_PREVIEW_EVERY_LOAD = false;
  show();
 })();
 </script>
+<style id="zaiFocusToolbarOrder">
+.zai-focus-gen{display:none!important}
+body.zai-tree-focus #treeToolbar{direction:rtl!important;flex-direction:row!important;flex-wrap:nowrap!important}
+body.zai-tree-focus #treeToolbar .zai-focus-gen:not([hidden]){display:inline-flex!important;align-items:center;justify-content:center;white-space:nowrap;gap:2px;width:auto;min-width:30px;flex:0 0 auto;height:30px;padding:0 5px;border:1px solid #c5dbcb;border-radius:9px;background:#eff7f0;color:#205b48;font-size:14px;cursor:pointer}
+body.zai-tree-focus #treeToolbar .zai-focus-gen[aria-disabled="true"]{color:#829087;background:#f5f7f5;pointer-events:auto!important;opacity:1}
+body.zai-tree-focus #zaiFullscreenPreviousGen{order:1!important}
+body.zai-tree-focus #treeToolbar label{order:2!important}
+body.zai-tree-focus #treeGenerationCount{order:3!important}
+body.zai-tree-focus #treeFitWidth{order:4!important}
+body.zai-tree-focus #zaiTreeDownloadPNG{order:5!important}
+body.zai-tree-focus #zaiFullscreenNextGen{order:6!important}
+body.zai-tree-focus #zaiFullscreenToggle.zai-fullscreen-exit{order:7!important;background:#b91c1c!important;border-color:#b91c1c!important;color:white!important}
+body.zai-tree-focus #zaiFullscreenToggle.zai-fullscreen-exit:hover{background:#991b1b!important}
+</style>
 </body></html>
