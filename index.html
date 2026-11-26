@@ -1115,7 +1115,7 @@ body.family-help-visible .zai-contribution-tip,body.zai-tree-focus .zai-contribu
     <div class="tree-toolbar generation-controls" id="treeToolbar">
       <label for="treeGenerationCount">عرض</label>
       <select id="treeGenerationCount" aria-label="عرض الشجرة">
-        <option value="3">٣ أجيال (افتراضي)</option>
+        <option value="4">٤ أجيال (افتراضي)</option>
       </select>
       <button id="treeFitWidth" class="tree-fit-width" type="button" title="ملاءمة عرض الشجرة للشاشة" aria-label="ملاءمة عرض الشجرة للشاشة" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 5v14M20.5 5v14"/><path d="M11 8 7 12l4 4M13 8l4 4-4 4"/><path d="M7 12H4m13 0h3"/></svg></button>
       <output id="treeZoomValue" hidden aria-hidden="true"></output>
@@ -1393,7 +1393,7 @@ let data=load(),expanded=new Set(),searchCollapsedBranches=new Set(),activeProfi
 let treeZoom = 1; // Measured from content width when the tree is rendered.
 const DEFAULT_GENERATIONS = 3;
 const ZAI_MAX_GENERATIONS = 5; // Generation selector limit; full-tree view stays available.
-const ZAI_START_GENERATIONS = 3;
+const ZAI_START_GENERATIONS = 4;
 const TREE_STAGE_GUTTER = { top:16, bottom:5 };
 const generationNumber = new Intl.NumberFormat('ar-SA');
 const generationSelect = document.getElementById('treeGenerationCount');
